@@ -1,5 +1,5 @@
 # cache for current jar dependency. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1405126940262 627582 cb6883d96005bc85b3e868f204507ea5b4fa9bbf C:\Users\Lucas\workspaceDoto\doto\SeuDoto\libs\android-support-v4.jar
-1389976290000 627582 cb6883d96005bc85b3e868f204507ea5b4fa9bbf C:\Users\Lucas\workspaceDoto\doto\appcompat_v7\libs\android-support-v4.jar
+1405374426000 627582 cb6883d96005bc85b3e868f204507ea5b4fa9bbf /home/tales/development/Git/doto/SeuDoto/libs/android-support-v4.jar
+1405374426000 627582 cb6883d96005bc85b3e868f204507ea5b4fa9bbf /home/tales/development/Git/android-support-v7-appcompat/libs/android-support-v4.jar
