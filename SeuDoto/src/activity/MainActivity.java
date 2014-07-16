@@ -1,4 +1,4 @@
-package controller;
+package activity;
 
 import com.example.seudoto.R;
 
