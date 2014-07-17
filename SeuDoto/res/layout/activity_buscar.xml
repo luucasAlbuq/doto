@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/telaBusca"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="2"
+        android:layout_marginTop="20dp" >
+
+        <TextView
+            android:id="@+id/textTipo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Profissional:"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <Spinner
+            android:id="@+id/profissional_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:id="@+id/textEspecialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Especialidade:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/especialidade_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:id="@+id/textConvenio"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Convênio:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/convenio_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right" />
+
+        <TextView
+            android:id="@+id/textCidade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Cidade:"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Spinner
+            android:id="@+id/cidade_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right" />
+    </GridLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/search_icon" />
+    
+  </LinearLayout>

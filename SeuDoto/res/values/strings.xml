@@ -4,5 +4,6 @@
     <string name="app_name">Seu Doto</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_busca">Busca</string>
+    <string name="title_activity_buscar">BuscarActivity</string>
 
 </resources>
