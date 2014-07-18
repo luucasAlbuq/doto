@@ -41,6 +41,42 @@
             android:layout_gravity="center_horizontal"
             android:text="12345"
             android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/detalhes_tipo_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Profissional:"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_tipo_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="Médico"
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/detalhes_especialidade_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Especialidade:"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_especialidade_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="Pediatra"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/detalhes_convenio_prof1"

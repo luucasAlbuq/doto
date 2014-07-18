@@ -2,7 +2,9 @@ package activity;
 
 import java.util.ArrayList;
 
+import model.Endereco;
 import model.ProfissionalSaude;
+import model.TipoProfissional;
 
 import com.example.seudoto.R;
 
@@ -41,11 +43,21 @@ public class ListaProfissionaisActivity extends Activity {
 					int position, long id) {
 				
 				//ProfissionalSaude profissionalSelecionado = listaProfissional.get(position);
-				System.out.println(">>>>>>>>>>>>>>>> "+position);
-				System.out.println("ID >>>>>> "+id);
 				
 				
-				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, BuscarActivity.class);
+				//Intent intent = pie.getIntent(getApplicationContext(),getGerarRelatorio().getAtividadesOrdenadasDecrescente(OrdenacaoEnum.TEMPO));
+				//startActivity(intent);
+				
+				//Bloco de codigo so pra testar
+				Endereco endereco = new Endereco("Rua dos Alfeneiros", "235", "Centro", "3A","Campina Grande", "PB");
+				ProfissionalSaude profissional = new ProfissionalSaude(TipoProfissional.MEDICO, "12345", "Lucas Albuquerque", endereco);
+	
+				//Passando o objeto Profissional para a activity DetalhesProfissionalActivity
+				Bundle parametro = new Bundle();
+				parametro.putSerializable("profissional", profissional);
+				
+				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, DetalhesProfissionalActivity.class);	
+				telaDetalhes.putExtra("profissional", parametro);
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
 				
 			}
