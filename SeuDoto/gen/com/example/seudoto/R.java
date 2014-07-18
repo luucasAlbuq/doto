@@ -973,10 +973,12 @@ containing a value of this type.
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
         public static final int acess=0x7f020057;
-        public static final int doctor_icon=0x7f020058;
-        public static final int ic_launcher=0x7f020059;
-        public static final int more_icon=0x7f02005a;
-        public static final int search_icon=0x7f02005b;
+        public static final int dislike_icon=0x7f020058;
+        public static final int doctor_icon=0x7f020059;
+        public static final int ic_launcher=0x7f02005a;
+        public static final int like_icon=0x7f02005b;
+        public static final int more_icon=0x7f02005c;
+        public static final int search_icon=0x7f02005d;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -993,13 +995,24 @@ containing a value of this type.
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
-        public static final int botaoLogin=0x7f050049;
+        public static final int botaoLogin=0x7f050054;
         public static final int botaoPesquisar=0x7f050045;
         public static final int checkbox=0x7f05002d;
         public static final int cidade_spinner=0x7f050044;
         public static final int collapseActionView=0x7f05000d;
         public static final int convenio_spinner=0x7f050042;
         public static final int default_activity_button=0x7f050028;
+        public static final int detalhes_avaliacao_prof1=0x7f05004b;
+        public static final int detalhes_avaliacao_resp_prof1=0x7f05004c;
+        public static final int detalhes_convenio_prof1=0x7f050049;
+        public static final int detalhes_convenio_resp_prof1=0x7f05004a;
+        public static final int detalhes_crm_prof1=0x7f050047;
+        public static final int detalhes_crm_resp_prof1=0x7f050048;
+        public static final int detalhes_dislike=0x7f050050;
+        public static final int detalhes_endereco_prof1=0x7f05004d;
+        public static final int detalhes_endereco_resp_prof1=0x7f05004e;
+        public static final int detalhes_like=0x7f05004f;
+        public static final int detalhes_nome_prof1=0x7f050046;
         public static final int dialog=0x7f05000e;
         public static final int disableHome=0x7f050008;
         public static final int dropdown=0x7f05000f;
@@ -1019,20 +1032,20 @@ containing a value of this type.
         public static final int never=0x7f050009;
         public static final int none=0x7f050010;
         public static final int normal=0x7f050000;
-        public static final int pesq_avaliacao_prof1=0x7f05004f;
-        public static final int pesq_avaliacao_resp_prof1=0x7f050050;
-        public static final int pesq_convenio_prof1=0x7f05004d;
-        public static final int pesq_convenio_resp_prof1=0x7f05004e;
-        public static final int pesq_crm_prof1=0x7f05004b;
-        public static final int pesq_crm_resp_prof1=0x7f05004c;
-        public static final int pesq_endereco_prof1=0x7f050051;
-        public static final int pesq_endereco_resp_prof1=0x7f050052;
-        public static final int pesq_nome_prof1=0x7f05004a;
+        public static final int pesq_avaliacao_prof1=0x7f05005a;
+        public static final int pesq_avaliacao_resp_prof1=0x7f05005b;
+        public static final int pesq_convenio_prof1=0x7f050058;
+        public static final int pesq_convenio_resp_prof1=0x7f050059;
+        public static final int pesq_crm_prof1=0x7f050056;
+        public static final int pesq_crm_resp_prof1=0x7f050057;
+        public static final int pesq_endereco_prof1=0x7f05005c;
+        public static final int pesq_endereco_resp_prof1=0x7f05005d;
+        public static final int pesq_nome_prof1=0x7f050055;
         public static final int profissional_spinner=0x7f05003e;
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
-        public static final int resultadoPesquisa=0x7f050046;
+        public static final int resultadoPesquisa=0x7f050051;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1059,8 +1072,8 @@ containing a value of this type.
         public static final int top_action_bar=0x7f050020;
         public static final int up=0x7f050021;
         public static final int useLogo=0x7f050003;
-        public static final int widget43=0x7f050047;
-        public static final int widget44=0x7f050048;
+        public static final int widget43=0x7f050052;
+        public static final int widget44=0x7f050053;
         public static final int withText=0x7f05000c;
     }
     public static final class integer {
@@ -1113,10 +1126,12 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030015;
         public static final int abc_search_view=0x7f030016;
         public static final int activity_buscar=0x7f030017;
-        public static final int activity_lista_profissionais=0x7f030018;
-        public static final int activity_main=0x7f030019;
-        public static final int modelo_lista_profissional=0x7f03001a;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001b;
+        public static final int activity_cadastrar_profissional=0x7f030018;
+        public static final int activity_detalhes_profissional=0x7f030019;
+        public static final int activity_lista_profissionais=0x7f03001a;
+        public static final int activity_main=0x7f03001b;
+        public static final int modelo_lista_profissional=0x7f03001c;
+        public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -1163,6 +1178,8 @@ containing a value of this type.
         public static final int hello_world=0x7f0a000e;
         public static final int title_activity_busca=0x7f0a000f;
         public static final int title_activity_buscar=0x7f0a0010;
+        public static final int title_activity_cadastrar_profissional=0x7f0a0013;
+        public static final int title_activity_detalhes_profissional=0x7f0a0012;
         public static final int title_activity_lista_profissionais=0x7f0a0011;
     }
     public static final class style {

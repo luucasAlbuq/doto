@@ -1,20 +1,28 @@
 package activity;
 
+import java.util.ArrayList;
+
+import model.ProfissionalSaude;
+
 import com.example.seudoto.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 public class ListaProfissionaisActivity extends Activity {
 
-	ListView resultadoPesquisa;
+	private ListView resultadoPesquisa;
+	private ArrayList<ProfissionalSaude> listaProfissional;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +32,25 @@ public class ListaProfissionaisActivity extends Activity {
 		resultadoPesquisa = (ListView) findViewById(R.id.resultadoPesquisa);
 
 		resultadoPesquisa.setAdapter(new EfficientAdapter(this, 5));
+		
+		
+		resultadoPesquisa.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				
+				//ProfissionalSaude profissionalSelecionado = listaProfissional.get(position);
+				System.out.println(">>>>>>>>>>>>>>>> "+position);
+				System.out.println("ID >>>>>> "+id);
+				
+				
+				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, BuscarActivity.class);
+				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
+				
+			}
+			
+		});
 	}
 
 	private static class EfficientAdapter extends BaseAdapter {

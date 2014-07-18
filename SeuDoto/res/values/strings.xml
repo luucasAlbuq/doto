@@ -6,5 +6,7 @@
     <string name="title_activity_busca">Busca</string>
     <string name="title_activity_buscar">BuscarActivity</string>
     <string name="title_activity_lista_profissionais">Lista Profissionais</string>
+    <string name="title_activity_detalhes_profissional">Detalhes Profissional</string>
+    <string name="title_activity_cadastrar_profissional">Cadastrar Profissional</string>
 
 </resources>
