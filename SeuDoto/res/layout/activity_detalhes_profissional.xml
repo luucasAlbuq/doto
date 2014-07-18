@@ -1,0 +1,118 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/detalhes_nome_prof1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Gabriela Oliveira"
+        android:layout_marginTop="10dp"
+        android:textSize="25sp" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignBounds"
+        android:layout_marginTop="10dp"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true" >
+
+        <TextView
+            android:id="@+id/detalhes_crm_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="1"
+            android:text="CRM:"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_crm_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="12345"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_convenio_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Convênio:"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_convenio_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="Unimed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_avaliacao_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Avaliação"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_avaliacao_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="Positiva"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_endereco_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Endereço"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_endereco_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text="Rua dos Alfeneiros"
+            android:textSize="15sp" />
+        
+        <ImageView
+            android:id="@+id/detalhes_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_column="0"
+            android:layout_row="6"
+            android:src="@drawable/like_icon" />
+        
+        <ImageView
+            android:id="@+id/detalhes_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_column="1"
+            android:layout_row="6"
+            android:src="@drawable/dislike_icon" />
+    </GridLayout>
+
+</LinearLayout>
