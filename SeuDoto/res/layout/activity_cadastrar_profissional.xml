@@ -1,12 +1,133 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="${packageName}.${activityClass}" >
 
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alignmentMode="alignBounds"
+        android:columnCount="3"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true" >
+
+        <TextView
+            android:id="@+id/cadastro_crm_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="1"
+            android:text="Identificação:"
+            android:textSize="17sp" />
+
+        <EditText
+            android:id="@+id/cadastrar_put_crm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_row="1"
+            android:ems="10"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
+        <TextView
+            android:id="@+id/cadastro_convenio_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="2"
+            android:text="Convênio:"
+            android:textSize="17sp" />
+
+        <Spinner
+            android:id="@+id/cadastro_convenio_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_gravity="right"
+            android:layout_row="2" />
+
+        <TextView
+            android:id="@+id/cadastro_especialidade_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="3"
+            android:text="Avaliação:"
+            android:textSize="17sp" />
+
+        <Spinner
+            android:id="@+id/cadastro_especialidade_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_gravity="right"
+            android:layout_row="3" />
+
+        <TextView
+            android:id="@+id/cadastro_tipo_prof"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:layout_row="4"
+            android:text="Profissional;"
+            android:textSize="17sp" />
+
+        <Spinner
+            android:id="@+id/cadastro_tipo_prof_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_column="1"
+            android:layout_gravity="right"
+            android:layout_row="4" />
+    </GridLayout>
+
     <TextView
+        android:id="@+id/cadastro_nome_prof1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_gravity="left"
+        android:text="Nome:"
+        android:textSize="17sp" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/cadastrar_put_nome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text" >
+    </EditText>
+    
+     <TextView
+        android:id="@+id/cadastro_endereco_prof1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:text="Endereço:"
+        android:textSize="17sp" />
+
+    <EditText
+        android:id="@+id/cadastrar_put_endereco"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textMultiLine" >
+    </EditText>
+
+    <ImageView
+        android:id="@+id/SaveimageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="7dp"
+        android:src="@drawable/save_icon" />
+
+</LinearLayout>
