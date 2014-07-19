@@ -3,20 +3,23 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import util.Convenio;
+import util.Especialidade;
+
 public class ProfissionalSaude implements Serializable {
 	
 	private TipoProfissional tipo;
 	private String numeroRegistro;
-	private ArrayList<String> especialidades; //trocar por um ENUM?
-	private ArrayList<String> convenios; //trocar por um ENUM?
+	private ArrayList<Especialidade> especialidades; //trocar por um ENUM?
+	private ArrayList<Convenio> convenios; //trocar por um ENUM?
 	private Endereco endereco;
 	private String nome;
 	
 	public ProfissionalSaude(TipoProfissional tipo, String numeroRegistro,String nome, Endereco endero) {
 		this.tipo = tipo;
 		this.numeroRegistro = numeroRegistro;
-		especialidades = new ArrayList<String>();
-		convenios = new ArrayList<String>();
+		especialidades = new ArrayList<Especialidade>();
+		convenios = new ArrayList<Convenio>();
 		this.nome = nome;
 		this.endereco=endero;
 
@@ -30,11 +33,11 @@ public class ProfissionalSaude implements Serializable {
 		this.numeroRegistro = numeroRegistro;
 	}
 	
-	public void addEspecialidade(String especialidade){
+	public void addEspecialidade(Especialidade especialidade){
 		especialidades.add(especialidade);
 	}
 	
-	public void addConvenio(String convenio){
+	public void addConvenio(Convenio convenio){
 		convenios.add(convenio);
 	}
 	
@@ -50,11 +53,11 @@ public class ProfissionalSaude implements Serializable {
 		return numeroRegistro;
 	}
 
-	public ArrayList<String> getEspecialidades() {
+	public ArrayList<Especialidade> getEspecialidades() {
 		return especialidades;
 	}
 
-	public ArrayList<String> getConvenios() {
+	public ArrayList<Convenio> getConvenios() {
 		return convenios;
 	}
 
@@ -74,11 +77,11 @@ public class ProfissionalSaude implements Serializable {
 		this.numeroRegistro = numeroRegistro;
 	}
 
-	public void setEspecialidades(ArrayList<String> especialidades) {
+	public void setEspecialidades(ArrayList<Especialidade> especialidades) {
 		this.especialidades = especialidades;
 	}
 
-	public void setConvenios(ArrayList<String> convenios) {
+	public void setConvenios(ArrayList<Convenio> convenios) {
 		this.convenios = convenios;
 	}
 

@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import util.Convenio;
 import util.Especialidade;
 import model.Endereco;
@@ -27,7 +29,7 @@ public interface ProfissionalInterface {
 	 * @param Endereco endereco
 	 * @param Convenio convenio
 	 */
-	void cadastrarProfissionalSaude(String nome, TipoProfissional tipoProfissinal, int identificacao,
+	void cadastrarProfissionalSaude(String nome, TipoProfissional tipoProfissinal, String identificacao,
 			Especialidade especialidade, Endereco endereco, Convenio convenio);
 
 	/**
@@ -37,7 +39,7 @@ public interface ProfissionalInterface {
 	 * @param String nome
 	 * @return ProfissionalSaude profissional
 	 */
-	ProfissionalSaude buscarProfissionalPorNome(String nome);
+	List<ProfissionalSaude> buscarProfissionalPorNome(String nome);
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
@@ -47,7 +49,7 @@ public interface ProfissionalInterface {
 	 *            especialidade
 	 * @return ProfissionalSaude profissional
 	 */
-	ProfissionalSaude buscarProfissionalPorEspecialidade(
+	List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
 			Especialidade especialidade);
 
 	/**
@@ -57,7 +59,7 @@ public interface ProfissionalInterface {
 	 * @param int identificacao
 	 * @return ProfissionalSaude profissional
 	 */
-	ProfissionalSaude buscarProfissionalPorIdentificacao(int identificacao);
+	ProfissionalSaude buscarProfissionalPorIdentificacao(String identificacao);
 	
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
@@ -66,7 +68,7 @@ public interface ProfissionalInterface {
 	 * @param TipoProfissinal tipo
 	 * @return ProfissionalSaude profissionalSaude
 	 */
-	ProfissionalSaude buscarProfissionalPorTipo(TipoProfissional tipo);
+	List<ProfissionalSaude> buscarProfissionalPorTipo(TipoProfissional tipo);
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
