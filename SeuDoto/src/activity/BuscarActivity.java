@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -58,6 +59,33 @@ public class BuscarActivity extends Activity {
 		});
 
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+ 
+        return super.onCreateOptionsMenu(menu);
+    }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_search:
+        	LocationFound();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	private void LocationFound() {
+        Intent i = new Intent(BuscarActivity.this, CadastrarProfissionalActivity.class);
+        startActivity(i);
+    }
+	
+	
 
 	public void carregarEspecialidades() {
 		final String[] especialidades = new String[] {

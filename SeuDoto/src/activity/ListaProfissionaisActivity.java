@@ -14,6 +14,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -48,11 +51,6 @@ public class ListaProfissionaisActivity extends Activity {
 				
 				ProfissionalController.setProfissionalSelecionado(listaProfissional.get(position));
 				
-				//Bloco de codigo so pra testar
-				Endereco endereco = new Endereco("Rua dos Alfeneiros", "235", "Centro", "3A","Campina Grande", "PB");
-				ProfissionalSaude profissional = new ProfissionalSaude(TipoProfissional.MEDICO, "12345", "Lucas Albuquerque", endereco);
-
-				
 				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, DetalhesProfissionalActivity.class);	
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
 				
@@ -60,6 +58,31 @@ public class ListaProfissionaisActivity extends Activity {
 			
 		});
 	}
+	
+	@Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_main_actions, menu);
+ 
+        return super.onCreateOptionsMenu(menu);
+    }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+        // Take appropriate action for each action item click
+        switch (item.getItemId()) {
+        case R.id.action_search:
+        	LocationFound();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	private void LocationFound() {
+        Intent i = new Intent(ListaProfissionaisActivity.this, CadastrarProfissionalActivity.class);
+        startActivity(i);
+    }
 
 	private static class EfficientAdapter extends BaseAdapter {
 
