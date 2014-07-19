@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.DAOREST;
@@ -14,6 +15,8 @@ public class ProfissionalController implements ProfissionalInterface {
 	private static ProfissionalController instance;
 	
 	private DAOREST dao;
+	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
+	private static ProfissionalSaude profissionalSelecionado;
 	
 	private ProfissionalController() {
 		// TODO Auto-generated constructor stub
@@ -76,6 +79,31 @@ public class ProfissionalController implements ProfissionalInterface {
 		getDao().remover(profissional);
 	}
 
+	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
+
+		//Bloco de teste
+		Endereco endereco = new Endereco("Rua quilombos", "123", "Centro", "03A", "Campina Grande", "PB");
+		ProfissionalSaude prof1 = new ProfissionalSaude(TipoProfissional.DENTISTA, "1234", "Fulano", endereco);
+		prof1.addConvenio(Convenio.SMILE);
+		prof1.addConvenio(Convenio.UNIDENTES);
+		
+		ProfissionalSaude prof2 = new ProfissionalSaude(TipoProfissional.MEDICO, "5678", "Beltrano", endereco);
+		prof1.addConvenio(Convenio.UNIMED);
+		
+		ArrayList<ProfissionalSaude> saida = new ArrayList<ProfissionalSaude>();
+		saida.add(prof1);
+		saida.add(prof2);
+		
+		return saida;
+		
+		//return resultadoBuscaSimples;
+	}
+
+	public void setResultadoBuscaSimples(
+			ArrayList<ProfissionalSaude> resultadoBuscaSimples) {
+		this.resultadoBuscaSimples = resultadoBuscaSimples;
+	}
+
 	public DAOREST getDao() {
 		if(dao==null){
 			dao = DAOREST.getInstance();
@@ -87,6 +115,26 @@ public class ProfissionalController implements ProfissionalInterface {
 		this.dao = dao;
 	}
 	
+	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio){
+		//TODO Implementar
+		ArrayList<ProfissionalSaude> resultado = dao.buscaSimples(tipo, especialidade, convenio);
+		setResultadoBuscaSimples(resultado);
+		return resultado;
+	}
 	
+	
+	public List<ProfissionalSaude> buscarTodos(){
+		return getDao().findAll();
+	}
 
+	public static ProfissionalSaude getProfissionalSelecionado() {
+		return profissionalSelecionado;
+	}
+
+	public static void setProfissionalSelecionado(
+			ProfissionalSaude profissionalSelecionado) {
+		ProfissionalController.profissionalSelecionado = profissionalSelecionado;
+	}
+	
+	
 }

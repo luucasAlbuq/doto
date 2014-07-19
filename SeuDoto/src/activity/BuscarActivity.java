@@ -1,11 +1,16 @@
 package activity;
 
+import java.util.List;
+
+import model.ProfissionalSaude;
+import model.TipoProfissional;
 import util.Convenio;
 import util.Especialidade;
 
 import com.example.seudoto.R;
 import com.example.seudoto.R.layout;
 
+import controller.ProfissionalController;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,11 +27,17 @@ import android.view.View.OnClickListener;
 public class BuscarActivity extends Activity {
 
 	private ImageButton botaoPesquisar;
+	private ProfissionalController profissionalController;
+	private String tipo;
+	private String especialidade;
+	private String convenio;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar);
+		
+		profissionalController = ProfissionalController.getInstance();
 
 		carregarCidades();
 		carregarConvenios();
@@ -38,9 +49,10 @@ public class BuscarActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-
-				Intent telaPesquisa = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
-				BuscarActivity.this.startActivity(telaPesquisa);
+				
+				//profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio());
+				Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
+				BuscarActivity.this.startActivity(telaLista);
 
 			}
 		});
@@ -48,7 +60,7 @@ public class BuscarActivity extends Activity {
 	}
 
 	public void carregarEspecialidades() {
-		String[] especialidades = new String[] {
+		final String[] especialidades = new String[] {
 				Especialidade.CARDIOLOGISTA.toString(),
 				Especialidade.DERMATOLOGISTA.toString(),
 				Especialidade.GINECOLOGISTA.toString(),
@@ -71,7 +83,8 @@ public class BuscarActivity extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
+						
+						setEspecialidade(especialidades[position]);
 
 					}
 
@@ -86,7 +99,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarConvenios() {
 
-		String[] convenios = new String[] { Convenio.SMILE.toString(),
+		final String[] convenios = new String[] { Convenio.SMILE.toString(),
 				Convenio.UNIDENTES.toString(), Convenio.UNIMED.toString() };
 
 		ArrayAdapter<String> adaptadorConvenios = new ArrayAdapter<String>(
@@ -105,7 +118,7 @@ public class BuscarActivity extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
+						setConvenio(convenios[position]);
 
 					}
 
@@ -120,7 +133,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		String[] cidades = new String[] { "João Pessoa", "Campina Grande",
+		final String[] cidades = new String[] { "João Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -154,7 +167,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		String[] tiposProfissionais = new String[] { "Médico", "Dentista",
+		final String[] tiposProfissionais = new String[] { "Médico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
@@ -173,7 +186,7 @@ public class BuscarActivity extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
+						setTipo(tiposProfissionais[position]);
 
 					}
 
@@ -185,4 +198,40 @@ public class BuscarActivity extends Activity {
 				});
 
 	}
+
+	public ProfissionalController getProfissionalController() {
+		return profissionalController;
+	}
+
+	public void setProfissionalController(
+			ProfissionalController profissionalController) {
+		this.profissionalController = profissionalController;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getEspecialidade() {
+		return especialidade;
+	}
+
+	public void setEspecialidade(String especialidade) {
+		this.especialidade = especialidade;
+	}
+
+	public String getConvenio() {
+		return convenio;
+	}
+
+	public void setConvenio(String convenio) {
+		this.convenio = convenio;
+	}
+
+		
+	
 }

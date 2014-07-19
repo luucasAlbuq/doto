@@ -8,6 +8,7 @@ import model.TipoProfissional;
 
 import com.example.seudoto.R;
 
+import controller.ProfissionalController;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -25,15 +26,18 @@ public class ListaProfissionaisActivity extends Activity {
 
 	private ListView resultadoPesquisa;
 	private ArrayList<ProfissionalSaude> listaProfissional;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_profissionais);
+		
+		listaProfissional = ProfissionalController.getResultadoBuscaSimples();
 
 		resultadoPesquisa = (ListView) findViewById(R.id.resultadoPesquisa);
-
-		resultadoPesquisa.setAdapter(new EfficientAdapter(this, 5));
+		resultadoPesquisa.setAdapter(new EfficientAdapter(this, listaProfissional.size()));
+		
 		
 		
 		resultadoPesquisa.setOnItemClickListener(new OnItemClickListener() {
@@ -42,22 +46,14 @@ public class ListaProfissionaisActivity extends Activity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				
-				//ProfissionalSaude profissionalSelecionado = listaProfissional.get(position);
-				
-				
-				//Intent intent = pie.getIntent(getApplicationContext(),getGerarRelatorio().getAtividadesOrdenadasDecrescente(OrdenacaoEnum.TEMPO));
-				//startActivity(intent);
+				ProfissionalController.setProfissionalSelecionado(listaProfissional.get(position));
 				
 				//Bloco de codigo so pra testar
 				Endereco endereco = new Endereco("Rua dos Alfeneiros", "235", "Centro", "3A","Campina Grande", "PB");
 				ProfissionalSaude profissional = new ProfissionalSaude(TipoProfissional.MEDICO, "12345", "Lucas Albuquerque", endereco);
-	
-				//Passando o objeto Profissional para a activity DetalhesProfissionalActivity
-				Bundle parametro = new Bundle();
-				parametro.putSerializable("profissional", profissional);
+
 				
 				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, DetalhesProfissionalActivity.class);	
-				telaDetalhes.putExtra("profissional", parametro);
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
 				
 			}
@@ -114,25 +110,25 @@ public class ListaProfissionaisActivity extends Activity {
 				campo = (ViewCampo) convertView.getTag();
 			}
 
-			// campo.campoNome.setText(String
-			// .valueOf(gerarRelatorio.getNomeAtivades().get(position)));
-			// campo.campoCRM.setText(String
-			// .valueOf(gerarRelatorio.getTempoAtivades().get(position)));
-			// campo.campoConvenio.setText(String
-			// .valueOf(gerarRelatorio.porcentagemDecrescente().get(
-			// position)));
-			// campo.campoAvaliacao.setText(String
-			// .valueOf(gerarRelatorio.getPrioridadeAtivades().get(
-			// position)));
-			// campo.campoEndereco.setText(String
-			// .valueOf(gerarRelatorio.getPrioridadeAtivades().get(
-			// position)));
-
-			campo.campoNome.setText("Gabriela Oliveira");
-			campo.campoCRM.setText("67890");
-			campo.campoConvenio.setText("Unimed");
-			campo.campoAvaliacao.setText("Positiva");
-			campo.campoEndereco.setText("Rua dos Alfeneiros, Nº 232 \n"+ "Campina Grande");
+			
+			/*
+			 * Esse bloco é responsavel por jogar as informações dos profissionais na tela
+			 */
+			 campo.campoNome.setText(String
+			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(position).getNome()));
+			 campo.campoCRM.setText(String
+			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(position).getNumeroRegistro()));
+			 
+			 if(ProfissionalController.getResultadoBuscaSimples().get(position).getConvenios().size()>0){
+				 campo.campoConvenio.setText(String
+						 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(
+						 position).getConvenios().get(0)));
+			 }
+			 
+			 campo.campoAvaliacao.setText("Positiva");
+			 campo.campoEndereco.setText(String
+			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(
+			 position).getEndereco().toString()));
 
 			return convertView;
 		}

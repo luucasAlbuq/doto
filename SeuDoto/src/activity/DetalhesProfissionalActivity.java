@@ -5,6 +5,7 @@ import model.ProfissionalSaude;
 import com.example.seudoto.R;
 import com.example.seudoto.R.layout;
 
+import controller.ProfissionalController;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,8 +23,7 @@ public class DetalhesProfissionalActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detalhes_profissional);
 		
-		Intent intent = getIntent();
-		ProfissionalSaude profissionalSaude = (ProfissionalSaude) intent.getSerializableExtra("profissional");
+		profissionalSaude = ProfissionalController.getProfissionalSelecionado();
 	
 		preencherCampos(profissionalSaude);
 	}
@@ -37,8 +37,14 @@ public class DetalhesProfissionalActivity extends Activity {
 		
 		nomeText.setText(prof.getNome());
 		crmText.setText(prof.getNumeroRegistro());
-		especialidadeText.setText(prof.getEspecialidades().get(0).toString());
-		convenioText.setText(prof.getConvenios().get(0).toString());
+		if(prof.getEspecialidades().size()>0){
+			especialidadeText.setText(prof.getEspecialidades().get(0).toString());
+		}
+		
+		if(prof.getConvenios().size()>0){
+			convenioText.setText(prof.getConvenios().get(0).toString());
+		}
+		
 		tipoText.setText(prof.getTipo().toString());
 	}
 

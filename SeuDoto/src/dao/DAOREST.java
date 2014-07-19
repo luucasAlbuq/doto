@@ -1,7 +1,9 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import model.ProfissionalSaude;
 import model.TipoProfissional;
 import util.Especialidade;
 import android.location.Criteria;
@@ -74,6 +76,10 @@ public class DAOREST implements DAOInterface {
 	}
 	
 	public <T> T findByEntity(T entity){
+		return null;
+	}
+	
+	public  ArrayList<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio){
 		return null;
 	}
 }

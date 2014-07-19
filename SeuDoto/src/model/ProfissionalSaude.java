@@ -8,6 +8,11 @@ import util.Especialidade;
 
 public class ProfissionalSaude implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1586030689050366981L;
+	
 	private TipoProfissional tipo;
 	private String numeroRegistro;
 	private ArrayList<Especialidade> especialidades; //trocar por um ENUM?
