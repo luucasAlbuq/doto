@@ -980,9 +980,9 @@ containing a value of this type.
         public static final int ic_launcher=0x7f02005c;
         public static final int like_icon=0x7f02005d;
         public static final int more_icon=0x7f02005e;
-        public static final int plus_icon=0x7f02005f;
-        public static final int save_icon=0x7f020060;
-        public static final int search_icon=0x7f020061;
+        public static final int pesquisa_icon=0x7f02005f;
+        public static final int plus_icon=0x7f020060;
+        public static final int save_icon=0x7f020061;
     }
     public static final class id {
         public static final int SaveimageView=0x7f050055;

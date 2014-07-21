@@ -20,6 +20,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -48,7 +49,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		final EditText bairroText = (EditText) findViewById(R.id.cadastrar_put_bairro);
 		final EditText numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
 
-		ImageView salvar = (ImageView) findViewById(R.id.SaveimageView);
+		ImageButton salvar = (ImageButton) findViewById(R.id.SaveimageView);
 
 		final Toast alertaSucesso = Toast.makeText(this,
 				"Profissional Cadastrado com Sucesso", Toast.LENGTH_LONG);
@@ -62,7 +63,7 @@ public class CadastrarProfissionalActivity extends Activity {
 				nome = nomeText.getText().toString();
 				rua = ruaText.getText().toString();
 				bairro = bairroText.getText().toString();
-				String endereco = rua + " " + bairro + " " + cidade;
+				String endereco = rua + " " + bairro + "\n " + cidade;
 
 				try {
 					ProfissionalSaude prof = new ProfissionalSaude(tipo,

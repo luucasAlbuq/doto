@@ -232,9 +232,9 @@ int drawable home_icon 0x7f02005b
 int drawable ic_launcher 0x7f02005c
 int drawable like_icon 0x7f02005d
 int drawable more_icon 0x7f02005e
-int drawable plus_icon 0x7f02005f
-int drawable save_icon 0x7f020060
-int drawable search_icon 0x7f020061
+int drawable pesquisa_icon 0x7f02005f
+int drawable plus_icon 0x7f020060
+int drawable save_icon 0x7f020061
 int id SaveimageView 0x7f050055
 int id action_bar 0x7f05001c
 int id action_bar_activity_content 0x7f050015

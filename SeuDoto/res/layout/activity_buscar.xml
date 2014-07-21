@@ -73,7 +73,10 @@
         android:id="@+id/botaoPesquisar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@null"
+        android:layout_marginTop="15dp"
+        android:clickable="true"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/search_icon" />
+        android:src="@drawable/pesquisa_icon" />
     
   </LinearLayout>

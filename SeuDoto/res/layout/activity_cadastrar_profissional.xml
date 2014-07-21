@@ -165,14 +165,17 @@
         </EditText>
     </GridLayout>
 
-    <ImageView
+  
+    
+     <ImageButton
         android:id="@+id/SaveimageView"
-        android:layout_width="wrap_content"
+         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="7dp"
-        android:src="@drawable/save_icon" />
-    
-    
+        android:background="@null"
+        android:clickable="true"
+        android:src="@drawable/save_icon" >
+    </ImageButton>
 
 </LinearLayout>

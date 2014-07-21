@@ -1,20 +1,16 @@
 package dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import bd.ProfissionalBD;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
-import util.Especialidade;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.Criteria;
+import bd.ProfissionalBD;
 
 public class DAOREST implements DAOInterface {
 
