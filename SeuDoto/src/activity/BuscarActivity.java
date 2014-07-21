@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 import android.view.View.OnClickListener;
 
 public class BuscarActivity extends Activity {
@@ -32,28 +33,38 @@ public class BuscarActivity extends Activity {
 	private String tipo;
 	private String especialidade;
 	private String convenio;
+	private String cidade;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar);
 		
-		profissionalController = ProfissionalController.getInstance();
+		profissionalController = ProfissionalController.getInstance(this);
 
 		carregarCidades();
 		carregarConvenios();
 		carregarEspecialidades();
 		carregarTiposProfissionais();
 
+		final Toast alertaBusca = Toast.makeText(this,
+				"Nenhum profissional foi encontrado!", Toast.LENGTH_LONG);
+		
 		botaoPesquisar = (ImageButton) findViewById(R.id.botaoPesquisar);
 		botaoPesquisar.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				
-				//profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio());
-				Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
-				BuscarActivity.this.startActivity(telaLista);
+				profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio(), getCidade());
+				
+				if(profissionalController.getResultadoBuscaSimples().size()>0){
+					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
+					BuscarActivity.this.startActivity(telaLista);
+				}else{
+					alertaBusca.show();
+				}
+				
 
 			}
 		});
@@ -180,8 +191,7 @@ public class BuscarActivity extends Activity {
 					@Override
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
-						// TODO Auto-generated method stub
-
+						cidade = cidades[position];
 					}
 
 					@Override
@@ -258,6 +268,14 @@ public class BuscarActivity extends Activity {
 
 	public void setConvenio(String convenio) {
 		this.convenio = convenio;
+	}
+
+	public String getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(String cidade) {
+		this.cidade = cidade;
 	}
 
 		

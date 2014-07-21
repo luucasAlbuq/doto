@@ -29,8 +29,7 @@ public interface ProfissionalInterface {
 	 * @param Endereco endereco
 	 * @param Convenio convenio
 	 */
-	void cadastrarProfissionalSaude(String nome, TipoProfissional tipoProfissinal, String identificacao,
-			Especialidade especialidade, Endereco endereco, Convenio convenio);
+	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String endereco, String convenio);
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como

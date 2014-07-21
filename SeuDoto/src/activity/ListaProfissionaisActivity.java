@@ -29,60 +29,63 @@ public class ListaProfissionaisActivity extends Activity {
 
 	private ListView resultadoPesquisa;
 	private ArrayList<ProfissionalSaude> listaProfissional;
-	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_lista_profissionais);
-		
+
 		listaProfissional = ProfissionalController.getResultadoBuscaSimples();
 
 		resultadoPesquisa = (ListView) findViewById(R.id.resultadoPesquisa);
-		resultadoPesquisa.setAdapter(new EfficientAdapter(this, listaProfissional.size()));
-		
-		
-		
+		resultadoPesquisa.setAdapter(new EfficientAdapter(this,
+				listaProfissional.size()));
+
 		resultadoPesquisa.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				
-				ProfissionalController.setProfissionalSelecionado(listaProfissional.get(position));
-				
-				Intent telaDetalhes = new Intent(ListaProfissionaisActivity.this, DetalhesProfissionalActivity.class);	
+
+				ProfissionalController
+						.setProfissionalSelecionado(listaProfissional
+								.get(position));
+
+				Intent telaDetalhes = new Intent(
+						ListaProfissionaisActivity.this,
+						DetalhesProfissionalActivity.class);
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
-				
+
 			}
-			
+
 		});
 	}
-	
+
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
- 
-        return super.onCreateOptionsMenu(menu);
-    }
-	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_main_actions, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
-        switch (item.getItemId()) {
-        case R.id.action_search:
-        	LocationFound();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-	
+		// Take appropriate action for each action item click
+		switch (item.getItemId()) {
+		case R.id.action_search:
+			LocationFound();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	private void LocationFound() {
-        Intent i = new Intent(ListaProfissionaisActivity.this, CadastrarProfissionalActivity.class);
-        startActivity(i);
-    }
+		Intent i = new Intent(ListaProfissionaisActivity.this,
+				CadastrarProfissionalActivity.class);
+		startActivity(i);
+	}
 
 	private static class EfficientAdapter extends BaseAdapter {
 
@@ -133,25 +136,22 @@ public class ListaProfissionaisActivity extends Activity {
 				campo = (ViewCampo) convertView.getTag();
 			}
 
-			
 			/*
-			 * Esse bloco é responsavel por jogar as informações dos profissionais na tela
+			 * Esse bloco é responsavel por jogar as informações dos
+			 * profissionais na tela
 			 */
-			 campo.campoNome.setText(String
-			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(position).getNome()));
-			 campo.campoCRM.setText(String
-			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(position).getNumeroRegistro()));
-			 
-			 if(ProfissionalController.getResultadoBuscaSimples().get(position).getConvenios().size()>0){
-				 campo.campoConvenio.setText(String
-						 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(
-						 position).getConvenios().get(0)));
-			 }
-			 
-			 campo.campoAvaliacao.setText("Positiva");
-			 campo.campoEndereco.setText(String
-			 .valueOf(ProfissionalController.getResultadoBuscaSimples().get(
-			 position).getEndereco().toString()));
+			campo.campoNome.setText(String.valueOf(ProfissionalController
+					.getResultadoBuscaSimples().get(position).getNome()));
+			campo.campoCRM.setText(String.valueOf(ProfissionalController
+					.getResultadoBuscaSimples().get(position)
+					.getNumeroRegistro()));
+			campo.campoConvenio.setText(String.valueOf(ProfissionalController
+					.getResultadoBuscaSimples().get(position).getConvenio()));
+
+			campo.campoAvaliacao.setText("Positiva");
+			campo.campoEndereco.setText(String.valueOf(ProfissionalController
+					.getResultadoBuscaSimples().get(position).getEndereco()
+					.toString()));
 
 			return convertView;
 		}

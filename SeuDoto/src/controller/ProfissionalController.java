@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import dao.DAOREST;
 import model.Endereco;
 import model.ProfissionalSaude;
@@ -17,25 +18,29 @@ public class ProfissionalController implements ProfissionalInterface {
 	private DAOREST dao;
 	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
+	private Context context;
 	
-	private ProfissionalController() {
-		// TODO Auto-generated constructor stub
+	private ProfissionalController(Context context) {
+		this.context = context;
 	}
 
-	public static ProfissionalController getInstance() {
-		if (instance == null)
-			instance = new ProfissionalController();
+	public static ProfissionalController getInstance(Context context) {
+		if (instance == null){
+			instance = new ProfissionalController(context);
+		}
+			
 		return instance;
 	}
 
 	@Override
-	public void cadastrarProfissionalSaude(String nome,
-			TipoProfissional tipoProfissinal, String identificacao,
-			Especialidade especialidade, Endereco endereco, Convenio convenio) {
+	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String endereco, String convenio) {
 		
-		ProfissionalSaude profissional = new ProfissionalSaude(tipoProfissinal, identificacao , nome, endereco);
-		profissional.getConvenios().add(convenio);
-		profissional.getEspecialidades().add(especialidade);
+		ProfissionalSaude profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, endereco, especialidade, convenio);
+		getDao().persistir(profissional);
+	}
+	
+	public void cadastrarProfissionalSaude(ProfissionalSaude prof){
+		getDao().persistir(prof);
 	}
 
 	@Override
@@ -46,7 +51,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
 			Especialidade especialidade) {
-		return getDao().findByEspecialidade(especialidade);
+		return getDao().findByEspecialidade(especialidade.toString());
 	}
 
 	@Override
@@ -82,21 +87,21 @@ public class ProfissionalController implements ProfissionalInterface {
 	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
 
 		//Bloco de teste
-		Endereco endereco = new Endereco("Rua quilombos", "123", "Centro", "03A", "Campina Grande", "PB");
-		ProfissionalSaude prof1 = new ProfissionalSaude(TipoProfissional.DENTISTA, "1234", "Fulano", endereco);
-		prof1.addConvenio(Convenio.SMILE);
-		prof1.addConvenio(Convenio.UNIDENTES);
-		
-		ProfissionalSaude prof2 = new ProfissionalSaude(TipoProfissional.MEDICO, "5678", "Beltrano", endereco);
-		prof1.addConvenio(Convenio.UNIMED);
-		
-		ArrayList<ProfissionalSaude> saida = new ArrayList<ProfissionalSaude>();
-		saida.add(prof1);
-		saida.add(prof2);
-		
-		return saida;
-		
-		//return resultadoBuscaSimples;
+//		Endereco endereco = new Endereco("Rua quilombos", "123", "Centro", "03A", "Campina Grande", "PB");
+//		ProfissionalSaude prof1 = new ProfissionalSaude(TipoProfissional.DENTISTA, "1234", "Fulano", endereco);
+//		prof1.addConvenio(Convenio.SMILE);
+//		prof1.addConvenio(Convenio.UNIDENTES);
+//		
+//		ProfissionalSaude prof2 = new ProfissionalSaude(TipoProfissional.MEDICO, "5678", "Beltrano", endereco);
+//		prof1.addConvenio(Convenio.UNIMED);
+//		
+//		ArrayList<ProfissionalSaude> saida = new ArrayList<ProfissionalSaude>();
+//		saida.add(prof1);
+//		saida.add(prof2);
+//		
+//		return saida;
+
+		return resultadoBuscaSimples;
 	}
 
 	public void setResultadoBuscaSimples(
@@ -106,7 +111,7 @@ public class ProfissionalController implements ProfissionalInterface {
 
 	public DAOREST getDao() {
 		if(dao==null){
-			dao = DAOREST.getInstance();
+			dao = DAOREST.getInstance(context);
 		}
 		return dao;
 	}
@@ -115,9 +120,10 @@ public class ProfissionalController implements ProfissionalInterface {
 		this.dao = dao;
 	}
 	
-	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio){
+	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio,String cidade){
 		//TODO Implementar
-		ArrayList<ProfissionalSaude> resultado = dao.buscaSimples(tipo, especialidade, convenio);
+		
+		ArrayList<ProfissionalSaude> resultado = getDao().buscaSimples(tipo, especialidade, convenio,cidade);
 		setResultadoBuscaSimples(resultado);
 		return resultado;
 	}

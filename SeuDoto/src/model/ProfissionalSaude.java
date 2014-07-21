@@ -13,60 +13,79 @@ public class ProfissionalSaude implements Serializable {
 	 */
 	private static final long serialVersionUID = -1586030689050366981L;
 	
-	private TipoProfissional tipo;
+	private String tipo;
 	private String numeroRegistro;
-	private ArrayList<Especialidade> especialidades; //trocar por um ENUM?
-	private ArrayList<Convenio> convenios; //trocar por um ENUM?
-	private Endereco endereco;
+	//private ArrayList<String> especialidades; //trocar por um ENUM?
+	//private ArrayList<Convenio> convenios; //trocar por um ENUM?
+	private String endereco;
 	private String nome;
+	private int avaliacao;
+	private String especialidade;
+	private String convenio;
 	
-	public ProfissionalSaude(TipoProfissional tipo, String numeroRegistro,String nome, Endereco endero) {
+	public ProfissionalSaude(String tipo, String numeroRegistro,String nome, String endero,String especialidade, String convenio) {
 		this.tipo = tipo;
 		this.numeroRegistro = numeroRegistro;
-		especialidades = new ArrayList<Especialidade>();
-		convenios = new ArrayList<Convenio>();
+		//especialidades = new ArrayList<String>();
+		//convenios = new ArrayList<Convenio>();
+		this.especialidade = especialidade;
+		this.convenio = convenio;
 		this.nome = nome;
 		this.endereco=endero;
+		avaliacao = 0;
 
 	}
 	
-	public void setTipo(TipoProfissional tipo){
+	
+	
+	public int getAvaliacao() {
+		return avaliacao;
+	}
+
+
+
+	public void setAvaliacao(int avaliacao) {
+		this.avaliacao = avaliacao;
+	}
+
+	
+	
+	public String getTipo() {
+		return tipo;
+	}
+
+
+
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
+
+
+
 	public void setRegistro(String numeroRegistro){
 		this.numeroRegistro = numeroRegistro;
 	}
 	
 	public void addEspecialidade(Especialidade especialidade){
-		especialidades.add(especialidade);
+		this.especialidade = this.especialidade+"\n"+especialidade;
 	}
 	
-	public void addConvenio(Convenio convenio){
-		convenios.add(convenio);
+	public void addConvenio(String convenio){
+		this.convenio= this.convenio +"\n"+convenio;
 	}
 	
 	public void setEndereco(String rua,String numero,String bairro, String sala, String cidade, String estado){
-		endereco = new Endereco (rua, numero, bairro, sala,cidade,estado);
-	}
-
-	public TipoProfissional getTipo() {
-		return tipo;
+		Endereco newEndereco = new Endereco (rua, numero, bairro, sala,cidade,estado);
+		endereco = newEndereco.toString();
 	}
 
 	public String getNumeroRegistro() {
 		return numeroRegistro;
 	}
 
-	public ArrayList<Especialidade> getEspecialidades() {
-		return especialidades;
-	}
+	
 
-	public ArrayList<Convenio> getConvenios() {
-		return convenios;
-	}
-
-	public Endereco getEndereco() {
+	public String getEndereco() {
 		return endereco;
 	}
 
@@ -82,34 +101,51 @@ public class ProfissionalSaude implements Serializable {
 		this.numeroRegistro = numeroRegistro;
 	}
 
-	public void setEspecialidades(ArrayList<Especialidade> especialidades) {
-		this.especialidades = especialidades;
+
+
+	public String getEspecialidade() {
+		return especialidade;
 	}
 
-	public void setConvenios(ArrayList<Convenio> convenios) {
-		this.convenios = convenios;
+
+
+	public void setEspecialidade(String especialidade) {
+		this.especialidade = especialidade;
 	}
 
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
+
+
+	public String getConvenio() {
+		return convenio;
 	}
+
+
+
+	public void setConvenio(String convenio) {
+		this.convenio = convenio;
+	}
+
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + avaliacao;
 		result = prime * result
-				+ ((convenios == null) ? 0 : convenios.hashCode());
+				+ ((convenio == null) ? 0 : convenio.hashCode());
 		result = prime * result
 				+ ((endereco == null) ? 0 : endereco.hashCode());
 		result = prime * result
-				+ ((especialidades == null) ? 0 : especialidades.hashCode());
+				+ ((especialidade == null) ? 0 : especialidade.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result
 				+ ((numeroRegistro == null) ? 0 : numeroRegistro.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
+
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -120,20 +156,22 @@ public class ProfissionalSaude implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ProfissionalSaude other = (ProfissionalSaude) obj;
-		if (convenios == null) {
-			if (other.convenios != null)
+		if (avaliacao != other.avaliacao)
+			return false;
+		if (convenio == null) {
+			if (other.convenio != null)
 				return false;
-		} else if (!convenios.equals(other.convenios))
+		} else if (!convenio.equals(other.convenio))
 			return false;
 		if (endereco == null) {
 			if (other.endereco != null)
 				return false;
 		} else if (!endereco.equals(other.endereco))
 			return false;
-		if (especialidades == null) {
-			if (other.especialidades != null)
+		if (especialidade == null) {
+			if (other.especialidade != null)
 				return false;
-		} else if (!especialidades.equals(other.especialidades))
+		} else if (!especialidade.equals(other.especialidade))
 			return false;
 		if (nome == null) {
 			if (other.nome != null)
@@ -145,11 +183,14 @@ public class ProfissionalSaude implements Serializable {
 				return false;
 		} else if (!numeroRegistro.equals(other.numeroRegistro))
 			return false;
-		if (tipo != other.tipo)
+		if (tipo == null) {
+			if (other.tipo != null)
+				return false;
+		} else if (!tipo.equals(other.tipo))
 			return false;
 		return true;
 	}
-	
+
 	
 	
 

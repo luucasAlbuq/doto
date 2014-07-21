@@ -2,6 +2,7 @@ package dao;
 
 import java.util.List;
 
+import model.ProfissionalSaude;
 import android.location.Criteria;
 
 public interface DAOInterface {
@@ -33,7 +34,7 @@ public interface DAOInterface {
 	 * 
 	 * @return List<T> resultados
 	 */
-	<T> List<T> findAll();
+	List<ProfissionalSaude> findAll();
 
 	/**
 	 * Realiza uma busca por ID em todas as entidades que estão presentes no BD
@@ -41,7 +42,7 @@ public interface DAOInterface {
 	 * @param id
 	 * @return
 	 */
-	<T> T findById(int id);
+	ProfissionalSaude findById(int id);
 
 	/**
 	 * Retorna uma lista de resultados de uma consulta passada como parámetro.
@@ -51,5 +52,5 @@ public interface DAOInterface {
 	 *            consulta
 	 * @return List<T> resultados
 	 */
-	<T> List<T> findByCriteira(Criteria consulta);
+	List<ProfissionalSaude> findByCriteira(Criteria consulta);
 }

@@ -15,62 +15,61 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DetalhesProfissionalActivity extends Activity {
-	
+
 	private ProfissionalSaude profissionalSaude;
-	private TextView nomeText, crmText,especialidadeText,convenioText,tipoText;
-	
+	private TextView nomeText, crmText, especialidadeText, convenioText,
+			tipoText;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detalhes_profissional);
-		
+
 		profissionalSaude = ProfissionalController.getProfissionalSelecionado();
-	
+
 		preencherCampos(profissionalSaude);
 	}
-	
+
 	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
- 
-        return super.onCreateOptionsMenu(menu);
-    }
-	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_main_actions, menu);
+
+		return super.onCreateOptionsMenu(menu);
+	}
+
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-        // Take appropriate action for each action item click
-        switch (item.getItemId()) {
-        case R.id.action_search:
-        	LocationFound();
-            return true;
-        default:
-            return super.onOptionsItemSelected(item);
-        }
-    }
-	
-	private void LocationFound() {
-        Intent i = new Intent(DetalhesProfissionalActivity.this, CadastrarProfissionalActivity.class);
-        startActivity(i);
-    }
+		// Take appropriate action for each action item click
+		switch (item.getItemId()) {
+		case R.id.action_search:
+			LocationFound();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
 
-	private void preencherCampos(ProfissionalSaude prof){
+	private void LocationFound() {
+		Intent i = new Intent(DetalhesProfissionalActivity.this,
+				CadastrarProfissionalActivity.class);
+		startActivity(i);
+	}
+
+	private void preencherCampos(ProfissionalSaude prof) {
 		nomeText = (TextView) findViewById(R.id.detalhes_nome_prof1);
 		crmText = (TextView) findViewById(R.id.detalhes_crm_resp_prof1);
 		especialidadeText = (TextView) findViewById(R.id.detalhes_especialidade_resp_prof1);
 		convenioText = (TextView) findViewById(R.id.detalhes_convenio_resp_prof1);
 		tipoText = (TextView) findViewById(R.id.detalhes_tipo_resp_prof1);
-		
+
 		nomeText.setText(prof.getNome());
 		crmText.setText(prof.getNumeroRegistro());
-		if(prof.getEspecialidades().size()>0){
-			especialidadeText.setText(prof.getEspecialidades().get(0).toString());
-		}
-		
-		if(prof.getConvenios().size()>0){
-			convenioText.setText(prof.getConvenios().get(0).toString());
-		}
-		
+
+		especialidadeText.setText(prof.getEspecialidade());
+
+		convenioText.setText(prof.getConvenio());
+
 		tipoText.setText(prof.getTipo().toString());
 	}
 
@@ -81,8 +80,5 @@ public class DetalhesProfissionalActivity extends Activity {
 	public void setProfissionalSaude(ProfissionalSaude profissionalSaude) {
 		this.profissionalSaude = profissionalSaude;
 	}
-	
-	
-	
-	
+
 }
