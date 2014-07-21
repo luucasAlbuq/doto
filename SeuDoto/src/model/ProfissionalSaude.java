@@ -7,83 +7,89 @@ import util.Convenio;
 import util.Especialidade;
 
 public class ProfissionalSaude implements Serializable {
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1586030689050366981L;
-	
+
 	private String tipo;
 	private String numeroRegistro;
-	//private ArrayList<String> especialidades; //trocar por um ENUM?
-	//private ArrayList<Convenio> convenios; //trocar por um ENUM?
+	// private ArrayList<String> especialidades; //trocar por um ENUM?
+	// private ArrayList<Convenio> convenios; //trocar por um ENUM?
 	private String endereco;
 	private String nome;
 	private int avaliacao;
 	private String especialidade;
 	private String convenio;
-	
-	public ProfissionalSaude(String tipo, String numeroRegistro,String nome, String endero,String especialidade, String convenio) {
-		this.tipo = tipo;
-		this.numeroRegistro = numeroRegistro;
-		//especialidades = new ArrayList<String>();
-		//convenios = new ArrayList<Convenio>();
-		this.especialidade = especialidade;
+
+	public ProfissionalSaude(String tipo, String numeroRegistro, String nome,
+			String endero, String especialidade, String convenio) throws Exception {
+
+		if(verificaParametros(tipo, numeroRegistro, nome, especialidade)){
+			this.tipo = tipo;
+			this.numeroRegistro = numeroRegistro;
+			this.especialidade = especialidade;
+			this.nome = nome;
+		}else{
+			throw new Exception("Parametros invalidos");
+		}
+		
+		// especialidades = new ArrayList<String>();
+		// convenios = new ArrayList<Convenio>();
+		
 		this.convenio = convenio;
-		this.nome = nome;
-		this.endereco=endero;
+		
+		this.endereco = endero;
 		avaliacao = 0;
 
 	}
-	
-	
-	
+
+	public boolean verificaParametros(String tipo, String numeroRegistro,
+			String nome, String especialidade) {
+		return (tipo != null && !tipo.trim().equals("") && nome != null
+				&& !nome.trim().equals("") && especialidade != null && !especialidade
+				.trim().equals("") && numeroRegistro!=null && !numeroRegistro.trim().equals(""));
+	}
+
 	public int getAvaliacao() {
 		return avaliacao;
 	}
-
-
 
 	public void setAvaliacao(int avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 
-	
-	
 	public String getTipo() {
 		return tipo;
 	}
-
-
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
-
-
-	public void setRegistro(String numeroRegistro){
+	public void setRegistro(String numeroRegistro) {
 		this.numeroRegistro = numeroRegistro;
 	}
-	
-	public void addEspecialidade(Especialidade especialidade){
-		this.especialidade = this.especialidade+"\n"+especialidade;
+
+	public void addEspecialidade(Especialidade especialidade) {
+		this.especialidade = this.especialidade + "\n" + especialidade;
 	}
-	
-	public void addConvenio(String convenio){
-		this.convenio= this.convenio +"\n"+convenio;
+
+	public void addConvenio(String convenio) {
+		this.convenio = this.convenio + "\n" + convenio;
 	}
-	
-	public void setEndereco(String rua,String numero,String bairro, String sala, String cidade, String estado){
-		Endereco newEndereco = new Endereco (rua, numero, bairro, sala,cidade,estado);
+
+	public void setEndereco(String rua, String numero, String bairro,
+			String sala, String cidade, String estado) {
+		Endereco newEndereco = new Endereco(rua, numero, bairro, sala, cidade,
+				estado);
 		endereco = newEndereco.toString();
 	}
 
 	public String getNumeroRegistro() {
 		return numeroRegistro;
 	}
-
-	
 
 	public String getEndereco() {
 		return endereco;
@@ -101,31 +107,21 @@ public class ProfissionalSaude implements Serializable {
 		this.numeroRegistro = numeroRegistro;
 	}
 
-
-
 	public String getEspecialidade() {
 		return especialidade;
 	}
-
-
 
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
 	}
 
-
-
 	public String getConvenio() {
 		return convenio;
 	}
 
-
-
 	public void setConvenio(String convenio) {
 		this.convenio = convenio;
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -144,8 +140,6 @@ public class ProfissionalSaude implements Serializable {
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
 	}
-
-
 
 	@Override
 	public boolean equals(Object obj) {
@@ -190,8 +184,5 @@ public class ProfissionalSaude implements Serializable {
 			return false;
 		return true;
 	}
-
-	
-	
 
 }

@@ -55,27 +55,37 @@ public class CadastrarProfissionalActivity extends Activity {
 				"Profissional Cadastrado com Sucesso", Toast.LENGTH_LONG);
 		final Toast alertaFalha = Toast.makeText(this,
 				"Erro ao cadastrado um profissional", Toast.LENGTH_LONG);
+		final Toast alertaCampos = Toast.makeText(this,
+				"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios", Toast.LENGTH_LONG);
 		salvar.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
 				nome = nomeText.getText().toString();
+				indentificacao = numeroRegistro.getText().toString();
 				rua = ruaText.getText().toString();
 				bairro = bairroText.getText().toString();
 				String endereco = rua + " " + bairro + "\n " + cidade;
 
 				try {
-					ProfissionalSaude prof = new ProfissionalSaude(tipo,
-							numeroRegistro.getText().toString(), nome,
-							endereco, especialidade, convenio);
-					controler.cadastrarProfissionalSaude(prof);
 					
-					nomeText.setText("");
-					numeroRegistro.setText("");
-					bairroText.setText("");
+					if(isCamposValidos()){
+						ProfissionalSaude prof = new ProfissionalSaude(tipo,
+								numeroRegistro.getText().toString(), nome,
+								endereco, especialidade, convenio);
+						controler.cadastrarProfissionalSaude(prof);
+						
+						nomeText.setText("");
+						numeroRegistro.setText("");
+						bairroText.setText("");
+						alertaSucesso.show();
+						
+					}else{
+						alertaCampos.show();
+					}
 					
-					alertaSucesso.show();
+					
 					
 				} catch (Exception e) {
 					alertaFalha.show();
@@ -252,6 +262,10 @@ public class CadastrarProfissionalActivity extends Activity {
 					}
 				});
 
+	}
+	
+	private boolean isCamposValidos(){
+		return tipo!=null && !tipo.trim().equals("") && indentificacao!=null && !indentificacao.trim().equals("");
 	}
 	
 	

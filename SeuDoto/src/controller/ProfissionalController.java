@@ -35,8 +35,15 @@ public class ProfissionalController implements ProfissionalInterface {
 	@Override
 	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String endereco, String convenio) {
 		
-		ProfissionalSaude profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, endereco, especialidade, convenio);
-		getDao().persistir(profissional);
+		ProfissionalSaude profissional;
+		try {
+			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, endereco, especialidade, convenio);
+			getDao().persistir(profissional);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public void cadastrarProfissionalSaude(ProfissionalSaude prof){
@@ -142,5 +149,13 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalController.profissionalSelecionado = profissionalSelecionado;
 	}
 	
+	public void incrementaAvaliacao(){
+		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()+1);
+		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
+	}
 	
+	public void decrementaAvaliacao(){
+		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()-1);
+		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
+	}
 }

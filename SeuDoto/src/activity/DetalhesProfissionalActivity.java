@@ -8,26 +8,71 @@ import com.example.seudoto.R.layout;
 import controller.ProfissionalController;
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteAbortException;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetalhesProfissionalActivity extends Activity {
 
 	private ProfissionalSaude profissionalSaude;
-	private TextView nomeText, crmText, especialidadeText, convenioText,
+	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoText,
 			tipoText;
+	private ProfissionalController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detalhes_profissional);
 
-		profissionalSaude = ProfissionalController.getProfissionalSelecionado();
+		controller = ProfissionalController.getInstance(this);
+		profissionalSaude = controller.getProfissionalSelecionado();
 
 		preencherCampos(profissionalSaude);
+		
+		final Toast alertaSucesso = Toast.makeText(this,
+				"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+		final Toast alertaFalha = Toast.makeText(this,
+				"Falha ao computar a avaliação", Toast.LENGTH_LONG);
+		
+		
+		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);
+		likeBotao.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				try{
+					controller.incrementaAvaliacao();
+					alertaSucesso.show();
+					
+				}catch (SQLiteAbortException e){
+					alertaFalha.show();
+				}
+				
+			}
+		});
+		
+		ImageButton unLike = (ImageButton) findViewById(R.id.detalhes_dislike);
+		unLike.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				try{
+					controller.decrementaAvaliacao();
+					alertaSucesso.show();
+					
+				}catch(SQLiteAbortException e){
+					alertaFalha.show();
+				}
+				
+			}
+		});
 	}
 
 	@Override
@@ -62,6 +107,7 @@ public class DetalhesProfissionalActivity extends Activity {
 		especialidadeText = (TextView) findViewById(R.id.detalhes_especialidade_resp_prof1);
 		convenioText = (TextView) findViewById(R.id.detalhes_convenio_resp_prof1);
 		tipoText = (TextView) findViewById(R.id.detalhes_tipo_resp_prof1);
+		avaliacaoText = (TextView) findViewById(R.id.detalhes_avaliacao_resp_prof1);
 
 		nomeText.setText(prof.getNome());
 		crmText.setText(prof.getNumeroRegistro());
@@ -71,6 +117,12 @@ public class DetalhesProfissionalActivity extends Activity {
 		convenioText.setText(prof.getConvenio());
 
 		tipoText.setText(prof.getTipo().toString());
+		
+		if(prof.getAvaliacao()>=0){
+			avaliacaoText.setText("Positiva: "+prof.getAvaliacao());
+		}else{
+			avaliacaoText.setText("Negativa: "+prof.getAvaliacao());
+		}
 	}
 
 	public ProfissionalSaude getProfissionalSaude() {
@@ -80,5 +132,6 @@ public class DetalhesProfissionalActivity extends Activity {
 	public void setProfissionalSaude(ProfissionalSaude profissionalSaude) {
 		this.profissionalSaude = profissionalSaude;
 	}
-
+	
+	
 }

@@ -97,13 +97,21 @@ public class DAOREST implements DAOInterface {
 			String numeroRegistro = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
 
-			ProfissionalSaude prof = new ProfissionalSaude(tipo,
-					numeroRegistro, nome, enderenco, especialidade, convenio);
-			prof.setAvaliacao(avaliacao);
+			ProfissionalSaude prof;
+			try {
+				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
+						enderenco, especialidade, convenio);
 
-			if (!listaDeResultados.contains(prof)) {
-				listaDeResultados.add(prof);
+				prof.setAvaliacao(avaliacao);
+
+				if (!listaDeResultados.contains(prof)) {
+					listaDeResultados.add(prof);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 		return listaDeResultados;
 	}
@@ -146,14 +154,21 @@ public class DAOREST implements DAOInterface {
 			String numeroRegistro = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
 
-			ProfissionalSaude prof = new ProfissionalSaude(tipo,
-					numeroRegistro, nome, enderenco, especialidade.toString(),
-					convenio);
-			prof.setAvaliacao(avaliacao);
+			ProfissionalSaude prof;
+			try {
+				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
+						enderenco, especialidade.toString(), convenio);
 
-			if (!listaDeResultados.contains(prof)) {
-				listaDeResultados.add(prof);
+				prof.setAvaliacao(avaliacao);
+
+				if (!listaDeResultados.contains(prof)) {
+					listaDeResultados.add(prof);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 		return listaDeResultados;
 	}
@@ -185,13 +200,21 @@ public class DAOREST implements DAOInterface {
 			String numeroRegistro = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
 
-			ProfissionalSaude prof = new ProfissionalSaude(tipo.toString(),
-					numeroRegistro, nome, enderenco, especialdiade, convenio);
-			prof.setAvaliacao(avaliacao);
+			ProfissionalSaude prof;
+			try {
+				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
+						nome, enderenco, especialdiade, convenio);
 
-			if (!listaDeResultados.contains(prof)) {
-				listaDeResultados.add(prof);
+				prof.setAvaliacao(avaliacao);
+
+				if (!listaDeResultados.contains(prof)) {
+					listaDeResultados.add(prof);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 		return listaDeResultados;
 	}
@@ -205,9 +228,12 @@ public class DAOREST implements DAOInterface {
 		database = criaBD.getReadableDatabase();
 
 		String sqlConsulta = "SELECT * FROM " + ProfissionalBD.TABLE_NAME
-				+ " WHERE " + ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo+"%'"+ " AND "
-				+ ProfissionalBD.ESPECIALIDADE_PROF + " LIKE '%" + especialidade+"%'"
-				+ " AND " + ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio+"%'"+" AND "+ ProfissionalBD.ENDERECO_PROF+" LIKE '%"+cidade+"%'";
+				+ " WHERE " + ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo
+				+ "%'" + " AND " + ProfissionalBD.ESPECIALIDADE_PROF
+				+ " LIKE '%" + especialidade + "%'" + " AND "
+				+ ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'"
+				+ " AND " + ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade
+				+ "%'";
 
 		Cursor cursor = database.rawQuery(sqlConsulta, null);
 
@@ -225,14 +251,31 @@ public class DAOREST implements DAOInterface {
 			String numeroRegistro = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
 
-			ProfissionalSaude prof = new ProfissionalSaude(tipo.toString(),
-					numeroRegistro, nome, enderenco, especialidade, convenio);
-			prof.setAvaliacao(avaliacao);
+			ProfissionalSaude prof;
+			try {
+				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
+						nome, enderenco, especialidade, convenio);
+				prof.setAvaliacao(avaliacao);
 
-			if (!listaDeResultados.contains(prof)) {
-				listaDeResultados.add(prof);
+				if (!listaDeResultados.contains(prof)) {
+					listaDeResultados.add(prof);
+				}
+
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
+
 		}
 		return listaDeResultados;
+	}
+
+	public void updateAvaliacao(int avaliacao, String crm) {
+		String consultasql = "UPDATE " + ProfissionalBD.TABLE_NAME + " SET "
+				+ ProfissionalBD.AVALIACAO_PROF + " = " + avaliacao + " WHERE "
+				+ ProfissionalBD.IDENTIFICACAO_PROF + " = " + crm;
+		database = criaBD.getReadableDatabase();
+		database.rawQuery(consultasql, null);
+
 	}
 }

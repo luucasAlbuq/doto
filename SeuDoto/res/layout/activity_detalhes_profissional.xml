@@ -131,6 +131,8 @@
             android:layout_gravity="center_horizontal"
             android:text="Rua dos Alfeneiros"
             android:textSize="15sp" />
+        
+        
     </GridLayout>
 
     <LinearLayout
