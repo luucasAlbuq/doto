@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.ProfissionalSaudeException;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 import android.content.ContentValues;
@@ -32,7 +33,7 @@ public class DAOREST implements DAOInterface {
 	}
 
 	@Override
-	public <T> void persistir(T entity) {
+	public <T> void persistir(T entity) throws ProfissionalSaudeException {
 
 		if (entity instanceof ProfissionalSaude) {
 			ProfissionalSaude prof = (ProfissionalSaude) entity;
@@ -53,30 +54,26 @@ public class DAOREST implements DAOInterface {
 					valores);
 			// return index;
 		} else {
-			new Exception("Objeto de tipo desconhecido");
+			throw new ProfissionalSaudeException("Objeto de tipo desconhecido");
 		}
 
 	}
 
 	@Override
-	public <T> void update(T entity) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public <T> void remover(T entity) {
+	public <T> void remover(T entity) throws ProfissionalSaudeException {
 		if (entity instanceof ProfissionalSaude) {
 			ProfissionalSaude prof = (ProfissionalSaude) entity;
 			database.delete(
 					ProfissionalBD.TABLE_NAME,
 					ProfissionalBD.IDENTIFICACAO_PROF + " = "
 							+ prof.getNumeroRegistro(), null);
+		} else {
+			throw new ProfissionalSaudeException("Objeto de tipo desconhecido");
 		}
 	}
 
 	@Override
-	public List<ProfissionalSaude> findAll() {
+	public List<ProfissionalSaude> findAll() throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 		Cursor cursor = database.rawQuery("select * from TB_PROF", null);
 		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
@@ -98,64 +95,49 @@ public class DAOREST implements DAOInterface {
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
 
 			ProfissionalSaude prof;
-			try {
-				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
-						enderenco, especialidade, convenio);
 
-				prof.setAvaliacao(avaliacao);
+			prof = new ProfissionalSaude(tipo, numeroRegistro, nome, enderenco,
+					especialidade, convenio);
 
-				if (!listaDeResultados.contains(prof)) {
-					listaDeResultados.add(prof);
-				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			prof.setAvaliacao(avaliacao);
+
+			if (!listaDeResultados.contains(prof)) {
+				listaDeResultados.add(prof);
 			}
 
 		}
 		return listaDeResultados;
 	}
 
-	@Override
-	public ProfissionalSaude findById(int id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ProfissionalSaude> findByCriteira(Criteria consulta) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	public <T> List<T> findByName(String nome) {
-		return null;
-	}
-
-	public List<ProfissionalSaude> findByEspecialidade(String especialidade) {
+	public List<ProfissionalSaude> findByEspecialidade(String especialidade)
+			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 
-		Cursor cursor = database.rawQuery(
-				"SELECT * FROM TB_PROF WHERE especialidade LIKE '%"
-						+ especialidade + "%'", null);
 		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-			String nome = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.NOME_PROF));
-			int avaliacao = cursor.getInt(cursor
-					.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
-			String convenio = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-			String enderenco = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
-			String tipo = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.TIPO_PROF));
-			String numeroRegistro = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
+		if (especialidade != null && !especialidade.trim().equals("")) {
 
-			ProfissionalSaude prof;
-			try {
+			Cursor cursor = database.rawQuery(
+					"SELECT * FROM TB_PROF WHERE especialidade LIKE '%"
+							+ especialidade + "%'", null);
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+					.moveToNext()) {
+				String nome = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.NOME_PROF));
+				int avaliacao = cursor.getInt(cursor
+						.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
+				String convenio = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
+				String enderenco = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+				String tipo = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.TIPO_PROF));
+				String numeroRegistro = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
+
+				ProfissionalSaude prof;
+
 				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 						enderenco, especialidade.toString(), convenio);
 
@@ -164,44 +146,44 @@ public class DAOREST implements DAOInterface {
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+			}
+		} else {
+			throw new ProfissionalSaudeException("Especialidade invalida");
 		}
 		return listaDeResultados;
 	}
 
-	public <T> T findByIndentificao(String identificacao) {
-		return null;
-	}
-
-	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
+	@Override
+	public List<ProfissionalSaude> findByTipo(String tipo)
+			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
-
-		Cursor cursor = database.rawQuery(
-				"SELECT * FROM TB_PROF WHERE tipo LIKE '%" + tipo.toString()
-						+ "%'", null);
 		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
-		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-			String nome = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.NOME_PROF));
-			int avaliacao = cursor.getInt(cursor
-					.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
-			String convenio = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-			String enderenco = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
-			String especialdiade = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
+		if (tipo != null && !tipo.trim().equals("")) {
 
-			String numeroRegistro = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
+			Cursor cursor = database.rawQuery(
+					"SELECT * FROM TB_PROF WHERE tipo LIKE '%"
+							+ tipo.toString() + "%'", null);
 
-			ProfissionalSaude prof;
-			try {
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+					.moveToNext()) {
+				String nome = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.NOME_PROF));
+				int avaliacao = cursor.getInt(cursor
+						.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
+				String convenio = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
+				String enderenco = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+				String especialdiade = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
+
+				String numeroRegistro = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
+
+				ProfissionalSaude prof;
+
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, enderenco, especialdiade, convenio);
 
@@ -210,30 +192,45 @@ public class DAOREST implements DAOInterface {
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
 				}
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
+			}
+		} else {
+
+			throw new ProfissionalSaudeException("Tipo invalido");
 		}
 		return listaDeResultados;
 	}
 
-	public <T> T findByEntity(T entity) {
-		return null;
+	private String geraConsultaSimples(String tipo, String especialidade,
+			String convenio, String cidade) throws ProfissionalSaudeException {
+		String consulta = "";
+
+		if (tipo != null && !tipo.trim().equals("") && especialidade != null
+				&& !especialidade.trim().equals("")
+				&& !especialidade.trim().equals("") && convenio != null
+				&& !convenio.trim().equals("") && cidade != null
+				&& !cidade.trim().equals("")) {
+			
+			consulta = "SELECT * FROM " + ProfissionalBD.TABLE_NAME
+					+ " WHERE " + ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo
+					+ "%'" + " AND " + ProfissionalBD.ESPECIALIDADE_PROF
+					+ " LIKE '%" + especialidade + "%'" + " AND "
+					+ ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'"
+					+ " AND " + ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade
+					+ "%'";
+		}else{
+			throw new ProfissionalSaudeException("Campos invalidos");
+		}
+
+		return consulta;
 	}
 
+	@Override
 	public ArrayList<ProfissionalSaude> buscaSimples(String tipo,
-			String especialidade, String convenio, String cidade) {
+			String especialidade, String convenio, String cidade) throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 
-		String sqlConsulta = "SELECT * FROM " + ProfissionalBD.TABLE_NAME
-				+ " WHERE " + ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo
-				+ "%'" + " AND " + ProfissionalBD.ESPECIALIDADE_PROF
-				+ " LIKE '%" + especialidade + "%'" + " AND "
-				+ ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'"
-				+ " AND " + ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade
-				+ "%'";
+		String sqlConsulta = geraConsultaSimples(tipo, especialidade, convenio, cidade);
 
 		Cursor cursor = database.rawQuery(sqlConsulta, null);
 
@@ -270,12 +267,51 @@ public class DAOREST implements DAOInterface {
 		return listaDeResultados;
 	}
 
-	public void updateAvaliacao(int avaliacao, String crm) {
-		String consultasql = "UPDATE " + ProfissionalBD.TABLE_NAME + " SET "
-				+ ProfissionalBD.AVALIACAO_PROF + " = " + avaliacao + " WHERE "
-				+ ProfissionalBD.IDENTIFICACAO_PROF + " = " + crm;
-		database = criaBD.getReadableDatabase();
-		database.rawQuery(consultasql, null);
+	public void updateAvaliacao(int avaliacao, String crm)
+			throws ProfissionalSaudeException {
+		if (crm != null && !crm.trim().equals("")) {
+			String consultasql = "UPDATE " + ProfissionalBD.TABLE_NAME
+					+ " SET " + ProfissionalBD.AVALIACAO_PROF + " = "
+					+ avaliacao + " WHERE " + ProfissionalBD.IDENTIFICACAO_PROF
+					+ " = " + crm;
+			database = criaBD.getReadableDatabase();
+			database.rawQuery(consultasql, null);
+		} else {
+			throw new ProfissionalSaudeException(
+					"Identificacao de profissional eh invalida ou nao existe");
+		}
 
+	}
+
+	@Override
+	public <T> void update(T entity) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public ProfissionalSaude findById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProfissionalSaude> findByCriteira(Criteria consulta) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public <T> T findByIndentificao(String identificacao) {
+		return null;
+	}
+
+	public List<ProfissionalSaude> findByName(String nome) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

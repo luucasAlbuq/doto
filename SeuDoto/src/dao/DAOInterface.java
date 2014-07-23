@@ -1,8 +1,11 @@
 package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import exception.ProfissionalSaudeException;
 import model.ProfissionalSaude;
+import model.TipoProfissional;
 import android.location.Criteria;
 
 public interface DAOInterface {
@@ -13,7 +16,7 @@ public interface DAOInterface {
 	 * @param T
 	 *            entity
 	 */
-	<T> void persistir(T entity);
+	<T> void persistir(T entity) throws ProfissionalSaudeException;
 
 	/**
 	 * Atualiza uma instancia de uma entidade no BD
@@ -26,15 +29,17 @@ public interface DAOInterface {
 	 * Remove de forma permanente uma instancia de uma entidade do BD
 	 * 
 	 * @param entity
+	 * @throws ProfissionalSaudeException 
 	 */
-	<T> void remover(T entity);
+	<T> void remover(T entity) throws ProfissionalSaudeException;
 
 	/**
 	 * Retornar todas as instancias de uma entidade presentes no BD
 	 * 
 	 * @return List<T> resultados
+	 * @throws ProfissionalSaudeException 
 	 */
-	List<ProfissionalSaude> findAll();
+	List<ProfissionalSaude> findAll() throws ProfissionalSaudeException;
 
 	/**
 	 * Realiza uma busca por ID em todas as entidades que estão presentes no BD
@@ -53,4 +58,9 @@ public interface DAOInterface {
 	 * @return List<T> resultados
 	 */
 	List<ProfissionalSaude> findByCriteira(Criteria consulta);
+	
+	ArrayList<ProfissionalSaude> buscaSimples(String tipo,
+			String especialidade, String convenio, String cidade) throws ProfissionalSaudeException;
+	
+	List<ProfissionalSaude> findByTipo(String tipo) throws ProfissionalSaudeException;
 }

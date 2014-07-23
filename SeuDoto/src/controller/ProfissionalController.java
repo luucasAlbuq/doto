@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.content.Context;
 import dao.DAOREST;
+import exception.ProfissionalSaudeException;
 import model.Endereco;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
@@ -46,7 +47,7 @@ public class ProfissionalController implements ProfissionalInterface {
 		
 	}
 	
-	public void cadastrarProfissionalSaude(ProfissionalSaude prof){
+	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException{
 		getDao().persistir(prof);
 	}
 
@@ -57,7 +58,7 @@ public class ProfissionalController implements ProfissionalInterface {
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
-			Especialidade especialidade) {
+			Especialidade especialidade) throws ProfissionalSaudeException {
 		return getDao().findByEspecialidade(especialidade.toString());
 	}
 
@@ -87,7 +88,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	@Override
-	public void removerProfissional(ProfissionalSaude profissional) {
+	public void removerProfissional(ProfissionalSaude profissional) throws ProfissionalSaudeException {
 		getDao().remover(profissional);
 	}
 
@@ -127,7 +128,7 @@ public class ProfissionalController implements ProfissionalInterface {
 		this.dao = dao;
 	}
 	
-	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio,String cidade){
+	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio,String cidade) throws ProfissionalSaudeException{
 		//TODO Implementar
 		
 		ArrayList<ProfissionalSaude> resultado = getDao().buscaSimples(tipo, especialidade, convenio,cidade);
@@ -136,7 +137,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	
-	public List<ProfissionalSaude> buscarTodos(){
+	public List<ProfissionalSaude> buscarTodos() throws ProfissionalSaudeException{
 		return getDao().findAll();
 	}
 
@@ -149,12 +150,12 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalController.profissionalSelecionado = profissionalSelecionado;
 	}
 	
-	public void incrementaAvaliacao(){
+	public void incrementaAvaliacao() throws ProfissionalSaudeException{
 		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()+1);
 		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
 	}
 	
-	public void decrementaAvaliacao(){
+	public void decrementaAvaliacao() throws ProfissionalSaudeException{
 		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()-1);
 		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
 	}

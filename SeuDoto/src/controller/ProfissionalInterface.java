@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import exception.ProfissionalSaudeException;
 import util.Convenio;
 import util.Especialidade;
 import model.Endereco;
@@ -47,9 +48,10 @@ public interface ProfissionalInterface {
 	 * @param Especialidade
 	 *            especialidade
 	 * @return ProfissionalSaude profissional
+	 * @throws ProfissionalSaudeException 
 	 */
 	List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
-			Especialidade especialidade);
+			Especialidade especialidade) throws ProfissionalSaudeException;
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
@@ -101,7 +103,8 @@ public interface ProfissionalInterface {
 	 * permanente do BD.
 	 * 
 	 * @param ProfissionalSaude profissional
+	 * @throws ProfissionalSaudeException 
 	 */
-	void removerProfissional(ProfissionalSaude profissional);
+	void removerProfissional(ProfissionalSaude profissional) throws ProfissionalSaudeException;
 
 }

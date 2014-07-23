@@ -3,6 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import exception.ProfissionalSaudeException;
 import util.Convenio;
 import util.Especialidade;
 
@@ -24,7 +25,7 @@ public class ProfissionalSaude implements Serializable {
 	private String convenio;
 
 	public ProfissionalSaude(String tipo, String numeroRegistro, String nome,
-			String endero, String especialidade, String convenio) throws Exception {
+			String endero, String especialidade, String convenio) throws ProfissionalSaudeException {
 
 		if(verificaParametros(tipo, numeroRegistro, nome, especialidade)){
 			this.tipo = tipo;
@@ -32,7 +33,7 @@ public class ProfissionalSaude implements Serializable {
 			this.especialidade = especialidade;
 			this.nome = nome;
 		}else{
-			throw new Exception("Parametros invalidos");
+			throw new ProfissionalSaudeException("Parametros invalidos");
 		}
 		
 		// especialidades = new ArrayList<String>();

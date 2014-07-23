@@ -6,6 +6,7 @@ import com.example.seudoto.R;
 import com.example.seudoto.R.layout;
 
 import controller.ProfissionalController;
+import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteAbortException;
@@ -53,6 +54,9 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 				}catch (SQLiteAbortException e){
 					alertaFalha.show();
+				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}
@@ -69,6 +73,9 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 				}catch(SQLiteAbortException e){
 					alertaFalha.show();
+				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				
 			}

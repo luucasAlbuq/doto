@@ -11,6 +11,7 @@ import com.example.seudoto.R;
 import com.example.seudoto.R.layout;
 
 import controller.ProfissionalController;
+import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +57,12 @@ public class BuscarActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio(), getCidade());
+				try {
+					profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio(), getCidade());
+				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				if(profissionalController.getResultadoBuscaSimples().size()>0){
 					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
