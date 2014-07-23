@@ -983,6 +983,7 @@ containing a value of this type.
         public static final int pesquisa_icon=0x7f02005f;
         public static final int plus_icon=0x7f020060;
         public static final int save_icon=0x7f020061;
+        public static final int search_icon=0x7f020062;
     }
     public static final class id {
         public static final int SaveimageView=0x7f050055;
@@ -1164,6 +1165,7 @@ containing a value of this type.
         public static final int activity_cadastrar_actions=0x7f0c0000;
         public static final int activity_cadastrar_home_actions=0x7f0c0001;
         public static final int activity_home_actions=0x7f0c0002;
+        public static final int activity_main_actions=0x7f0c0003;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
