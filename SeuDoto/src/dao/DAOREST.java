@@ -10,6 +10,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.location.Criteria;
 import bd.ProfissionalBD;
 
@@ -210,54 +211,69 @@ public class DAOREST implements DAOInterface {
 				&& !especialidade.trim().equals("") && convenio != null
 				&& !convenio.trim().equals("") && cidade != null
 				&& !cidade.trim().equals("")) {
-			
-			String linhaTipo, linhaEspecialidade,linhaConvenio,linhaCidade;
+
+			String linhaTipo, linhaEspecialidade, linhaConvenio, linhaCidade;
 			ArrayList<String> listaConsulta = new ArrayList<String>();
-			
-			listaConsulta.add("SELECT * FROM " + ProfissionalBD.TABLE_NAME+ " WHERE ");
-			
-			if(!tipo.trim().equalsIgnoreCase("SELECIONE")){
-				linhaTipo = ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo+ "%'";
+
+			listaConsulta.add("SELECT * FROM " + ProfissionalBD.TABLE_NAME
+					+ " WHERE ");
+
+			if (!tipo.trim().equalsIgnoreCase("SELECIONE")) {
+				linhaTipo = ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo + "%'";
 				listaConsulta.add(linhaTipo);
-				
-			}if(!especialidade.trim().equalsIgnoreCase("SELECIONE")){
-				linhaEspecialidade = ProfissionalBD.ESPECIALIDADE_PROF + " LIKE '%" + especialidade + "%'";
-				if(listaConsulta.size()==2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+
+			}
+			if (!especialidade.trim().equalsIgnoreCase("SELECIONE")) {
+				linhaEspecialidade = ProfissionalBD.ESPECIALIDADE_PROF
+						+ " LIKE '%" + especialidade + "%'";
+				if (listaConsulta.size() == 2
+						&& !listaConsulta.get(listaConsulta.size() - 1)
+								.equalsIgnoreCase("AND")) {
 					listaConsulta.add("AND");
 				}
 				listaConsulta.add(linhaEspecialidade);
-				
-			}if(!convenio.trim().equalsIgnoreCase("SELECIONE")){
-				linhaConvenio = ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'";
-				if(listaConsulta.size()>=2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+
+			}
+			if (!convenio.trim().equalsIgnoreCase("SELECIONE")) {
+				linhaConvenio = ProfissionalBD.CONVENIO_PROF + " LIKE '%"
+						+ convenio + "%'";
+				if (listaConsulta.size() >= 2
+						&& !listaConsulta.get(listaConsulta.size() - 1)
+								.equalsIgnoreCase("AND")) {
 					listaConsulta.add("AND");
 				}
 				listaConsulta.add(linhaConvenio);
-				
-			}if(!cidade.trim().equalsIgnoreCase("SELECIONE")){
-				linhaCidade = ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade+ "%'";
-				if(listaConsulta.size()>=2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+
+			}
+			if (!cidade.trim().equalsIgnoreCase("SELECIONE")) {
+				linhaCidade = ProfissionalBD.ENDERECO_PROF + " LIKE '%"
+						+ cidade + "%'";
+				if (listaConsulta.size() >= 2
+						&& !listaConsulta.get(listaConsulta.size() - 1)
+								.equalsIgnoreCase("AND")) {
 					listaConsulta.add("AND");
 				}
 				listaConsulta.add(linhaCidade);
 			}
-			
-			//Montando a consulta final
-			
-			//Se o usuario nao tiver selecionado nada ele deve pesquisar todos
-			if(tipo.trim().equalsIgnoreCase("SELECIONE") && especialidade.trim().equalsIgnoreCase("SELECIONE") 
-					&& convenio.trim().equalsIgnoreCase("SELECIONE") && cidade.trim().equalsIgnoreCase("SELECIONE")){
+
+			// Montando a consulta final
+
+			// Se o usuario nao tiver selecionado nada ele deve pesquisar todos
+			if (tipo.trim().equalsIgnoreCase("SELECIONE")
+					&& especialidade.trim().equalsIgnoreCase("SELECIONE")
+					&& convenio.trim().equalsIgnoreCase("SELECIONE")
+					&& cidade.trim().equalsIgnoreCase("SELECIONE")) {
 				consulta = "select * from TB_PROF";
 			}
-			
-			//Nesse caso ele selecionou alguma coisa
-			if(listaConsulta.size()!=1){
-				for(String sql : listaConsulta){
-					consulta= consulta + " "+sql;
+
+			// Nesse caso ele selecionou alguma coisa
+			if (listaConsulta.size() != 1) {
+				for (String sql : listaConsulta) {
+					consulta = consulta + " " + sql;
 				}
 			}
-			
-		}else{
+
+		} else {
 			throw new ProfissionalSaudeException("Campos invalidos");
 		}
 
@@ -311,12 +327,14 @@ public class DAOREST implements DAOInterface {
 	public void updateAvaliacao(int avaliacao, String crm)
 			throws ProfissionalSaudeException {
 		if (crm != null && !crm.trim().equals("")) {
-			String consultasql = "UPDATE " + ProfissionalBD.TABLE_NAME
-					+ " SET " + ProfissionalBD.AVALIACAO_PROF + " = "
-					+ avaliacao + " WHERE " + ProfissionalBD.IDENTIFICACAO_PROF
-					+ " = " + crm;
-			database = criaBD.getReadableDatabase();
-			database.rawQuery(consultasql, null);
+			SQLiteDatabase db = criaBD.getWritableDatabase();
+			SQLiteStatement stmt = db.compileStatement("UPDATE "
+					+ ProfissionalBD.TABLE_NAME + " SET "
+					+ ProfissionalBD.AVALIACAO_PROF + "=? WHERE "
+					+ ProfissionalBD.IDENTIFICACAO_PROF + " =?");
+			stmt.bindString(1, "" + avaliacao);
+			stmt.bindString(2, crm);
+			stmt.execute();
 		} else {
 			throw new ProfissionalSaudeException(
 					"Identificacao de profissional eh invalida ou nao existe");

@@ -51,7 +51,6 @@ public class DetalhesProfissionalActivity extends Activity {
 				try{
 					controller.incrementaAvaliacao();
 					alertaSucesso.show();
-					
 				}catch (SQLiteAbortException e){
 					alertaFalha.show();
 				} catch (ProfissionalSaudeException e) {
