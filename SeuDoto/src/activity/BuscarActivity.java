@@ -80,7 +80,7 @@ public class BuscarActivity extends Activity {
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_actions, menu);
+        inflater.inflate(R.menu.activity_cadastrar_actions, menu);
  
         return super.onCreateOptionsMenu(menu);
     }
@@ -105,7 +105,7 @@ public class BuscarActivity extends Activity {
 	
 
 	public void carregarEspecialidades() {
-		final String[] especialidades = new String[] {
+		final String[] especialidades = new String[] {"Selecione",
 				Especialidade.CARDIOLOGISTA.toString(),
 				Especialidade.DERMATOLOGISTA.toString(),
 				Especialidade.GINECOLOGISTA.toString(),
@@ -144,7 +144,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarConvenios() {
 
-		final String[] convenios = new String[] { Convenio.SMILE.toString(),
+		final String[] convenios = new String[] {"Selecione", Convenio.SMILE.toString(),
 				Convenio.UNIDENTES.toString(), Convenio.UNIMED.toString() };
 
 		ArrayAdapter<String> adaptadorConvenios = new ArrayAdapter<String>(
@@ -178,7 +178,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] { "João Pessoa", "Campina Grande",
+		final String[] cidades = new String[] {"Selecione", "João Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -211,7 +211,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] { "Médico", "Dentista",
+		final String[] tiposProfissionais = new String[] {"Selecione", "Médico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(

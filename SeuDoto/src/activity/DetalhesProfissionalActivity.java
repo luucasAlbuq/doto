@@ -85,7 +85,7 @@ public class DetalhesProfissionalActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.activity_main_actions, menu);
+		inflater.inflate(R.menu.activity_cadastrar_home_actions, menu);
 
 		return super.onCreateOptionsMenu(menu);
 	}
@@ -95,17 +95,27 @@ public class DetalhesProfissionalActivity extends Activity {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			LocationFound();
+			LocationFound(R.id.action_search);
+			return true;
+		case R.id.action_home_main:
+			LocationFound(R.id.action_home_main);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void LocationFound() {
-		Intent i = new Intent(DetalhesProfissionalActivity.this,
-				CadastrarProfissionalActivity.class);
-		startActivity(i);
+	private void LocationFound(int id) {
+		if(id==R.id.action_search){
+			Intent i = new Intent(DetalhesProfissionalActivity.this,
+					CadastrarProfissionalActivity.class);
+			startActivity(i);
+		}else if(id==R.id.action_home_main){
+			Intent i = new Intent(DetalhesProfissionalActivity.this,
+					BuscarActivity.class);
+			startActivity(i);
+		}
+		
 	}
 
 	private void preencherCampos(ProfissionalSaude prof) {

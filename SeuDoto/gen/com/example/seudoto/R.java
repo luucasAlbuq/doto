@@ -994,11 +994,12 @@ containing a value of this type.
         public static final int action_bar_subtitle=0x7f050023;
         public static final int action_bar_title=0x7f050022;
         public static final int action_context_bar=0x7f05001d;
-        public static final int action_home=0x7f050072;
+        public static final int action_home=0x7f050074;
+        public static final int action_home_main=0x7f050073;
         public static final int action_menu_divider=0x7f050016;
         public static final int action_menu_presenter=0x7f050017;
         public static final int action_mode_close_button=0x7f050024;
-        public static final int action_search=0x7f050073;
+        public static final int action_search=0x7f050072;
         public static final int activity_chooser_view_content=0x7f050025;
         public static final int always=0x7f05000b;
         public static final int beginning=0x7f050011;
@@ -1160,8 +1161,9 @@ containing a value of this type.
         public static final int support_simple_spinner_dropdown_item=0x7f03001d;
     }
     public static final class menu {
-        public static final int activity_home_actions=0x7f0c0000;
-        public static final int activity_main_actions=0x7f0c0001;
+        public static final int activity_cadastrar_actions=0x7f0c0000;
+        public static final int activity_cadastrar_home_actions=0x7f0c0001;
+        public static final int activity_home_actions=0x7f0c0002;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 

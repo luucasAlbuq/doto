@@ -211,13 +211,52 @@ public class DAOREST implements DAOInterface {
 				&& !convenio.trim().equals("") && cidade != null
 				&& !cidade.trim().equals("")) {
 			
-			consulta = "SELECT * FROM " + ProfissionalBD.TABLE_NAME
-					+ " WHERE " + ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo
-					+ "%'" + " AND " + ProfissionalBD.ESPECIALIDADE_PROF
-					+ " LIKE '%" + especialidade + "%'" + " AND "
-					+ ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'"
-					+ " AND " + ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade
-					+ "%'";
+			String linhaTipo, linhaEspecialidade,linhaConvenio,linhaCidade;
+			ArrayList<String> listaConsulta = new ArrayList<String>();
+			
+			listaConsulta.add("SELECT * FROM " + ProfissionalBD.TABLE_NAME+ " WHERE ");
+			
+			if(!tipo.trim().equalsIgnoreCase("SELECIONE")){
+				linhaTipo = ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo+ "%'";
+				listaConsulta.add(linhaTipo);
+				
+			}if(!especialidade.trim().equalsIgnoreCase("SELECIONE")){
+				linhaEspecialidade = ProfissionalBD.ESPECIALIDADE_PROF + " LIKE '%" + especialidade + "%'";
+				if(listaConsulta.size()==2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+					listaConsulta.add("AND");
+				}
+				listaConsulta.add(linhaEspecialidade);
+				
+			}if(!convenio.trim().equalsIgnoreCase("SELECIONE")){
+				linhaConvenio = ProfissionalBD.CONVENIO_PROF + " LIKE '%" + convenio + "%'";
+				if(listaConsulta.size()>=2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+					listaConsulta.add("AND");
+				}
+				listaConsulta.add(linhaConvenio);
+				
+			}if(!cidade.trim().equalsIgnoreCase("SELECIONE")){
+				linhaCidade = ProfissionalBD.ENDERECO_PROF + " LIKE '%" + cidade+ "%'";
+				if(listaConsulta.size()>=2 && !listaConsulta.get(listaConsulta.size()-1).equalsIgnoreCase("AND")){
+					listaConsulta.add("AND");
+				}
+				listaConsulta.add(linhaCidade);
+			}
+			
+			//Montando a consulta final
+			
+			//Se o usuario nao tiver selecionado nada ele deve pesquisar todos
+			if(tipo.trim().equalsIgnoreCase("SELECIONE") && especialidade.trim().equalsIgnoreCase("SELECIONE") 
+					&& convenio.trim().equalsIgnoreCase("SELECIONE") && cidade.trim().equalsIgnoreCase("SELECIONE")){
+				consulta = "select * from TB_PROF";
+			}
+			
+			//Nesse caso ele selecionou alguma coisa
+			if(listaConsulta.size()!=1){
+				for(String sql : listaConsulta){
+					consulta= consulta + " "+sql;
+				}
+			}
+			
 		}else{
 			throw new ProfissionalSaudeException("Campos invalidos");
 		}
@@ -227,10 +266,12 @@ public class DAOREST implements DAOInterface {
 
 	@Override
 	public ArrayList<ProfissionalSaude> buscaSimples(String tipo,
-			String especialidade, String convenio, String cidade) throws ProfissionalSaudeException {
+			String especialidade, String convenio, String cidade)
+			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 
-		String sqlConsulta = geraConsultaSimples(tipo, especialidade, convenio, cidade);
+		String sqlConsulta = geraConsultaSimples(tipo, especialidade, convenio,
+				cidade);
 
 		Cursor cursor = database.rawQuery(sqlConsulta, null);
 
