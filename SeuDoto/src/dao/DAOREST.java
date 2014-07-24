@@ -302,6 +302,12 @@ public class DAOREST implements DAOInterface {
 
 			String enderenco = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+			
+			String convenioConsulta = cursor.getString(cursor
+					.getColumnIndex(ProfissionalBD.CONVENIO_PROF)); 
+			
+			String especialidadeConsulta = cursor.getString(cursor
+					.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 
 			String numeroRegistro = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.IDENTIFICACAO_PROF));
@@ -309,7 +315,7 @@ public class DAOREST implements DAOInterface {
 			ProfissionalSaude prof;
 			try {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
-						nome, enderenco, especialidade, convenio);
+						nome, enderenco, especialidadeConsulta, convenioConsulta);
 				prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {

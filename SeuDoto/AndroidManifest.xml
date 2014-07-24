@@ -42,6 +42,15 @@
             android:name="activity.CadastrarProfissionalActivity"
             android:label="@string/title_activity_cadastrar_profissional" >
         </activity>
+        
+        <uses-library android:name="android.test.runner" />
     </application>
+
+    
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:label="Tests for My App"
+        android:targetPackage="com.example.app" />
 
 </manifest>
