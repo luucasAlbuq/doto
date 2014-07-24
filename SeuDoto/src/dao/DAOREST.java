@@ -19,7 +19,8 @@ public class DAOREST implements DAOInterface {
 	private static DAOREST instance;
 	private static ProfissionalBD criaBD;
 	private SQLiteDatabase database;
-
+	private static final String exceçao = "Objeto de tipo desconhecido";
+	
 	public DAOREST() {
 		// TODO Auto-generated constructor stub
 	}
@@ -55,7 +56,7 @@ public class DAOREST implements DAOInterface {
 					valores);
 			// return index;
 		} else {
-			throw new ProfissionalSaudeException("Objeto de tipo desconhecido");
+			throw new ProfissionalSaudeException(exceçao);
 		}
 
 	}
@@ -69,7 +70,7 @@ public class DAOREST implements DAOInterface {
 					ProfissionalBD.IDENTIFICACAO_PROF + " = "
 							+ prof.getNumeroRegistro(), null);
 		} else {
-			throw new ProfissionalSaudeException("Objeto de tipo desconhecido");
+			throw new ProfissionalSaudeException("exceçao");
 		}
 	}
 
