@@ -112,9 +112,9 @@ public class ProfissionalController implements ProfissionalInterface {
 		return resultadoBuscaSimples;
 	}
 
-	public void setResultadoBuscaSimples(
+	public static void setResultadoBuscaSimples(
 			ArrayList<ProfissionalSaude> resultadoBuscaSimples) {
-		this.resultadoBuscaSimples = resultadoBuscaSimples;
+			resultadoBuscaSimples = resultado;
 	}
 
 	public DAOREST getDao() {
