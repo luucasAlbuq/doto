@@ -113,7 +113,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	public static void setResultadoBuscaSimples(
-			ArrayList<ProfissionalSaude> resultadoBuscaSimples) {
+			ArrayList<ProfissionalSaude> resultado){
 			resultadoBuscaSimples = resultado;
 	}
 
