@@ -38,9 +38,9 @@ public class DetalhesProfissionalActivity extends Activity {
 		preencherCampos(profissionalSaude);
 		
 		final Toast alertaSucesso = Toast.makeText(this,
-				"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+				"Avaliaï¿½ï¿½o computada com Sucesso", Toast.LENGTH_LONG);
 		final Toast alertaFalha = Toast.makeText(this,
-				"Falha ao computar a avaliação", Toast.LENGTH_LONG);
+				"Falha ao computar a avaliaï¿½ï¿½o", Toast.LENGTH_LONG);
 		
 		
 		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);
@@ -134,11 +134,11 @@ public class DetalhesProfissionalActivity extends Activity {
 
 		tipoText.setText(prof.getTipo().toString());
 		
-		if(prof.getAvaliacao()>=0){
-			avaliacaoText.setText("Positiva: "+prof.getAvaliacao());
-		}else{
-			avaliacaoText.setText("Negativa: "+prof.getAvaliacao());
-		}
+//		if(prof.getAvaliacao()>=0){
+//			avaliacaoText.setText("Positiva: "+prof.getAvaliacao());
+//		}else{
+//			avaliacaoText.setText("Negativa: "+prof.getAvaliacao());
+//		}
 	}
 
 	public ProfissionalSaude getProfissionalSaude() {

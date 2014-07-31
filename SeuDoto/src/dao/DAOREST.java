@@ -58,7 +58,7 @@ public class DAOREST implements DAOInterface {
 					prof.getNumeroRegistro());
 			valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
 			valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
-			valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
+			//valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
 			database = criaBD.getReadableDatabase();
 			long index = database.insert(ProfissionalBD.TABLE_NAME, null,
 					valores);
@@ -109,7 +109,7 @@ public class DAOREST implements DAOInterface {
 			prof = new ProfissionalSaude(tipo, numeroRegistro, nome, enderenco,
 					especialidade, convenio);
 
-			prof.setAvaliacao(avaliacao);
+//			prof.setAvaliacao(avaliacao);
 
 			if (!listaDeResultados.contains(prof)) {
 				listaDeResultados.add(prof);
@@ -151,7 +151,7 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 						enderenco, especialidade.toString(), convenio);
 
-				prof.setAvaliacao(avaliacao);
+//				prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
@@ -197,7 +197,7 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, enderenco, especialdiade, convenio);
 
-				prof.setAvaliacao(avaliacao);
+//				prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
@@ -325,7 +325,7 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, enderenco, especialidadeConsulta,
 						convenioConsulta);
-				prof.setAvaliacao(avaliacao);
+				//prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
