@@ -23,7 +23,5 @@ public class Avaliacao {
 	public boolean isAvaliacao() {
 		return avaliacao;
 	}
-	
-	
 
 }

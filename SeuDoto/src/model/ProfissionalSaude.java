@@ -16,45 +16,61 @@ public class ProfissionalSaude implements Serializable {
 	private String tipo;
 	private String numeroRegistro;
 	private String nome;
-	private int avaliacao;
+	// private int avaliacao;
 	private List<Avaliacao> avaliacoes;
 	private String especialidade;
 	private String convenio;
 
 	public ProfissionalSaude(String tipo, String numeroRegistro, String nome,
-			String endero, String especialidade, String convenio) throws ProfissionalSaudeException {
+			String endero, String especialidade, String convenio)
+			throws ProfissionalSaudeException {
 
-		if(verificaParametros(tipo, numeroRegistro, nome, especialidade)){
+		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
 			this.tipo = tipo;
 			this.numeroRegistro = numeroRegistro;
 			this.especialidade = especialidade;
 			this.nome = nome;
-		}else{
+		} else {
 			throw new ProfissionalSaudeException("Parametros invalidos");
 		}
-		
+
 		// especialidades = new ArrayList<String>();
 		// convenios = new ArrayList<Convenio>();
-		
+
 		this.convenio = convenio;
-		
-		avaliacao = 0;
 
 	}
 
 	public boolean verificaParametros(String tipo, String numeroRegistro,
 			String nome, String especialidade) {
 		return (tipo != null && !tipo.trim().equals("") && nome != null
-				&& !nome.trim().equals("") && especialidade != null && !especialidade
-				.trim().equals("") && numeroRegistro!=null && !numeroRegistro.trim().equals(""));
+				&& !nome.trim().equals("") && especialidade != null
+				&& !especialidade.trim().equals("") && numeroRegistro != null && !numeroRegistro
+				.trim().equals(""));
 	}
 
-	public int getAvaliacao() {
-		return avaliacao;
+	public int getAvaliacaoPositiva() {
+		int cont = 0;
+
+		for (Avaliacao av : avaliacoes) {
+			if (av.isAvaliacao()) {
+				cont++;
+			}
+		}
+
+		return cont;
 	}
 
-	public void setAvaliacao(int avaliacao) {
-		this.avaliacao = avaliacao;
+	public int getAvaliacaoNegativa() {
+		int cont = 0;
+
+		for (Avaliacao av : avaliacoes) {
+			if (!av.isAvaliacao()) {
+				cont++;
+			}
+		}
+
+		return cont;
 	}
 
 	public String getTipo() {
@@ -113,7 +129,6 @@ public class ProfissionalSaude implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + avaliacao;
 		result = prime * result
 				+ ((convenio == null) ? 0 : convenio.hashCode());
 		result = prime * result
@@ -134,14 +149,12 @@ public class ProfissionalSaude implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		ProfissionalSaude other = (ProfissionalSaude) obj;
-		if (avaliacao != other.avaliacao)
-			return false;
 		if (convenio == null) {
 			if (other.convenio != null)
 				return false;
 		} else if (!convenio.equals(other.convenio))
-			return false; 
-		
+			return false;
+
 		if (especialidade == null) {
 			if (other.especialidade != null)
 				return false;
