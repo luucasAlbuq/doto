@@ -147,7 +147,7 @@ public class ListaProfissionaisActivity extends Activity {
 			}
 
 			/*
-			 * Esse bloco é responsavel por jogar as informações dos
+			 * Esse bloco ï¿½ responsavel por jogar as informaï¿½ï¿½es dos
 			 * profissionais na tela
 			 */
 			campo.campoNome.setText(String.valueOf(ProfissionalController
@@ -159,9 +159,6 @@ public class ListaProfissionaisActivity extends Activity {
 					.getResultadoBuscaSimples().get(position).getConvenio()));
 
 			campo.campoAvaliacao.setText("Positiva");
-			campo.campoEndereco.setText(String.valueOf(ProfissionalController
-					.getResultadoBuscaSimples().get(position).getEndereco()
-					.toString()));
 
 			return convertView;
 		}

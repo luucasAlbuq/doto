@@ -16,9 +16,6 @@ public class ProfissionalSaude implements Serializable {
 
 	private String tipo;
 	private String numeroRegistro;
-	// private ArrayList<String> especialidades; //trocar por um ENUM?
-	// private ArrayList<Convenio> convenios; //trocar por um ENUM?
-	private String endereco;
 	private String nome;
 	private int avaliacao;
 	private String especialidade;
@@ -41,7 +38,6 @@ public class ProfissionalSaude implements Serializable {
 		
 		this.convenio = convenio;
 		
-		this.endereco = endero;
 		avaliacao = 0;
 
 	}
@@ -81,19 +77,8 @@ public class ProfissionalSaude implements Serializable {
 		this.convenio = this.convenio + "\n" + convenio;
 	}
 
-	public void setEndereco(String rua, String numero, String bairro,
-			String sala, String cidade, String estado) {
-		Endereco newEndereco = new Endereco(rua, numero, bairro, sala, cidade,
-				estado);
-		endereco = newEndereco.toString();
-	}
-
 	public String getNumeroRegistro() {
 		return numeroRegistro;
-	}
-
-	public String getEndereco() {
-		return endereco;
 	}
 
 	public String getNome() {
@@ -132,8 +117,6 @@ public class ProfissionalSaude implements Serializable {
 		result = prime * result
 				+ ((convenio == null) ? 0 : convenio.hashCode());
 		result = prime * result
-				+ ((endereco == null) ? 0 : endereco.hashCode());
-		result = prime * result
 				+ ((especialidade == null) ? 0 : especialidade.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result
@@ -157,12 +140,8 @@ public class ProfissionalSaude implements Serializable {
 			if (other.convenio != null)
 				return false;
 		} else if (!convenio.equals(other.convenio))
-			return false;
-		if (endereco == null) {
-			if (other.endereco != null)
-				return false;
-		} else if (!endereco.equals(other.endereco))
-			return false;
+			return false; 
+		
 		if (especialidade == null) {
 			if (other.especialidade != null)
 				return false;

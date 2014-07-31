@@ -54,8 +54,6 @@ public class DAOREST implements DAOInterface {
 			valores.put(ProfissionalBD.NOME_PROF, prof.getNome());
 			valores.put(ProfissionalBD.ESPECIALIDADE_PROF,
 					prof.getEspecialidade());
-			valores.put(ProfissionalBD.ENDERECO_PROF, prof.getEndereco()
-					.toString());
 			valores.put(ProfissionalBD.IDENTIFICACAO_PROF,
 					prof.getNumeroRegistro());
 			valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
