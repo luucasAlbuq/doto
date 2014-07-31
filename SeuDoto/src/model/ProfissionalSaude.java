@@ -1,11 +1,10 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
-import exception.ProfissionalSaudeException;
-import util.Convenio;
 import util.Especialidade;
+import exception.ProfissionalSaudeException;
 
 public class ProfissionalSaude implements Serializable {
 
@@ -18,6 +17,7 @@ public class ProfissionalSaude implements Serializable {
 	private String numeroRegistro;
 	private String nome;
 	private int avaliacao;
+	private List<Avaliacao> avaliacoes;
 	private String especialidade;
 	private String convenio;
 
