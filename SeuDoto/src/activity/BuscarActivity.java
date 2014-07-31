@@ -1,11 +1,5 @@
 package activity;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import util.Convenio;
 import util.Especialidade;
 import android.app.Activity;
@@ -21,13 +15,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.seudoto.R;
 
 import controller.ProfissionalController;
@@ -41,8 +28,6 @@ public class BuscarActivity extends Activity {
 	private String especialidade;
 	private String convenio;
 	private String cidade;
-	//volley
-	private RequestQueue queue;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +36,6 @@ public class BuscarActivity extends Activity {
 		
 		profissionalController = ProfissionalController.getInstance(this);
 		
-		//volley
-		queue = Volley.newRequestQueue(this);
-
 		carregarCidades();
 		carregarConvenios();
 		carregarEspecialidades();
@@ -293,41 +275,6 @@ public class BuscarActivity extends Activity {
 
 	public void setCidade(String cidade) {
 		this.cidade = cidade;
-	}
-
-		
-	//volley
-	public void jsonPOST(String prof, String espec, String conv, String cidade){
-		//post
-		HashMap<String, String> parametrosDaBusca = new HashMap<String, String>();
-		parametrosDaBusca.put("profissional", prof);
-		parametrosDaBusca.put("especialidade", espec);
-		parametrosDaBusca.put("convenio", conv);
-		parametrosDaBusca.put("cidade", cidade);
-		
-		String url = "http://date.jsontest.com/";
-		
-		JsonObjectRequest req = new JsonObjectRequest(url, new JSONObject(parametrosDaBusca),
-			       new Response.Listener<JSONObject>() {
-			           @Override
-			           public void onResponse(JSONObject response) {
-			               try {
-			            	   //pra onde vão as respostas??
-			            	   setResultadoBusca(response.toString(4));
-			               } catch (JSONException e) {
-			                   e.printStackTrace();
-			               }
-			           }
-			       }, new Response.ErrorListener() {
-			           @Override
-			           public void onErrorResponse(VolleyError error) {
-			               VolleyLog.e("Error: ", error.getMessage());
-			           }
-			       });
-
-			// add the request object to the queue to be executed
-			queue.add(req);
-		
 	}
 	
 	private void setResultadoBusca(String resposta){

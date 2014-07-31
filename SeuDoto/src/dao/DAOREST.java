@@ -1,5 +1,9 @@
 package dao;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +23,14 @@ public class DAOREST implements DAOInterface {
 	private static DAOREST instance;
 	private static ProfissionalBD criaBD;
 	private SQLiteDatabase database;
-	private static final String exceçao = "Objeto de tipo desconhecido";
-	
+	private static final String excecao = "Objeto de tipo desconhecido";
+	private static String URL = "jdbc:mysql://54.191.161.104/";
+	private static String DB_NAME = "dotozin";
+	private static String DRIVER = "com.mysql.jdbc.Driver";
+	private static String USER_NAME = "doto";
+	private static String PASSWORD = "doto12345";
+	private static int NAO_CADASTRADO = 0;
+
 	public DAOREST() {
 		// TODO Auto-generated constructor stub
 	}
@@ -56,7 +66,7 @@ public class DAOREST implements DAOInterface {
 					valores);
 			// return index;
 		} else {
-			throw new ProfissionalSaudeException(exceçao);
+			throw new ProfissionalSaudeException(excecao);
 		}
 
 	}
@@ -70,7 +80,7 @@ public class DAOREST implements DAOInterface {
 					ProfissionalBD.IDENTIFICACAO_PROF + " = "
 							+ prof.getNumeroRegistro(), null);
 		} else {
-			throw new ProfissionalSaudeException("exceçao");
+			throw new ProfissionalSaudeException("exceï¿½ao");
 		}
 	}
 
@@ -302,10 +312,10 @@ public class DAOREST implements DAOInterface {
 
 			String enderenco = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
-			
+
 			String convenioConsulta = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.CONVENIO_PROF)); 
-			
+					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
+
 			String especialidadeConsulta = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 
@@ -315,7 +325,8 @@ public class DAOREST implements DAOInterface {
 			ProfissionalSaude prof;
 			try {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
-						nome, enderenco, especialidadeConsulta, convenioConsulta);
+						nome, enderenco, especialidadeConsulta,
+						convenioConsulta);
 				prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
@@ -372,12 +383,58 @@ public class DAOREST implements DAOInterface {
 	}
 
 	public List<ProfissionalSaude> findByName(String nome) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
 	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public boolean cadastrarProfissional(ProfissionalSaude prof) {
+
+		if (!crmJaCadastrado(prof)) {
+
+			try {
+				Class.forName(DRIVER).newInstance();
+				Connection conn = DriverManager.getConnection(URL + DB_NAME,
+						USER_NAME, PASSWORD);
+
+				Statement st = conn.createStatement();
+
+				String sql = "INSERT INTO Profissional VALUES ('"
+						+ prof.getNumeroRegistro() + "', '" + prof.getTipo()
+						+ "', '" + prof.getNome() + "')";
+
+				st.executeUpdate(sql);
+
+				conn.close();
+			} catch (Exception e) {
+				// TODO tratar a exception
+
+			}
+		}
+
+		return false;
+	}
+
+	private boolean crmJaCadastrado(ProfissionalSaude prof) {
+		try {
+			Class.forName(DRIVER).newInstance();
+			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+					USER_NAME, PASSWORD);
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("select * from Profissional where crm ='" + prof.getNumeroRegistro() +"'");
+			
+			while (res.next()) {
+				return true;
+			}
+
+			conn.close();
+		} catch (Exception e) {
+			//TODO tratar a exception
+		}
+		return false;
 	}
 }
