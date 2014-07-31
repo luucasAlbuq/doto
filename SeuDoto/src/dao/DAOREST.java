@@ -382,9 +382,32 @@ public class DAOREST implements DAOInterface {
 		return null;
 	}
 
-	public List<ProfissionalSaude> findByName(String nome) {
+	public List<ProfissionalSaude> findByName(String nomeProf) {
+		List<ProfissionalSaude> listaProf = new ArrayList<ProfissionalSaude>();
+		
+		try {
+			Class.forName(DRIVER).newInstance();
+			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+					USER_NAME, PASSWORD);
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("select * from Profissional where nome ='" + nomeProf  +"'");
+			
+			while (res.next()) {
+				String crm = res.getString("crm");
+				String nome = res.getString("nome");
+				String tipo = res.getString("tipo_prof");
+				//TODO falta encontrar o resto dos dados de Profissional no BD
+				listaProf.add(new ProfissionalSaude(tipo, crm, nome, null, null, null));
+			}
 
-		return null;
+			conn.close();
+		} catch (Exception e) {
+			//TODO tratar exception
+
+		}
+
+
+		return listaProf;
 	}
 
 	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
