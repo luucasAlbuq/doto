@@ -488,4 +488,25 @@ public class DAOREST implements DAOInterface {
 			e.printStackTrace();
 		} 
 	}
+	
+	public boolean existeCrm(String crm){
+	
+		try {
+			Class.forName(DRIVER).newInstance();
+			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+					USER_NAME, PASSWORD);
+			Statement st = conn.createStatement();
+			ResultSet res = st.executeQuery("select * from Profissional where crm ='" + crm  +"'");
+			
+			while (res.next()) {
+				return true;
+			}
+
+			conn.close();
+		} catch (Exception e) {
+			//TODO tratar exception
+
+		}
+		return false;
+	}
 }
