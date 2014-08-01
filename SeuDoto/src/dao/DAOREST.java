@@ -429,17 +429,25 @@ public class DAOREST implements DAOInterface {
 						+ "', '" + prof.getNome() + "')";
 
 				st.executeUpdate(sql);
+				
+				sql = "INSERT INTO ConvenioProf VALUES ('"
+						+ prof.getNumeroRegistro() + "', '" + prof.getConvenio()
+						+  "')";
+
+				st.executeUpdate(sql);
 
 				conn.close();
+				return true;
 			} catch (Exception e) {
-				// TODO tratar a exception
+				System.err.print("ERRO");
+				System.out.println(e);
 
 			}
 		}
 
 		return false;
 	}
-
+	
 	private boolean crmJaCadastrado(ProfissionalSaude prof) {
 		try {
 			Class.forName(DRIVER).newInstance();
