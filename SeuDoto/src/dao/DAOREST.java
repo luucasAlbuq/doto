@@ -466,4 +466,26 @@ public class DAOREST implements DAOInterface {
 		}
 		return false;
 	}
+	
+	public void adicionarConvenio(String crm, String convenio){
+		try {
+			Class.forName(DRIVER).newInstance();
+			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+					USER_NAME, PASSWORD);
+
+			Statement st = conn.createStatement();
+			
+			String sql = "INSERT INTO ConvenioProf VALUES ('"
+					+ crm + "', '" + convenio
+					+  "')";
+
+			st.executeUpdate(sql);
+
+			conn.close();
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
 }
