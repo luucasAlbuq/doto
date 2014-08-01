@@ -30,7 +30,7 @@ public interface ProfissionalInterface {
 	 * @param Endereco endereco
 	 * @param Convenio convenio
 	 */
-	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String endereco, String convenio);
+	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio);
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
@@ -87,7 +87,7 @@ public interface ProfissionalInterface {
 	 * @return ProfissionalSaude profissional
 	 */
 	ProfissionalSaude buscarProfissional(String nome, TipoProfissional tipoProfissional,int identificacao,
-			Especialidade especialidade, Endereco endereco, Convenio convenio);
+			Especialidade especialidade,  Convenio convenio);
 
 	/**
 	 * Método responsavel por atualizar um entidade Profissional, após

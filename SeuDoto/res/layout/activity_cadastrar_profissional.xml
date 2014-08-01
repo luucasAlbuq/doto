@@ -121,49 +121,7 @@
             android:layout_column="1" />
     </GridLayout>
 
-    <GridLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:alignmentMode="alignBounds"
-        android:columnCount="2"
-        android:columnOrderPreserved="false"
-        android:useDefaultMargins="true" >
-
-       
-
-        <TextView
-            android:id="@+id/cadastro_rua_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:text="Rua:"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/cadastrar_put_rua"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:ems="10"
-            android:inputType="textMultiLine" >
-        </EditText>
-
-        <TextView
-            android:id="@+id/cadastro_bairro_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:text="Bairro:"
-            android:textSize="15sp" />
-
-        <EditText
-            android:id="@+id/cadastrar_put_bairro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine" >
-        </EditText>
-    </GridLayout>
+  
 
   
     

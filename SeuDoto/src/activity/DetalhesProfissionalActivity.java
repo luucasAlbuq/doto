@@ -38,9 +38,9 @@ public class DetalhesProfissionalActivity extends Activity {
 		preencherCampos(profissionalSaude);
 		
 		final Toast alertaSucesso = Toast.makeText(this,
-				"Avaliaï¿½ï¿½o computada com Sucesso", Toast.LENGTH_LONG);
+				"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
 		final Toast alertaFalha = Toast.makeText(this,
-				"Falha ao computar a avaliaï¿½ï¿½o", Toast.LENGTH_LONG);
+				"Falha ao computar a Avaliação", Toast.LENGTH_LONG);
 		
 		
 		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);

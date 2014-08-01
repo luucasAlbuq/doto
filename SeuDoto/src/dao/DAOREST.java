@@ -60,7 +60,7 @@ public class DAOREST implements DAOInterface {
 			valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
 			//valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
 			database = criaBD.getReadableDatabase();
-			long index = database.insert(ProfissionalBD.TABLE_NAME, null,
+			database.insert(ProfissionalBD.TABLE_NAME, null,
 					valores);
 			// return index;
 		} else {
@@ -91,14 +91,11 @@ public class DAOREST implements DAOInterface {
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			String nome = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.NOME_PROF));
-			int avaliacao = cursor.getInt(cursor
-					.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
 			String especialidade = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 			String convenio = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-			String enderenco = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+			
 			String tipo = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.TIPO_PROF));
 			String numeroRegistro = cursor.getString(cursor
@@ -106,7 +103,7 @@ public class DAOREST implements DAOInterface {
 
 			ProfissionalSaude prof;
 
-			prof = new ProfissionalSaude(tipo, numeroRegistro, nome, enderenco,
+			prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 					especialidade, convenio);
 
 //			prof.setAvaliacao(avaliacao);
@@ -135,12 +132,10 @@ public class DAOREST implements DAOInterface {
 					.moveToNext()) {
 				String nome = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.NOME_PROF));
-				int avaliacao = cursor.getInt(cursor
-						.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
+				
 				String convenio = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-				String enderenco = cursor.getString(cursor
-						.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+				
 				String tipo = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.TIPO_PROF));
 				String numeroRegistro = cursor.getString(cursor
@@ -149,7 +144,7 @@ public class DAOREST implements DAOInterface {
 				ProfissionalSaude prof;
 
 				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
-						enderenco, especialidade.toString(), convenio);
+						especialidade.toString(), convenio);
 
 //				prof.setAvaliacao(avaliacao);
 
@@ -180,12 +175,10 @@ public class DAOREST implements DAOInterface {
 					.moveToNext()) {
 				String nome = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.NOME_PROF));
-				int avaliacao = cursor.getInt(cursor
-						.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
+				
 				String convenio = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-				String enderenco = cursor.getString(cursor
-						.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
+				
 				String especialdiade = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 
@@ -195,7 +188,7 @@ public class DAOREST implements DAOInterface {
 				ProfissionalSaude prof;
 
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
-						nome, enderenco, especialdiade, convenio);
+						nome, especialdiade, convenio);
 
 //				prof.setAvaliacao(avaliacao);
 
@@ -254,16 +247,7 @@ public class DAOREST implements DAOInterface {
 				listaConsulta.add(linhaConvenio);
 
 			}
-			if (!cidade.trim().equalsIgnoreCase("SELECIONE")) {
-				linhaCidade = ProfissionalBD.ENDERECO_PROF + " LIKE '%"
-						+ cidade + "%'";
-				if (listaConsulta.size() >= 2
-						&& !listaConsulta.get(listaConsulta.size() - 1)
-								.equalsIgnoreCase("AND")) {
-					listaConsulta.add("AND");
-				}
-				listaConsulta.add(linhaCidade);
-			}
+			
 
 			// Montando a consulta final
 
@@ -305,12 +289,7 @@ public class DAOREST implements DAOInterface {
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			String nome = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.NOME_PROF));
-			int avaliacao = cursor.getInt(cursor
-					.getColumnIndex(ProfissionalBD.AVALIACAO_PROF));
-
-			String enderenco = cursor.getString(cursor
-					.getColumnIndex(ProfissionalBD.ENDERECO_PROF));
-
+		
 			String convenioConsulta = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
 
@@ -323,7 +302,7 @@ public class DAOREST implements DAOInterface {
 			ProfissionalSaude prof;
 			try {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
-						nome, enderenco, especialidadeConsulta,
+						nome, especialidadeConsulta,
 						convenioConsulta);
 				//prof.setAvaliacao(avaliacao);
 
@@ -380,6 +359,9 @@ public class DAOREST implements DAOInterface {
 		return null;
 	}
 
+	
+	/////////////////////////////////////// METODOS DO BD NA NUVEM  ////////////////////////////////////////////
+	
 	public List<ProfissionalSaude> findByName(String nomeProf) {
 		List<ProfissionalSaude> listaProf = new ArrayList<ProfissionalSaude>();
 		
@@ -395,7 +377,7 @@ public class DAOREST implements DAOInterface {
 				String nome = res.getString("nome");
 				String tipo = res.getString("tipo_prof");
 				//TODO falta encontrar o resto dos dados de Profissional no BD
-				listaProf.add(new ProfissionalSaude(tipo, crm, nome, null, null, null));
+				listaProf.add(new ProfissionalSaude(tipo, crm, nome, null, null));
 			}
 
 			conn.close();

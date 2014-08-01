@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.Context;
 import dao.DAOREST;
 import exception.ProfissionalSaudeException;
-import model.Endereco;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 import util.Convenio;
@@ -34,11 +33,11 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	@Override
-	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String endereco, String convenio) {
+	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) {
 		
 		ProfissionalSaude profissional;
 		try {
-			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, endereco, especialidade, convenio);
+			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
 			getDao().persistir(profissional);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -76,7 +75,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	@Override
 	public ProfissionalSaude buscarProfissional(String nome,
 			TipoProfissional tipoProfissional, int identificacao,
-			Especialidade especialidade, Endereco endereco, Convenio convenio) {
+			Especialidade especialidade, Convenio convenio) {
 		
 		
 		return null;
@@ -93,22 +92,6 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
-
-		//Bloco de teste
-//		Endereco endereco = new Endereco("Rua quilombos", "123", "Centro", "03A", "Campina Grande", "PB");
-//		ProfissionalSaude prof1 = new ProfissionalSaude(TipoProfissional.DENTISTA, "1234", "Fulano", endereco);
-//		prof1.addConvenio(Convenio.SMILE);
-//		prof1.addConvenio(Convenio.UNIDENTES);
-//		
-//		ProfissionalSaude prof2 = new ProfissionalSaude(TipoProfissional.MEDICO, "5678", "Beltrano", endereco);
-//		prof1.addConvenio(Convenio.UNIMED);
-//		
-//		ArrayList<ProfissionalSaude> saida = new ArrayList<ProfissionalSaude>();
-//		saida.add(prof1);
-//		saida.add(prof2);
-//		
-//		return saida;
-
 		return resultadoBuscaSimples;
 	}
 
@@ -151,12 +134,12 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public void incrementaAvaliacao() throws ProfissionalSaudeException{
-		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()+1);
-		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
+		//getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()+1);
+		//getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
 	}
 	
 	public void decrementaAvaliacao() throws ProfissionalSaudeException{
-		getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()-1);
-		getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
+		//getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()-1);
+		//getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
 	}
 }

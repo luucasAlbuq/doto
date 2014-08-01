@@ -3,14 +3,8 @@ package activity;
 import model.ProfissionalSaude;
 import util.Convenio;
 import util.Especialidade;
-
-import com.example.seudoto.R;
-import com.example.seudoto.R.layout;
-
-import controller.ProfissionalController;
 import android.app.Activity;
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,15 +15,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.seudoto.R;
+
+import controller.ProfissionalController;
 
 public class CadastrarProfissionalActivity extends Activity {
 
-	private String nome, indentificacao, tipo, especialidade, convenio, cidade,
-			rua, bairro;
+	private String nome, indentificacao, tipo, especialidade, convenio;
 	private ProfissionalController controler;
 
 	@Override
@@ -45,8 +40,6 @@ public class CadastrarProfissionalActivity extends Activity {
 		controler = ProfissionalController.getInstance(this);
 
 		final EditText nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
-		final EditText ruaText = (EditText) findViewById(R.id.cadastrar_put_rua);
-		final EditText bairroText = (EditText) findViewById(R.id.cadastrar_put_bairro);
 		final EditText numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
 
 		ImageButton salvar = (ImageButton) findViewById(R.id.SaveimageView);
@@ -64,21 +57,15 @@ public class CadastrarProfissionalActivity extends Activity {
 
 				nome = nomeText.getText().toString();
 				indentificacao = numeroRegistro.getText().toString();
-				rua = ruaText.getText().toString();
-				bairro = bairroText.getText().toString();
-				String endereco = rua + " " + bairro + "\n " + cidade;
 
 				try {
 					
 					if(isCamposValidos()){
-						ProfissionalSaude prof = new ProfissionalSaude(tipo,
-								numeroRegistro.getText().toString(), nome,
-								endereco, especialidade, convenio);
+						ProfissionalSaude prof = new ProfissionalSaude(tipo, numeroRegistro.getText().toString(), nome, especialidade, convenio);
 						controler.cadastrarProfissionalSaude(prof);
 						
 						nomeText.setText("");
 						numeroRegistro.setText("");
-						bairroText.setText("");
 						alertaSucesso.show();
 						
 					}else{
@@ -216,7 +203,7 @@ public class CadastrarProfissionalActivity extends Activity {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 
-						cidade = cidades[position];
+						
 
 					}
 

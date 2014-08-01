@@ -14,7 +14,7 @@
         android:text="Gabriela Oliveira"
         android:textSize="25sp" />
 
-    <GridLayout
+   <GridLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -114,23 +114,6 @@
             android:text="Positiva"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/detalhes_endereco_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal"
-            android:text="Endereço"
-            android:textSize="15sp" />
-
-        <TextView
-            android:id="@+id/detalhes_endereco_resp_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:text="Rua dos Alfeneiros"
-            android:textSize="15sp" />
         
         
     </GridLayout>
