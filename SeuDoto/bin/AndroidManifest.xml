@@ -8,6 +8,12 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:targetPackage="com.example.seudoto" />
 
     <application
         android:allowBackup="true"
@@ -45,12 +51,6 @@
         </activity>
         
         <uses-library android:name="android.test.runner" />
-    </application>
-
+    </application>    
     
-
-      <instrumentation
-        android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="com.example.seudoto" />
-
 </manifest>

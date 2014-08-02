@@ -33,15 +33,15 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	@Override
-	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) {
+	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) throws ProfissionalSaudeException {
 		
 		ProfissionalSaude profissional;
 		try {
 			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
 			getDao().persistir(profissional);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new ProfissionalSaudeException();
 		}
 		
 	}

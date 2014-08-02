@@ -1,5 +1,7 @@
 package exception;
 
+import util.MensagemExcessao;
+
 public class ProfissionalSaudeException extends Exception {
 	
 	/**
@@ -9,5 +11,9 @@ public class ProfissionalSaudeException extends Exception {
 
 	public ProfissionalSaudeException(String msg){
 		super(msg);
+	}
+	
+	public ProfissionalSaudeException(){
+		super(MensagemExcessao.ERRO.toString());
 	}
 }

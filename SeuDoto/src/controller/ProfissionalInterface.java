@@ -29,8 +29,9 @@ public interface ProfissionalInterface {
 	 * @param Especialidade especialidade
 	 * @param Endereco endereco
 	 * @param Convenio convenio
+	 * @throws ProfissionalSaudeException 
 	 */
-	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio);
+	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) throws ProfissionalSaudeException;
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como

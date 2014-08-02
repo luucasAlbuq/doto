@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.MensagemExcessao;
 import exception.ProfissionalSaudeException;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
@@ -23,7 +24,7 @@ public class DAOREST implements DAOInterface {
 	private static DAOREST instance;
 	private static ProfissionalBD criaBD;
 	private SQLiteDatabase database;
-	private static final String excecao = "Objeto de tipo desconhecido";
+	private static final String excecao = MensagemExcessao.ERRO.toString();
 	private static String URL = "jdbc:mysql://54.191.161.104/";
 	private static String DB_NAME = "dotozin";
 	private static String DRIVER = "com.mysql.jdbc.Driver";
@@ -47,7 +48,7 @@ public class DAOREST implements DAOInterface {
 	@Override
 	public <T> void persistir(T entity) throws ProfissionalSaudeException {
 
-		if (entity instanceof ProfissionalSaude) {
+		if (entity instanceof ProfissionalSaude && entity!=null) {
 			ProfissionalSaude prof = (ProfissionalSaude) entity;
 
 			ContentValues valores = new ContentValues();
