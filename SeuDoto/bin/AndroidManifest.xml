@@ -48,9 +48,8 @@
 
     
 
-    <instrumentation
+      <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:label="Tests for My App"
-        android:targetPackage="com.example.app" />
+        android:targetPackage="com.example.seudoto" />
 
 </manifest>
