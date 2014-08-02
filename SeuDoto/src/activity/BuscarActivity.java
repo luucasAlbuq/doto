@@ -204,7 +204,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] {"Selecione", "Mï¿½dico", "Dentista",
+		final String[] tiposProfissionais = new String[] {"Selecione", "Médico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(

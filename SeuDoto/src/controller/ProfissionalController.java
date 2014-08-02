@@ -48,6 +48,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	
 	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException{
 		getDao().persistir(prof);
+		getDao().cadastrarProfissional(prof);
 	}
 
 	@Override
