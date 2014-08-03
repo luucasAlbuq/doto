@@ -50,6 +50,8 @@ public class CadastrarProfissionalActivity extends Activity {
 				"Erro ao cadastrado um profissional", Toast.LENGTH_LONG);
 		final Toast alertaCampos = Toast.makeText(this,
 				"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios", Toast.LENGTH_LONG);
+		final Toast alertaCRM = Toast.makeText(this,
+				"Número de registro já foi cadastrado", Toast.LENGTH_LONG);
 		salvar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -61,12 +63,18 @@ public class CadastrarProfissionalActivity extends Activity {
 				try {
 					
 					if(isCamposValidos()){
-						ProfissionalSaude prof = new ProfissionalSaude(tipo, numeroRegistro.getText().toString(), nome, especialidade, convenio);
-						controler.cadastrarProfissionalSaude(prof);
+						if(controler.getDao().isCrmValido(numeroRegistro.getText().toString())){
+							ProfissionalSaude prof = new ProfissionalSaude(tipo, numeroRegistro.getText().toString(), nome, especialidade, convenio);
+							controler.cadastrarProfissionalSaude(prof);
+							
+							nomeText.setText("");
+							numeroRegistro.setText("");
+							alertaSucesso.show();
+						}else{
+							alertaCRM.show();
+							numeroRegistro.setText("");
+						}
 						
-						nomeText.setText("");
-						numeroRegistro.setText("");
-						alertaSucesso.show();
 						
 					}else{
 						alertaCampos.show();

@@ -77,23 +77,23 @@
             android:text="Positiva"
             android:textSize="15sp" />
         
-        <TextView
-            android:id="@+id/pesq_endereco_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="center_horizontal"
-            android:text="Endereço"
-            android:textSize="15sp" />
+<!--         <TextView -->
+<!--             android:id="@+id/pesq_endereco_prof1" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_column="0" -->
+<!--             android:layout_gravity="center_horizontal" -->
+<!--             android:text="Endereço" -->
+<!--             android:textSize="15sp" /> -->
 
-        <TextView
-            android:id="@+id/pesq_endereco_resp_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:text="Rua dos Alfeneiros"
-            android:textSize="15sp" />
+<!--         <TextView -->
+<!--             android:id="@+id/pesq_endereco_resp_prof1" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_column="1" -->
+<!--             android:layout_gravity="center_horizontal" -->
+<!--             android:text="Rua dos Alfeneiros" -->
+<!--             android:textSize="15sp" /> -->
     </GridLayout>
 
 </LinearLayout>

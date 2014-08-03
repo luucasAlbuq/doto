@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_column="0"
             android:layout_gravity="center_horizontal"
-            android:text="Avaliação"
+            android:text="Avaliações(+)"
             android:textSize="15sp" />
 
         <TextView
@@ -111,7 +111,25 @@
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:layout_gravity="center_horizontal"
-            android:text="Positiva"
+            android:text=""
+            android:textSize="15sp" />
+        
+        <TextView
+            android:id="@+id/detalhes_avaliacao_neg_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Avaliações(-)"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detalhes_avaliacao_neg_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text=""
             android:textSize="15sp" />
 
         

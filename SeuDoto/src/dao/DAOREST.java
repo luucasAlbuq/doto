@@ -5,10 +5,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import util.MensagemExcessao;
 import exception.ProfissionalSaudeException;
+import model.Avaliacao;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 import android.content.ContentValues;
@@ -48,10 +50,10 @@ public class DAOREST implements DAOInterface {
 	@Override
 	public <T> void persistir(T entity) throws ProfissionalSaudeException {
 
-		if (entity instanceof ProfissionalSaude && entity!=null) {
+		if (entity instanceof ProfissionalSaude && entity != null) {
 			ProfissionalSaude prof = (ProfissionalSaude) entity;
-			
-			if(isCrmValido(prof.getNumeroRegistro())){
+
+			if (isCrmValido(prof.getNumeroRegistro())) {
 				ContentValues valores = new ContentValues();
 				valores.put(ProfissionalBD.NOME_PROF, prof.getNome());
 				valores.put(ProfissionalBD.ESPECIALIDADE_PROF,
@@ -60,12 +62,13 @@ public class DAOREST implements DAOInterface {
 						prof.getNumeroRegistro());
 				valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
 				valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
-				//valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
+				// valores.put(ProfissionalBD.AVALIACAO_PROF,
+				// prof.getAvaliacao());
 				database = criaBD.getReadableDatabase();
-				database.insert(ProfissionalBD.TABLE_NAME, null,
-						valores);
-			}else{
-				throw new ProfissionalSaudeException(MensagemExcessao.CRM_INVALIDO.toString());
+				database.insert(ProfissionalBD.TABLE_NAME, null, valores);
+			} else {
+				throw new ProfissionalSaudeException(
+						MensagemExcessao.CRM_INVALIDO.toString());
 			}
 
 		} else {
@@ -100,7 +103,7 @@ public class DAOREST implements DAOInterface {
 					.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 			String convenio = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-			
+
 			String tipo = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.TIPO_PROF));
 			String numeroRegistro = cursor.getString(cursor
@@ -111,7 +114,7 @@ public class DAOREST implements DAOInterface {
 			prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 					especialidade, convenio);
 
-//			prof.setAvaliacao(avaliacao);
+			// prof.setAvaliacao(avaliacao);
 
 			if (!listaDeResultados.contains(prof)) {
 				listaDeResultados.add(prof);
@@ -137,10 +140,10 @@ public class DAOREST implements DAOInterface {
 					.moveToNext()) {
 				String nome = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.NOME_PROF));
-				
+
 				String convenio = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-				
+
 				String tipo = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.TIPO_PROF));
 				String numeroRegistro = cursor.getString(cursor
@@ -151,7 +154,7 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 						especialidade.toString(), convenio);
 
-//				prof.setAvaliacao(avaliacao);
+				// prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
@@ -180,10 +183,10 @@ public class DAOREST implements DAOInterface {
 					.moveToNext()) {
 				String nome = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.NOME_PROF));
-				
+
 				String convenio = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
-				
+
 				String especialdiade = cursor.getString(cursor
 						.getColumnIndex(ProfissionalBD.ESPECIALIDADE_PROF));
 
@@ -195,7 +198,7 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, especialdiade, convenio);
 
-//				prof.setAvaliacao(avaliacao);
+				// prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
@@ -252,7 +255,6 @@ public class DAOREST implements DAOInterface {
 				listaConsulta.add(linhaConvenio);
 
 			}
-			
 
 			// Montando a consulta final
 
@@ -294,7 +296,7 @@ public class DAOREST implements DAOInterface {
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			String nome = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.NOME_PROF));
-		
+
 			String convenioConsulta = cursor.getString(cursor
 					.getColumnIndex(ProfissionalBD.CONVENIO_PROF));
 
@@ -307,9 +309,8 @@ public class DAOREST implements DAOInterface {
 			ProfissionalSaude prof;
 			try {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
-						nome, especialidadeConsulta,
-						convenioConsulta);
-				//prof.setAvaliacao(avaliacao);
+						nome, especialidadeConsulta, convenioConsulta);
+				// prof.setAvaliacao(avaliacao);
 
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
@@ -364,55 +365,154 @@ public class DAOREST implements DAOInterface {
 		return null;
 	}
 	
-	private boolean isCrmValido(String crm) throws ProfissionalSaudeException{
-		
+	public int getAvaliacoesPositicas(String crm) throws ProfissionalSaudeException{
+		database = criaBD.getReadableDatabase();
+		int contadorPositivo = 0;
+
+		if (crm != null && !crm.trim().equals("")) {
+
+			Cursor cursor = database.rawQuery(
+					"SELECT * FROM TB_AVALIACAO WHERE identificacao_prof ="+crm, null);
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+					.moveToNext()) {
+				String avaliacao = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.AVALIACAO));
+				if(Integer.parseInt(avaliacao)==0){
+					contadorPositivo++;
+				}
+			}
+			
+			
+		} else {
+			throw new ProfissionalSaudeException("Especialidade invalida");
+		}
+		return contadorPositivo;
+	}
+	
+	public int getAvaliacoesNegativas(String crm) throws ProfissionalSaudeException{
+		database = criaBD.getReadableDatabase();
+		int contadorNegativo = 0;
+
+		if (crm != null && !crm.trim().equals("")) {
+
+			Cursor cursor = database.rawQuery(
+					"SELECT * FROM TB_AVALIACAO WHERE identificacao_prof ="+crm, null);
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+					.moveToNext()) {
+				String avaliacao = cursor.getString(cursor
+						.getColumnIndex(ProfissionalBD.AVALIACAO));
+				if(Integer.parseInt(avaliacao)!=0){
+					contadorNegativo++;
+				}
+			}
+			
+			
+		} else {
+			throw new ProfissionalSaudeException("Especialidade invalida");
+		}
+		return contadorNegativo;
+	}
+
+	public void criarAvaliacao(String cpf, String crm, int avaliacao)
+			throws ProfissionalSaudeException {
+		if (isAvaliacaoValida(cpf, crm)) {
+			Avaliacao aval = null;
+			if (avaliacao == 0) {
+				aval = new Avaliacao(crm, cpf, true);
+			} else {
+				aval = new Avaliacao(crm, cpf, false);
+			}
+
+			ContentValues valores = new ContentValues();
+			valores.put(ProfissionalBD.IDENTIFICACAO_USER_AVAL,
+					aval.getIdUsuario());
+			valores.put(ProfissionalBD.IDENTIFICACAO_PROF_AVAL, aval.getCrm());
+			valores.put(ProfissionalBD.AVALIACAO, avaliacao);
+
+			database = criaBD.getReadableDatabase();
+			database.insert(ProfissionalBD.TABLE_NAME_AVAL, null, valores);
+			
+		} else {
+			throw new ProfissionalSaudeException(
+					MensagemExcessao.AVALIACAO_INVALIDA.toString());
+		}
+	}
+
+	public boolean isAvaliacaoValida(String cpf, String crm)
+			throws ProfissionalSaudeException {
+		database = criaBD.getReadableDatabase();
+
+		if (crm != null && !crm.trim().equals("") && cpf != null
+				&& !cpf.trim().equals("")) {
+			Cursor cursor = database.rawQuery(
+					"SELECT * FROM TB_AVALIACAO WHERE identificacao_user ="
+							+ cpf + " and identificacao_prof=" + crm, null);
+			for (cursor.moveToFirst(); !cursor.isAfterLast();) {
+
+				return false;
+			}
+
+			return true;
+		} else {
+			throw new ProfissionalSaudeException(
+					MensagemExcessao.AVALIACAO_INVALIDA.toString());
+		}
+	}
+
+	public boolean isCrmValido(String crm) throws ProfissionalSaudeException {
+
 		database = criaBD.getReadableDatabase();
 
 		if (crm != null && !crm.trim().equals("")) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT identificacao FROM TB_PROF WHERE identificacao ="
-							+crm, null);
+							+ crm, null);
 
 			for (cursor.moveToFirst(); !cursor.isAfterLast();) {
-				
+
 				return false;
 			}
-			
+
 			return true;
-		}else{
-			throw new ProfissionalSaudeException();
+		} else {
+			throw new ProfissionalSaudeException(
+					MensagemExcessao.CRM_INVALIDO.toString());
 		}
-		
+
 	}
 
-	
-	/////////////////////////////////////// METODOS DO BD NA NUVEM  ////////////////////////////////////////////
-	
+	// ///////////////////////////////////// METODOS DO BD NA NUVEM
+	// ////////////////////////////////////////////
+
 	public List<ProfissionalSaude> findByName(String nomeProf) {
 		List<ProfissionalSaude> listaProf = new ArrayList<ProfissionalSaude>();
-		
+
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
 					USER_NAME, PASSWORD);
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("select * from Profissional where nome ='" + nomeProf  +"'");
-			
+			ResultSet res = st
+					.executeQuery("select * from Profissional where nome ='"
+							+ nomeProf + "'");
+
 			while (res.next()) {
 				String crm = res.getString("crm");
 				String nome = res.getString("nome");
 				String tipo = res.getString("tipo_prof");
-				//TODO falta encontrar o resto dos dados de Profissional no BD
-				listaProf.add(new ProfissionalSaude(tipo, crm, nome, null, null));
+				// TODO falta encontrar o resto dos dados de Profissional no BD
+				listaProf
+						.add(new ProfissionalSaude(tipo, crm, nome, null, null));
 			}
 
 			conn.close();
 		} catch (Exception e) {
-			//TODO tratar exception
+			// TODO tratar exception
 
 		}
-
 
 		return listaProf;
 	}
@@ -438,10 +538,10 @@ public class DAOREST implements DAOInterface {
 						+ "', '" + prof.getNome() + "')";
 
 				st.executeUpdate(sql);
-				
+
 				sql = "INSERT INTO ConvenioProf VALUES ('"
-						+ prof.getNumeroRegistro() + "', '" + prof.getConvenio()
-						+  "')";
+						+ prof.getNumeroRegistro() + "', '"
+						+ prof.getConvenio() + "')";
 
 				st.executeUpdate(sql);
 
@@ -456,37 +556,38 @@ public class DAOREST implements DAOInterface {
 
 		return false;
 	}
-	
+
 	private boolean crmJaCadastrado(ProfissionalSaude prof) {
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
 					USER_NAME, PASSWORD);
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("select * from Profissional where crm ='" + prof.getNumeroRegistro() +"'");
-			
+			ResultSet res = st
+					.executeQuery("select * from Profissional where crm ='"
+							+ prof.getNumeroRegistro() + "'");
+
 			while (res.next()) {
 				return true;
 			}
 
 			conn.close();
 		} catch (Exception e) {
-			//TODO tratar a exception
+			// TODO tratar a exception
 		}
 		return false;
 	}
-	
-	public void adicionarConvenio(String crm, String convenio){
+
+	public void adicionarConvenio(String crm, String convenio) {
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
 					USER_NAME, PASSWORD);
 
 			Statement st = conn.createStatement();
-			
-			String sql = "INSERT INTO ConvenioProf VALUES ('"
-					+ crm + "', '" + convenio
-					+  "')";
+
+			String sql = "INSERT INTO ConvenioProf VALUES ('" + crm + "', '"
+					+ convenio + "')";
 
 			st.executeUpdate(sql);
 
@@ -495,25 +596,27 @@ public class DAOREST implements DAOInterface {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
 	}
-	
-	public boolean existeCrm(String crm){
-	
+
+	public boolean existeCrm(String crm) {
+
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
 					USER_NAME, PASSWORD);
 			Statement st = conn.createStatement();
-			ResultSet res = st.executeQuery("select * from Profissional where crm ='" + crm  +"'");
-			
+			ResultSet res = st
+					.executeQuery("select * from Profissional where crm ='"
+							+ crm + "'");
+
 			while (res.next()) {
 				return true;
 			}
 
 			conn.close();
 		} catch (Exception e) {
-			//TODO tratar exception
+			// TODO tratar exception
 
 		}
 		return false;

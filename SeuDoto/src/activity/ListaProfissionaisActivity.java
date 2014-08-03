@@ -9,6 +9,7 @@ import model.TipoProfissional;
 import com.example.seudoto.R;
 
 import controller.ProfissionalController;
+import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -29,6 +30,7 @@ public class ListaProfissionaisActivity extends Activity {
 
 	private ListView resultadoPesquisa;
 	private ArrayList<ProfissionalSaude> listaProfissional;
+	private static ProfissionalController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,7 @@ public class ListaProfissionaisActivity extends Activity {
 		setContentView(R.layout.activity_lista_profissionais);
 
 		listaProfissional = ProfissionalController.getResultadoBuscaSimples();
+		controller = ProfissionalController.getInstance(this);
 
 		resultadoPesquisa = (ListView) findViewById(R.id.resultadoPesquisa);
 		resultadoPesquisa.setAdapter(new EfficientAdapter(this,
@@ -138,8 +141,7 @@ public class ListaProfissionaisActivity extends Activity {
 						.findViewById(R.id.pesq_convenio_resp_prof1);
 				campo.campoAvaliacao = (TextView) convertView
 						.findViewById(R.id.pesq_avaliacao_resp_prof1);
-				campo.campoEndereco = (TextView) convertView
-						.findViewById(R.id.pesq_endereco_resp_prof1);
+
 
 				convertView.setTag(campo);
 			} else {
@@ -150,15 +152,28 @@ public class ListaProfissionaisActivity extends Activity {
 			 * Esse bloco � responsavel por jogar as informa��es dos
 			 * profissionais na tela
 			 */
-			campo.campoNome.setText(String.valueOf(ProfissionalController
-					.getResultadoBuscaSimples().get(position).getNome()));
-			campo.campoCRM.setText(String.valueOf(ProfissionalController
-					.getResultadoBuscaSimples().get(position)
-					.getNumeroRegistro()));
-			campo.campoConvenio.setText(String.valueOf(ProfissionalController
-					.getResultadoBuscaSimples().get(position).getConvenio()));
-
-			campo.campoAvaliacao.setText("Positiva");
+			ProfissionalSaude profListagem = ProfissionalController.getResultadoBuscaSimples().get(position);
+			
+			campo.campoNome.setText(String.valueOf(profListagem.getNome()));
+			campo.campoCRM.setText(String.valueOf(profListagem.getNumeroRegistro()));
+			campo.campoConvenio.setText(String.valueOf(profListagem.getConvenio()));
+			
+			int avaliacoesNegativas=0;
+			int avaliacoesPositivas = 0;
+			try {
+				avaliacoesNegativas = controller.getAvaliacoesNegativas(profListagem.getNumeroRegistro());
+				avaliacoesPositivas = controller.getAvaliacoesPositivas(profListagem.getNumeroRegistro());
+			} catch (ProfissionalSaudeException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			if(avaliacoesPositivas>=avaliacoesNegativas){
+				campo.campoAvaliacao.setText("Positiva");
+			}else{
+				campo.campoAvaliacao.setText("Negativa");
+			}
+			
 
 			return convertView;
 		}
