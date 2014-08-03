@@ -50,20 +50,24 @@ public class DAOREST implements DAOInterface {
 
 		if (entity instanceof ProfissionalSaude && entity!=null) {
 			ProfissionalSaude prof = (ProfissionalSaude) entity;
+			
+			if(isCrmValido(prof.getNumeroRegistro())){
+				ContentValues valores = new ContentValues();
+				valores.put(ProfissionalBD.NOME_PROF, prof.getNome());
+				valores.put(ProfissionalBD.ESPECIALIDADE_PROF,
+						prof.getEspecialidade());
+				valores.put(ProfissionalBD.IDENTIFICACAO_PROF,
+						prof.getNumeroRegistro());
+				valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
+				valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
+				//valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
+				database = criaBD.getReadableDatabase();
+				database.insert(ProfissionalBD.TABLE_NAME, null,
+						valores);
+			}else{
+				throw new ProfissionalSaudeException(MensagemExcessao.CRM_INVALIDO.toString());
+			}
 
-			ContentValues valores = new ContentValues();
-			valores.put(ProfissionalBD.NOME_PROF, prof.getNome());
-			valores.put(ProfissionalBD.ESPECIALIDADE_PROF,
-					prof.getEspecialidade());
-			valores.put(ProfissionalBD.IDENTIFICACAO_PROF,
-					prof.getNumeroRegistro());
-			valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
-			valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
-			//valores.put(ProfissionalBD.AVALIACAO_PROF, prof.getAvaliacao());
-			database = criaBD.getReadableDatabase();
-			database.insert(ProfissionalBD.TABLE_NAME, null,
-					valores);
-			// return index;
 		} else {
 			throw new ProfissionalSaudeException(excecao);
 		}
@@ -79,7 +83,7 @@ public class DAOREST implements DAOInterface {
 					ProfissionalBD.IDENTIFICACAO_PROF + " = "
 							+ prof.getNumeroRegistro(), null);
 		} else {
-			throw new ProfissionalSaudeException("exce�ao");
+			throw new ProfissionalSaudeException();
 		}
 	}
 
@@ -358,6 +362,28 @@ public class DAOREST implements DAOInterface {
 
 	public <T> T findByIndentificao(String identificacao) {
 		return null;
+	}
+	
+	private boolean isCrmValido(String crm) throws ProfissionalSaudeException{
+		
+		database = criaBD.getReadableDatabase();
+
+		if (crm != null && !crm.trim().equals("")) {
+
+			Cursor cursor = database.rawQuery(
+					"SELECT identificacao FROM TB_PROF WHERE identificacao ="
+							+crm, null);
+
+			for (cursor.moveToFirst(); !cursor.isAfterLast();) {
+				
+				return false;
+			}
+			
+			return true;
+		}else{
+			throw new ProfissionalSaudeException();
+		}
+		
 	}
 
 	
