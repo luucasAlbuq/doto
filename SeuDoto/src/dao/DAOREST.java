@@ -26,13 +26,13 @@ public class DAOREST implements DAOInterface {
 	private static DAOREST instance;
 	private static ProfissionalBD criaBD;
 	private SQLiteDatabase database;
-	private static final String excecao = MensagemExcessao.ERRO.toString();
+	private static final String EXCECAO = MensagemExcessao.ERRO.toString();
 	private static String URL = "jdbc:mysql://54.191.161.104/";
 	private static String DB_NAME = "dotozin";
 	private static String DRIVER = "com.mysql.jdbc.Driver";
 	private static String USER_NAME = "doto";
 	private static String PASSWORD = "doto12345";
-	private static int NAO_CADASTRADO = 0;
+	
 
 	public DAOREST() {
 		// TODO Auto-generated constructor stub
@@ -62,8 +62,7 @@ public class DAOREST implements DAOInterface {
 						prof.getNumeroRegistro());
 				valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
 				valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
-				// valores.put(ProfissionalBD.AVALIACAO_PROF,
-				// prof.getAvaliacao());
+				
 				database = criaBD.getReadableDatabase();
 				database.insert(ProfissionalBD.TABLE_NAME, null, valores);
 			} else {
@@ -72,7 +71,7 @@ public class DAOREST implements DAOInterface {
 			}
 
 		} else {
-			throw new ProfissionalSaudeException(excecao);
+			throw new ProfissionalSaudeException(EXCECAO);
 		}
 
 	}
@@ -94,7 +93,7 @@ public class DAOREST implements DAOInterface {
 	public List<ProfissionalSaude> findAll() throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 		Cursor cursor = database.rawQuery("select * from TB_PROF", null);
-		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
+		List<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			String nome = cursor.getString(cursor
@@ -114,7 +113,6 @@ public class DAOREST implements DAOInterface {
 			prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 					especialidade, convenio);
 
-			// prof.setAvaliacao(avaliacao);
 
 			if (!listaDeResultados.contains(prof)) {
 				listaDeResultados.add(prof);
@@ -128,9 +126,9 @@ public class DAOREST implements DAOInterface {
 			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 
-		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
+		List<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
-		if (especialidade != null && !especialidade.trim().equals("")) {
+		if (especialidade != null && !"".equals(especialidade.trim())) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT * FROM TB_PROF WHERE especialidade LIKE '%"
@@ -154,8 +152,6 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo, numeroRegistro, nome,
 						especialidade.toString(), convenio);
 
-				// prof.setAvaliacao(avaliacao);
-
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
 				}
@@ -171,9 +167,9 @@ public class DAOREST implements DAOInterface {
 	public List<ProfissionalSaude> findByTipo(String tipo)
 			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
-		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
+		List<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
-		if (tipo != null && !tipo.trim().equals("")) {
+		if (tipo != null && !"".equals(tipo.trim())) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT * FROM TB_PROF WHERE tipo LIKE '%"
@@ -198,8 +194,6 @@ public class DAOREST implements DAOInterface {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, especialdiade, convenio);
 
-				// prof.setAvaliacao(avaliacao);
-
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
 				}
@@ -216,14 +210,14 @@ public class DAOREST implements DAOInterface {
 			String convenio, String cidade) throws ProfissionalSaudeException {
 		String consulta = "";
 
-		if (tipo != null && !tipo.trim().equals("") && especialidade != null
-				&& !especialidade.trim().equals("")
-				&& !especialidade.trim().equals("") && convenio != null
-				&& !convenio.trim().equals("") && cidade != null
-				&& !cidade.trim().equals("")) {
+		if (tipo != null && !"".equals(tipo.trim()) && especialidade != null
+				&& !"".equals(especialidade.trim())
+				&& !"".equals(especialidade.trim()) && convenio != null
+				&& !"".equals(convenio.trim()) && cidade != null
+				&& !"".equals(cidade.trim())) {
 
-			String linhaTipo, linhaEspecialidade, linhaConvenio, linhaCidade;
-			ArrayList<String> listaConsulta = new ArrayList<String>();
+			String linhaTipo, linhaEspecialidade, linhaConvenio;
+			List<String> listaConsulta = new ArrayList<String>();
 
 			listaConsulta.add("SELECT * FROM " + ProfissionalBD.TABLE_NAME
 					+ " WHERE ");
@@ -291,7 +285,7 @@ public class DAOREST implements DAOInterface {
 
 		Cursor cursor = database.rawQuery(sqlConsulta, null);
 
-		ArrayList<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
+		List<ProfissionalSaude> listaDeResultados = new ArrayList<ProfissionalSaude>();
 
 		for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 			String nome = cursor.getString(cursor
@@ -310,8 +304,7 @@ public class DAOREST implements DAOInterface {
 			try {
 				prof = new ProfissionalSaude(tipo.toString(), numeroRegistro,
 						nome, especialidadeConsulta, convenioConsulta);
-				// prof.setAvaliacao(avaliacao);
-
+		
 				if (!listaDeResultados.contains(prof)) {
 					listaDeResultados.add(prof);
 				}
@@ -322,7 +315,7 @@ public class DAOREST implements DAOInterface {
 			}
 
 		}
-		return listaDeResultados;
+		return (ArrayList<ProfissionalSaude>) listaDeResultados;
 	}
 
 	public void updateAvaliacao(int avaliacao, String crm)

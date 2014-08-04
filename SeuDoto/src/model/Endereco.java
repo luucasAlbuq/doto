@@ -110,43 +110,47 @@ public class Endereco implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		Endereco other = (Endereco) obj;
 		if (bairro == null) {
-			if (other.bairro != null)
+			if (other.bairro != null){
 				return false;
-		} else if (!bairro.equals(other.bairro))
-			return false;
+			}
+		} else if (!bairro.equals(other.bairro)){
+			return false;}
 		if (cidade == null) {
-			if (other.cidade != null)
-				return false;
-		} else if (!cidade.equals(other.cidade))
-			return false;
+			if (other.cidade != null){
+				return false;}
+		} else if (!cidade.equals(other.cidade)){
+			return false;}
 		if (estado == null) {
-			if (other.estado != null)
-				return false;
-		} else if (!estado.equals(other.estado))
-			return false;
+			if (other.estado != null){
+				return false;}
+		} else if (!estado.equals(other.estado)){
+			return false;}
 		if (numero == null) {
-			if (other.numero != null)
-				return false;
-		} else if (!numero.equals(other.numero))
-			return false;
+			if (other.numero != null){
+				return false;}
+		} else if (!numero.equals(other.numero)){
+			return false;}
 		if (rua == null) {
-			if (other.rua != null)
-				return false;
-		} else if (!rua.equals(other.rua))
-			return false;
+			if (other.rua != null){
+				return false;}
+		} else if (!rua.equals(other.rua)){
+			return false;}
 		if (sala == null) {
-			if (other.sala != null)
-				return false;
-		} else if (!sala.equals(other.sala))
-			return false;
+			if (other.sala != null){
+				return false;}
+		} else if (!sala.equals(other.sala)){
+			return false;}
 		return true;
 	}
 
