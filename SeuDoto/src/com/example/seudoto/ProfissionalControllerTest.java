@@ -158,7 +158,101 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		assertNotNull(excption);
 		assertEquals(MensagemExcessao.CRM_INVALIDO.toString(), excption.getMessage());
 	}
+	
+	
+	public void testAvaliar(){
+		ProfissionalSaude prof = null;
+		final String cpf=""+rand.nextInt();
+		final String cpf2=""+rand.nextInt();
+		int positiva = 0;
+		int negativa = 1;
+		
+		try {
+			prof = new ProfissionalSaude(TipoProfissional.MEDICO.toString(),
+					""+rand.nextInt(), "Beltrano Figueiredo",
+					Especialidade.PEDIATRA.toString(),
+					Convenio.UNIMED.toString());
+			
+			controller.cadastrarProfissionalSaude(prof);
+			
 
+		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		}
+
+		try {
+			
+			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==0);
+			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
+			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+			
+			assertTrue(controller.getAvaliacoesPositivas(prof.getNumeroRegistro())==0);
+			controller.criarAvaliacao(cpf2,prof.getNumeroRegistro(),positiva);
+			assertTrue(controller.getAvaliacoesPositivas(prof.getNumeroRegistro())==1);
+			
+		} catch (ProfissionalSaudeException e1) {
+			e1.printStackTrace();
+			fail();
+		}
+		
+		
+
+		try {
+			controller.removerProfissional(prof);
+		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		}
+	}
+	
+	public void testAvaliacaoDuplicada() throws ProfissionalSaudeException{
+		ProfissionalSaude prof = null;
+		final String cpf=""+rand.nextInt();
+		int positiva = 0;
+		Exception exception=null;
+		int negativa=1;
+		
+		try {
+			prof = new ProfissionalSaude(TipoProfissional.MEDICO.toString(),
+					""+rand.nextInt(), "Beltrano Figueiredo",
+					Especialidade.PEDIATRA.toString(),
+					Convenio.UNIMED.toString());
+			
+			controller.cadastrarProfissionalSaude(prof);
+			
+
+		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		}
+
+		try {
+			
+			//Cria pela primeira vez
+			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==0);
+			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
+			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+			//Cria pela segunda vez
+			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
+			fail();
+		} catch (ProfissionalSaudeException e1) {
+			e1.printStackTrace();
+			exception = e1;
+		}
+		
+		assertNotNull(exception);
+		assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+
+		try {
+			controller.removerProfissional(prof);
+		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		}
+	
+	}
+	
 	public void testBuscarPorEspecialidade() {
 		List<ProfissionalSaude> profissionais = null;
 		ProfissionalSaude prof = null;

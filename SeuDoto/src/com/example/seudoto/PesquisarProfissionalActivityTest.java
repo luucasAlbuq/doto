@@ -189,6 +189,7 @@ public class PesquisarProfissionalActivityTest extends
 		mSolo.waitForText(ERRO);
 		// Verifica se mudou de tela
 		mSolo.assertCurrentActivity("Activity Correta", BuscarActivity.class);
+		mSolo.goBackToActivity("BuscarActivity");
 	}
 
 	public void testFpesquisarPorConvenioInexistente() {
