@@ -17,7 +17,7 @@ public class ProfissionalSaude implements Serializable {
 	private String tipo;
 	private String numeroRegistro;
 	private String nome;
-	// private int avaliacao;
+	
 	private List<Avaliacao> avaliacoes;
 	private String especialidade;
 	private String convenio;
@@ -36,19 +36,17 @@ public class ProfissionalSaude implements Serializable {
 			throw new ProfissionalSaudeException("Parametros invalidos");
 		}
 
-		// especialidades = new ArrayList<String>();
-		// convenios = new ArrayList<Convenio>();
-
+	
 		this.convenio = convenio;
 
 	}
 
 	public boolean verificaParametros(String tipo, String numeroRegistro,
 			String nome, String especialidade) {
-		return (tipo != null && !tipo.trim().equals("") && nome != null
+		return tipo != null && !tipo.trim().equals("") && nome != null
 				&& !nome.trim().equals("") && especialidade != null
 				&& !especialidade.trim().equals("") && numeroRegistro != null && !numeroRegistro
-				.trim().equals(""));
+				.trim().equals("");
 	}
 
 	public int getAvaliacaoPositiva() {
@@ -148,39 +146,42 @@ public class ProfissionalSaude implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
+		}
+			
+		if (getClass() != obj.getClass()){
+			return false;}
 		ProfissionalSaude other = (ProfissionalSaude) obj;
 		if (convenio == null) {
-			if (other.convenio != null)
-				return false;
-		} else if (!convenio.equals(other.convenio))
-			return false;
+			if (other.convenio != null){
+				return false;}
+		} else if (!convenio.equals(other.convenio)){
+			return false;}
 
 		if (especialidade == null) {
-			if (other.especialidade != null)
-				return false;
-		} else if (!especialidade.equals(other.especialidade))
-			return false;
+			if (other.especialidade != null){
+				return false;}
+		} else if (!especialidade.equals(other.especialidade)){
+			return false;}
 		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
+			if (other.nome != null){
+				return false;}
+		} else if (!nome.equals(other.nome)){
+			return false;}
 		if (numeroRegistro == null) {
-			if (other.numeroRegistro != null)
-				return false;
-		} else if (!numeroRegistro.equals(other.numeroRegistro))
-			return false;
+			if (other.numeroRegistro != null){
+				return false;}
+		} else if (!numeroRegistro.equals(other.numeroRegistro)){
+			return false;}
 		if (tipo == null) {
-			if (other.tipo != null)
-				return false;
-		} else if (!tipo.equals(other.tipo))
-			return false;
+			if (other.tipo != null){
+				return false;}
+		} else if (!tipo.equals(other.tipo)) {
+			return false;}
 		return true;
 	}
 
