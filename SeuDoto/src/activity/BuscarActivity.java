@@ -57,7 +57,7 @@ public class BuscarActivity extends Activity {
 					e.printStackTrace();
 				}
 				
-				if(profissionalController.getResultadoBuscaSimples().size()>0){
+				if(!profissionalController.getResultadoBuscaSimples().isEmpty()){
 					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
 					BuscarActivity.this.startActivity(telaLista);
 				}else{
@@ -83,14 +83,14 @@ public class BuscarActivity extends Activity {
         // Take appropriate action for each action item click
         switch (item.getItemId()) {
         case R.id.action_search:
-        	LocationFound();
+        	locationFound();
             return true;
         default:
             return super.onOptionsItemSelected(item);
         }
     }
 	
-	private void LocationFound() {
+	private void locationFound() {
         Intent i = new Intent(BuscarActivity.this, CadastrarProfissionalActivity.class);
         startActivity(i);
     }
@@ -204,7 +204,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] {"Selecione", "Médico", "Dentista",
+		final String[] tiposProfissionais = new String[] {"Selecione", "Mï¿½dico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(

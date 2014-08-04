@@ -113,9 +113,8 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio,String cidade) throws ProfissionalSaudeException{
-		//TODO Implementar
 		
-		ArrayList<ProfissionalSaude> resultado = getDao().buscaSimples(tipo, especialidade, convenio,cidade);
+		ArrayList<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDao().buscaSimples(tipo, especialidade, convenio,cidade);
 		setResultadoBuscaSimples(resultado);
 		return resultado;
 	}
@@ -135,8 +134,6 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public void criarAvaliacao(String cpf, String crm, int avaliacao) throws ProfissionalSaudeException{
-		//getProfissionalSelecionado().setAvaliacao(profissionalSelecionado.getAvaliacao()+1);
-		//getDao().updateAvaliacao(getProfissionalSelecionado().getAvaliacao(), getProfissionalSelecionado().getNumeroRegistro());
 		getDao().criarAvaliacao(cpf, crm, avaliacao);
 	}
 	

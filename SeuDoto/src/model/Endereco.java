@@ -125,32 +125,43 @@ public class Endereco implements Serializable {
 				return false;
 			}
 		} else if (!bairro.equals(other.bairro)){
-			return false;}
+			return false;
+			}
 		if (cidade == null) {
 			if (other.cidade != null){
-				return false;}
+				return false;
+				}
 		} else if (!cidade.equals(other.cidade)){
-			return false;}
+			return false;
+			}
 		if (estado == null) {
 			if (other.estado != null){
-				return false;}
+				return false;
+				}
 		} else if (!estado.equals(other.estado)){
-			return false;}
+			return false;
+			}
 		if (numero == null) {
 			if (other.numero != null){
-				return false;}
+				return false;
+				}
 		} else if (!numero.equals(other.numero)){
-			return false;}
+			return false;
+			}
 		if (rua == null) {
 			if (other.rua != null){
-				return false;}
+				return false;
+				}
 		} else if (!rua.equals(other.rua)){
-			return false;}
+			return false;
+			}
 		if (sala == null) {
 			if (other.sala != null){
-				return false;}
+				return false;
+				}
 		} else if (!sala.equals(other.sala)){
-			return false;}
+			return false;
+			}
 		return true;
 	}
 

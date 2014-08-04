@@ -42,7 +42,7 @@ public interface DAOInterface {
 	List<ProfissionalSaude> findAll() throws ProfissionalSaudeException;
 
 	/**
-	 * Realiza uma busca por ID em todas as entidades que estão presentes no BD
+	 * Realiza uma busca por ID em todas as entidades que estï¿½o presentes no BD
 	 * 
 	 * @param id
 	 * @return
@@ -50,7 +50,7 @@ public interface DAOInterface {
 	ProfissionalSaude findById(int id);
 
 	/**
-	 * Retorna uma lista de resultados de uma consulta passada como parámetro.
+	 * Retorna uma lista de resultados de uma consulta passada como parï¿½metro.
 	 * Criteria funciona como uma consulta sql.
 	 * 
 	 * @param Criteria
@@ -59,7 +59,7 @@ public interface DAOInterface {
 	 */
 	List<ProfissionalSaude> findByCriteira(Criteria consulta);
 	
-	ArrayList<ProfissionalSaude> buscaSimples(String tipo,
+	List<ProfissionalSaude> buscaSimples(String tipo,
 			String especialidade, String convenio, String cidade) throws ProfissionalSaudeException;
 	
 	List<ProfissionalSaude> findByTipo(String tipo) throws ProfissionalSaudeException;

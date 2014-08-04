@@ -12,6 +12,7 @@ import org.junit.Before;
 import util.Convenio;
 import util.Especialidade;
 import util.MensagemExcessao;
+
 import android.test.AndroidTestCase;
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
@@ -20,8 +21,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 
 	private ProfissionalController controller;
 	private static final String EXCESSAO = MensagemExcessao.ERRO.toString();
+	
 	Random rand;
-
+	
 	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -38,7 +40,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		ProfissionalSaude prof = null;
 
 		try {
-			prof = new ProfissionalSaude("Médico", "" + rand.nextInt(),
+			prof = new ProfissionalSaude("Mï¿½dico", "" + rand.nextInt(),
 					"Lucas Almeida", Especialidade.CARDIOLOGISTA.toString(),
 					Convenio.SMILE.toString());
 			controller.cadastrarProfissionalSaude(prof);
@@ -209,7 +211,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 	public void testAvaliacaoDuplicada() throws ProfissionalSaudeException{
 		ProfissionalSaude prof = null;
 		final String cpf=""+rand.nextInt();
-		int positiva = 0;
 		Exception exception=null;
 		int negativa=1;
 		

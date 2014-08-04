@@ -5,9 +5,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+import java.util.logging.Logger;
 import util.MensagemExcessao;
 import exception.ProfissionalSaudeException;
 import model.Avaliacao;
@@ -222,28 +224,26 @@ public class DAOREST implements DAOInterface {
 			listaConsulta.add("SELECT * FROM " + ProfissionalBD.TABLE_NAME
 					+ " WHERE ");
 
-			if (!tipo.trim().equalsIgnoreCase("SELECIONE")) {
+			if (!"SELECIONE".equalsIgnoreCase(tipo.trim())) {
 				linhaTipo = ProfissionalBD.TIPO_PROF + " LIKE '%" + tipo + "%'";
 				listaConsulta.add(linhaTipo);
 
 			}
-			if (!especialidade.trim().equalsIgnoreCase("SELECIONE")) {
+			if (!"SELECIONE".equalsIgnoreCase(especialidade.trim())) {
 				linhaEspecialidade = ProfissionalBD.ESPECIALIDADE_PROF
 						+ " LIKE '%" + especialidade + "%'";
 				if (listaConsulta.size() == 2
-						&& !listaConsulta.get(listaConsulta.size() - 1)
-								.equalsIgnoreCase("AND")) {
+						&& !"AND".equalsIgnoreCase(listaConsulta.get(listaConsulta.size() - 1))) {
 					listaConsulta.add("AND");
 				}
 				listaConsulta.add(linhaEspecialidade);
 
 			}
-			if (!convenio.trim().equalsIgnoreCase("SELECIONE")) {
+			if (!"SELECIONE".equalsIgnoreCase(convenio.trim())) {
 				linhaConvenio = ProfissionalBD.CONVENIO_PROF + " LIKE '%"
 						+ convenio + "%'";
 				if (listaConsulta.size() >= 2
-						&& !listaConsulta.get(listaConsulta.size() - 1)
-								.equalsIgnoreCase("AND")) {
+						&& !"AND".equalsIgnoreCase(listaConsulta.get(listaConsulta.size() - 1))){
 					listaConsulta.add("AND");
 				}
 				listaConsulta.add(linhaConvenio);
@@ -253,10 +253,10 @@ public class DAOREST implements DAOInterface {
 			// Montando a consulta final
 
 			// Se o usuario nao tiver selecionado nada ele deve pesquisar todos
-			if (tipo.trim().equalsIgnoreCase("SELECIONE")
-					&& especialidade.trim().equalsIgnoreCase("SELECIONE")
-					&& convenio.trim().equalsIgnoreCase("SELECIONE")
-					&& cidade.trim().equalsIgnoreCase("SELECIONE")) {
+			if ("SELECIONE".equalsIgnoreCase(tipo.trim())
+					&& "SELECIONE".equalsIgnoreCase(especialidade.trim())
+					&& "SELECIONE".equalsIgnoreCase(convenio.trim())
+					&& "SELECIONE".equalsIgnoreCase(cidade.trim())) {
 				consulta = "select * from TB_PROF";
 			}
 
@@ -275,7 +275,7 @@ public class DAOREST implements DAOInterface {
 	}
 
 	@Override
-	public ArrayList<ProfissionalSaude> buscaSimples(String tipo,
+	public List<ProfissionalSaude> buscaSimples(String tipo,
 			String especialidade, String convenio, String cidade)
 			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
@@ -311,16 +311,16 @@ public class DAOREST implements DAOInterface {
 
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw new ProfissionalSaudeException(e.getMessage());
 			}
 
 		}
-		return (ArrayList<ProfissionalSaude>) listaDeResultados;
+		return listaDeResultados;
 	}
 
 	public void updateAvaliacao(int avaliacao, String crm)
 			throws ProfissionalSaudeException {
-		if (crm != null && !crm.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim())) {
 			SQLiteDatabase db = criaBD.getWritableDatabase();
 			SQLiteStatement stmt = db.compileStatement("UPDATE "
 					+ ProfissionalBD.TABLE_NAME + " SET "
@@ -351,7 +351,7 @@ public class DAOREST implements DAOInterface {
 	@Override
 	public List<ProfissionalSaude> findByCriteira(Criteria consulta) {
 		// TODO Auto-generated method stub
-		return null;
+		return (List) consulta;
 	}
 
 	public <T> T findByIndentificao(String identificacao) {
@@ -362,7 +362,7 @@ public class DAOREST implements DAOInterface {
 		database = criaBD.getReadableDatabase();
 		int contadorPositivo = 0;
 
-		if (crm != null && !crm.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim())) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT * FROM TB_AVALIACAO WHERE identificacao_prof ="+crm, null);
@@ -387,7 +387,7 @@ public class DAOREST implements DAOInterface {
 		database = criaBD.getReadableDatabase();
 		int contadorNegativo = 0;
 
-		if (crm != null && !crm.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim())) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT * FROM TB_AVALIACAO WHERE identificacao_prof ="+crm, null);
@@ -437,8 +437,8 @@ public class DAOREST implements DAOInterface {
 			throws ProfissionalSaudeException {
 		database = criaBD.getReadableDatabase();
 
-		if (crm != null && !crm.trim().equals("") && cpf != null
-				&& !cpf.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim()) && cpf != null
+				&& !"".equals(cpf.trim())) {
 			Cursor cursor = database.rawQuery(
 					"SELECT * FROM TB_AVALIACAO WHERE identificacao_user ="
 							+ cpf + " and identificacao_prof=" + crm, null);
@@ -458,7 +458,7 @@ public class DAOREST implements DAOInterface {
 
 		database = criaBD.getReadableDatabase();
 
-		if (crm != null && !crm.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim())) {
 
 			Cursor cursor = database.rawQuery(
 					"SELECT identificacao FROM TB_PROF WHERE identificacao ="
@@ -512,7 +512,7 @@ public class DAOREST implements DAOInterface {
 
 	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
 		// TODO Auto-generated method stub
-		return null;
+		return Collections.emptyList(); 
 	}
 
 	public boolean cadastrarProfissional(ProfissionalSaude prof) {
@@ -541,7 +541,7 @@ public class DAOREST implements DAOInterface {
 				conn.close();
 				return true;
 			} catch (Exception e) {
-				System.err.print("ERRO");
+				System.out.println("ERRO");
 				System.out.println(e);
 
 			}

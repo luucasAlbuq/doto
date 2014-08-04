@@ -43,10 +43,11 @@ public class ProfissionalSaude implements Serializable {
 
 	public boolean verificaParametros(String tipo, String numeroRegistro,
 			String nome, String especialidade) {
-		return tipo != null && !tipo.trim().equals("") && nome != null
-				&& !nome.trim().equals("") && especialidade != null
-				&& !especialidade.trim().equals("") && numeroRegistro != null && !numeroRegistro
-				.trim().equals("");
+		return tipo != null && !"".equals(tipo.trim()) && nome != null
+				&& !"".equals(nome.trim()) && especialidade != null
+				&& !"".equals(especialidade.trim()) && numeroRegistro != null && 
+				!"".equals(numeroRegistro
+				.trim());
 	}
 
 	public int getAvaliacaoPositiva() {
@@ -154,34 +155,45 @@ public class ProfissionalSaude implements Serializable {
 		}
 			
 		if (getClass() != obj.getClass()){
-			return false;}
+			return false;
+			}
 		ProfissionalSaude other = (ProfissionalSaude) obj;
 		if (convenio == null) {
 			if (other.convenio != null){
-				return false;}
+				return false;
+				}
 		} else if (!convenio.equals(other.convenio)){
-			return false;}
+			return false;
+			}
 
 		if (especialidade == null) {
 			if (other.especialidade != null){
-				return false;}
+				return false;
+				}
 		} else if (!especialidade.equals(other.especialidade)){
-			return false;}
+			return false;
+			}
 		if (nome == null) {
 			if (other.nome != null){
-				return false;}
+				return false;
+				}
 		} else if (!nome.equals(other.nome)){
-			return false;}
+			return false;
+			}
 		if (numeroRegistro == null) {
 			if (other.numeroRegistro != null){
-				return false;}
+				return false;
+				}
 		} else if (!numeroRegistro.equals(other.numeroRegistro)){
-			return false;}
+			return false;
+			}
 		if (tipo == null) {
 			if (other.tipo != null){
-				return false;}
+				return false;
+				}
 		} else if (!tipo.equals(other.tipo)) {
-			return false;}
+			return false;
+			}
 		return true;
 	}
 
