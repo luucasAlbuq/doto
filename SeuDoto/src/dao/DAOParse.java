@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.AvaliacaoTableEnum;
 import util.ProfissionalTableEnum;
 
 import com.parse.FindCallback;
@@ -13,12 +14,12 @@ import com.parse.ParseQuery;
 import exception.ProfissionalSaudeException;
 import android.content.Context;
 import bd.ProfissionalBD;
+import model.Avaliacao;
 import model.ProfissionalSaude;
 
 public class DAOParse {
 	
 	private static DAOParse instance;
-	private ParseObject objeto = null;
 	private static List<ParseObject> resultadoBusca=null;
 	private static ArrayList<ProfissionalSaude> todosProfissionais = new ArrayList<ProfissionalSaude>();
 	
@@ -35,7 +36,7 @@ public class DAOParse {
 	}
 	
 	public void cadastrarProfissional(ProfissionalSaude prof) throws ProfissionalSaudeException{
-		
+		ParseObject objeto = null;
 		if(isCrmUnico(prof.getNumeroRegistro())){
 			objeto = new ParseObject(ProfissionalTableEnum.NOME_CLASSE.toString());
 			objeto.put(ProfissionalTableEnum.COLUNA_NOME.toString(), prof.getNome());
@@ -149,8 +150,140 @@ public class DAOParse {
 			}
 		}
 		
-		int size = profisisonais.size();
+		//Carregando avaliacoes
+		ArrayList<Avaliacao> avaliacoes = getAllAvaliacoes();
+		for(ProfissionalSaude prof : profisisonais){
+			for(Avaliacao aval : avaliacoes){
+				if(prof.getNumeroRegistro().equals(aval.getCrm())){
+					if(aval.isAvaliacao()){
+						prof.addAvaliacaoPositiva();
+					}else{
+						prof.addAvaliacaoNegativa();
+					}
+				}
+			}
+		}
+		
 		return profisisonais;
+	}
+	
+	
+	public ArrayList<Avaliacao> getAllAvaliacoes(){
+		List<ParseObject> avaliacoes=null;
+		
+		ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+		query.setLimit(50);
+		try {
+			avaliacoes= query.find();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return montarAvaliacao(avaliacoes);
+	}
+	
+	private ArrayList<Avaliacao> montarAvaliacao(List<ParseObject> objs){
+		ArrayList<Avaliacao> avaliacaos = new ArrayList<Avaliacao>();
+		
+		for(ParseObject par : objs){
+			String idUser = par.getString(AvaliacaoTableEnum.COLUNA_USER.toString());
+			String crm = par.getString(AvaliacaoTableEnum.COLUNA_CRM.toString());
+			boolean aval = (Boolean) par.get(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString());
+			avaliacaos.add(new Avaliacao(crm, idUser, aval));
+		}
+		
+		return avaliacaos;
+	}
+	
+	public void criarAvaliacao(String crm,String idUser, boolean avaliacao) throws ProfissionalSaudeException{
+		if(crm!=null && !crm.trim().equals("") && idUser!=null && !idUser.trim().equals("")){
+			if(isAvaliacaoUnica(idUser, crm)){
+				ParseObject aval = new ParseObject(AvaliacaoTableEnum.NOME_CLASSE.toString());
+				aval.put(AvaliacaoTableEnum.COLUNA_CRM.toString(), crm);
+				aval.put(AvaliacaoTableEnum.COLUNA_USER.toString(), idUser);
+				aval.put(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString(), avaliacao);
+				
+				try{
+					aval.saveInBackground();
+				}catch(Exception e){
+					e.getStackTrace();
+					aval.saveEventually();
+				}
+			}else{
+				throw new ProfissionalSaudeException();
+			}
+			
+		}else{
+			throw new ProfissionalSaudeException();
+		}
+	}
+	
+	
+	public Integer getAvaliacoesPositivas(ProfissionalSaude prof){
+		Integer avalPositivas = null;
+		
+		if(prof.getNumeroRegistro()!=null){
+			List<ParseObject> objs=null;
+			
+			ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(), prof.getNumeroRegistro());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString(), true);
+			try {
+				 objs = query.find();
+				 avalPositivas = new Integer(objs.size());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return avalPositivas;
+	}
+	
+	public Integer getAvaliacoesNegativas(ProfissionalSaude prof){
+		Integer avalNegativas = null;
+		
+		if(prof.getNumeroRegistro()!=null){
+			List<ParseObject> objs=null;
+			
+			ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(), prof.getNumeroRegistro());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString(), false);
+			try {
+				 objs = query.find();
+				 avalNegativas = new Integer(objs.size());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		return avalNegativas;
+	}
+	
+	public boolean isAvaliacaoUnica(String idUser, String crm){
+		boolean isValido = true;
+		
+		List<ParseObject> objs=null;
+		
+		if(idUser!=null && crm!=null && !idUser.equals("") && !crm.trim().equals("")){
+			ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_USER.toString(), idUser);
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(), crm);
+			try {
+				 objs = query.find();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(objs!=null && objs.size()>0){
+			isValido =false;
+		}
+		
+		return isValido;
 	}
 
 	public static List<ParseObject> getResultadoBusca() {

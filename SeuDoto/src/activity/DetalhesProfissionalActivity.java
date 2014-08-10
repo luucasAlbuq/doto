@@ -8,8 +8,11 @@ import com.example.seudoto.R.layout;
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteAbortException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +29,10 @@ public class DetalhesProfissionalActivity extends Activity {
 	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,avaliacaoPosi,
 			tipoText;
 	private ProfissionalController controller;
+	private boolean avaliacao;
+	final String IDUSER ="12345";
+	boolean isAvaliacaoUnica = false;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +49,6 @@ public class DetalhesProfissionalActivity extends Activity {
 			e1.printStackTrace();
 		}
 		
-		final Toast alertaSucesso = Toast.makeText(this,
-				"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
 		final Toast alertaFalha = Toast.makeText(this,
 				"Falha ao computar a Avaliação", Toast.LENGTH_LONG);
 		final Toast alertaAvaliacao = Toast.makeText(this,
@@ -56,13 +61,14 @@ public class DetalhesProfissionalActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				try{
-					String cpfUser = "12345";
+					
+					avaliacao=true;
 					String crm = profissionalSaude.getNumeroRegistro();
-					if(controller.getDao().isAvaliacaoValida(cpfUser, crm)){
-						controller.criarAvaliacao("12345", crm,0);
-						int avaliacaoesAtualizadas = controller.getAvaliacoesPositivas(crm);
-						avaliacaoPosi.setText(""+avaliacaoesAtualizadas);
-						alertaSucesso.show();
+					if(controller.getDao().isAvaliacaoValida(IDUSER, crm)){
+						
+						EsperandoConsulta espera = new EsperandoConsulta();
+						espera.execute(new String[]{"Seu Doto"});
+						
 					}else{
 						alertaAvaliacao.show();
 					}
@@ -82,14 +88,13 @@ public class DetalhesProfissionalActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				try{
-					String cpfUser = "12345";
+					avaliacao = false;
 					String crm = profissionalSaude.getNumeroRegistro(); 
-					if(controller.getDao().isAvaliacaoValida(cpfUser,crm )){
-						controller.criarAvaliacao("12345", crm,1);
-						int avaliacoesAtualizadas = controller.getAvaliacoesPositivas(crm);
-						avaliacaoNega.setText(""+avaliacoesAtualizadas);
+					if(controller.getDao().isAvaliacaoValida(IDUSER,crm )){
 						
-						alertaSucesso.show();
+						EsperandoConsulta espera = new EsperandoConsulta();
+						espera.execute(new String[]{"Seu Doto"});
+						
 					}else{
 						alertaAvaliacao.show();
 					}
@@ -159,8 +164,8 @@ public class DetalhesProfissionalActivity extends Activity {
 		convenioText.setText(prof.getConvenio());
 
 		tipoText.setText(prof.getTipo().toString());
-		avaliacaoPosi.setText(""+controller.getAvaliacoesPositivas(profissionalSaude.getNumeroRegistro()));
-		avaliacaoNega.setText(""+controller.getAvaliacoesNegativas(profissionalSaude.getNumeroRegistro()));
+		avaliacaoPosi.setText(""+profissionalSaude.getAvaliacoesPositivas());
+		avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
 	}
 
 	public ProfissionalSaude getProfissionalSaude() {
@@ -171,5 +176,75 @@ public class DetalhesProfissionalActivity extends Activity {
 		this.profissionalSaude = profissionalSaude;
 	}
 	
+	
+	public boolean isAvaliacaoUnica() {
+		return isAvaliacaoUnica;
+	}
+
+	public void setAvaliacaoUnica(boolean isAvaliacaoUnica) {
+		this.isAvaliacaoUnica = isAvaliacaoUnica;
+	}
+
+
+		// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
+		private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
+
+			private ProgressDialog mProgressDialog;
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				Context contexto = DetalhesProfissionalActivity.this;
+				mProgressDialog = new ProgressDialog(contexto);
+				mProgressDialog.setMessage("Enviando dados");
+				mProgressDialog.setIndeterminate(false);
+				mProgressDialog.setCancelable(false);
+				mProgressDialog.show();
+			}
+
+			@Override
+			protected String doInBackground(String... params) {
+
+				
+				String crm = profissionalSaude.getNumeroRegistro();
+				setAvaliacaoUnica( controller.getDaoParse().isAvaliacaoUnica(IDUSER, crm));
+				
+				
+				if(isAvaliacaoUnica){
+					try {
+						controller.criarAvaliacao(IDUSER, crm, avaliacao);
+						
+						if(avaliacao){
+							profissionalSaude.addAvaliacaoPositiva();
+						}else if(!avaliacao){
+							profissionalSaude.addAvaliacaoNegativa();
+						}
+					} catch (ProfissionalSaudeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+				return null;
+			}
+
+			@Override
+			protected void onPostExecute(String result) {
+				if(!isAvaliacaoUnica()){
+					mProgressDialog.dismiss();
+					Toast alertaAvaliacao = Toast.makeText(DetalhesProfissionalActivity.this,
+								"Você já avaliou esse profissional!", Toast.LENGTH_LONG);
+					alertaAvaliacao.show();
+				}else{
+					avaliacaoPosi.setText(""+profissionalSaude.getAvaliacoesPositivas());
+					avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
+					mProgressDialog.dismiss();
+					Toast alertaSucesso = Toast.makeText(DetalhesProfissionalActivity.this,
+							"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+					alertaSucesso.show();
+				}
+				
+			}
+		}
 	
 }

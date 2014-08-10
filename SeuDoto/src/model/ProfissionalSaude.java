@@ -18,9 +18,9 @@ public class ProfissionalSaude implements Serializable {
 	private String numeroRegistro;
 	private String nome;
 	
-	private List<Avaliacao> avaliacoes;
 	private String especialidade;
 	private String convenio;
+	private Integer avaliacoesPositivas, avaliacoesNegativas;
 
 	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, String convenio)
 			throws ProfissionalSaudeException {
@@ -30,7 +30,8 @@ public class ProfissionalSaude implements Serializable {
 			this.numeroRegistro = numeroRegistro;
 			this.especialidade = especialidade;
 			this.nome = nome;
-			avaliacoes = new ArrayList<Avaliacao>();
+			avaliacoesNegativas = new Integer(0);
+			avaliacoesPositivas = new Integer(0);
 			
 		} else {
 			throw new ProfissionalSaudeException("Parametros invalidos");
@@ -49,33 +50,13 @@ public class ProfissionalSaude implements Serializable {
 				!"".equals(numeroRegistro
 				.trim());
 	}
-
-	public int getAvaliacaoPositiva() {
-		int cont = 0;
-
-		for (Avaliacao av : avaliacoes) {
-			if (av.isAvaliacao()) {
-				cont++;
-			}
-		}
-
-		return cont;
-	}
-
-	public int getAvaliacaoNegativa() {
-		int cont = 0;
-
-		for (Avaliacao av : avaliacoes) {
-			if (!av.isAvaliacao()) {
-				cont++;
-			}
-		}
-
-		return cont;
+	
+	public void addAvaliacaoPositiva(){
+		setAvaliacoesPositivas(avaliacoesPositivas+1);
 	}
 	
-	public void addAvaliacao(Avaliacao av){
-		avaliacoes.add(av);
+	public void addAvaliacaoNegativa(){
+		setAvaliacoesNegativas(avaliacoesNegativas+1);
 	}
 
 	public String getTipo() {
@@ -196,5 +177,23 @@ public class ProfissionalSaude implements Serializable {
 			}
 		return true;
 	}
+
+	public Integer getAvaliacoesPositivas() {
+		return avaliacoesPositivas;
+	}
+
+	public void setAvaliacoesPositivas(Integer avaliacoesPositivas) {
+		this.avaliacoesPositivas = avaliacoesPositivas;
+	}
+
+	public Integer getAvaliacoesNegativas() {
+		return avaliacoesNegativas;
+	}
+
+	public void setAvaliacoesNegativas(Integer avaliacoesNegativas) {
+		this.avaliacoesNegativas = avaliacoesNegativas;
+	}
+	
+	
 
 }

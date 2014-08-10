@@ -138,16 +138,16 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalController.profissionalSelecionado = profissionalSelecionado;
 	}
 	
-	public void criarAvaliacao(String cpf, String crm, int avaliacao) throws ProfissionalSaudeException{
-		getDao().criarAvaliacao(cpf, crm, avaliacao);
+	public void criarAvaliacao(String idUser, String crm, boolean avaliacao) throws ProfissionalSaudeException{
+		getDaoParse().criarAvaliacao(crm, idUser, avaliacao);
 	}
 	
-	public int getAvaliacoesPositivas(String crm) throws ProfissionalSaudeException{
-		return getDao().getAvaliacoesPositicas(crm);
+	public int getAvaliacoesPositivas(ProfissionalSaude prof) throws ProfissionalSaudeException{
+		return getDaoParse().getAvaliacoesPositivas(prof);
 	}
 	
-	public int getAvaliacoesNegativas(String crm) throws ProfissionalSaudeException{
-		return getDao().getAvaliacoesNegativas(crm);
+	public int getAvaliacoesNegativas(ProfissionalSaude prof) throws ProfissionalSaudeException{
+		return getDaoParse().getAvaliacoesNegativas(prof);
 	}
 
 	public DAOParse getDaoParse() {

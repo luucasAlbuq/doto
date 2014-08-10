@@ -160,13 +160,10 @@ public class ListaProfissionaisActivity extends Activity {
 			
 			int avaliacoesNegativas=0;
 			int avaliacoesPositivas = 0;
-			try {
-				avaliacoesNegativas = controller.getAvaliacoesNegativas(profListagem.getNumeroRegistro());
-				avaliacoesPositivas = controller.getAvaliacoesPositivas(profListagem.getNumeroRegistro());
-			} catch (ProfissionalSaudeException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			
+			avaliacoesNegativas = profListagem.getAvaliacoesNegativas();
+			avaliacoesPositivas = profListagem.getAvaliacoesPositivas();
+			
 			
 			if(avaliacoesPositivas>=avaliacoesNegativas){
 				campo.campoAvaliacao.setText("Positiva");

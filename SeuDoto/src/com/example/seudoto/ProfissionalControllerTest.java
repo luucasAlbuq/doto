@@ -69,7 +69,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			controller.cadastrarProfissionalSaude(prof);
 			Assert.fail("Deveria ter lancado excessao");
 		} catch (ProfissionalSaudeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			excption = e;
 		}
@@ -93,7 +92,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 					prof.getEspecialidade(), prof.getConvenio());
 
 		} catch (ProfissionalSaudeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			excption = e;
 			Assert.fail("Nao Deveria ter lancado excessao");
@@ -104,7 +102,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		try {
 			assertTrue(controller.buscarTodos().contains(prof));
 		} catch (ProfissionalSaudeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Assert.fail("Nao Deveria ter lancado excessao");
 		}
@@ -131,7 +128,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 					prof.getConvenio());
 			Assert.fail("Deveria ter lancado excessao");
 		} catch (ProfissionalSaudeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			excption = e;
 		}
@@ -153,7 +149,6 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			controller.cadastrarProfissionalSaude(prof);
 			fail("Deveria lencar excessao");
 		} catch (ProfissionalSaudeException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			excption = e;
 		}
@@ -166,8 +161,8 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		ProfissionalSaude prof = null;
 		final String cpf=""+rand.nextInt();
 		final String cpf2=""+rand.nextInt();
-		int positiva = 0;
-		int negativa = 1;
+		boolean positiva = true;
+		boolean negativa = false;
 		
 		try {
 			prof = new ProfissionalSaude(TipoProfissional.MEDICO.toString(),
@@ -185,13 +180,13 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 
 		try {
 			
-			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==0);
+			assertTrue(controller.getAvaliacoesNegativas(prof)==0);
 			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
-			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+			assertTrue(controller.getAvaliacoesNegativas(prof)==1);
 			
-			assertTrue(controller.getAvaliacoesPositivas(prof.getNumeroRegistro())==0);
+			assertTrue(controller.getAvaliacoesPositivas(prof)==0);
 			controller.criarAvaliacao(cpf2,prof.getNumeroRegistro(),positiva);
-			assertTrue(controller.getAvaliacoesPositivas(prof.getNumeroRegistro())==1);
+			assertTrue(controller.getAvaliacoesPositivas(prof)==1);
 			
 		} catch (ProfissionalSaudeException e1) {
 			e1.printStackTrace();
@@ -212,7 +207,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		ProfissionalSaude prof = null;
 		final String cpf=""+rand.nextInt();
 		Exception exception=null;
-		int negativa=1;
+		boolean negativa=false;
 		
 		try {
 			prof = new ProfissionalSaude(TipoProfissional.MEDICO.toString(),
@@ -231,9 +226,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		try {
 			
 			//Cria pela primeira vez
-			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==0);
+			assertTrue(controller.getAvaliacoesNegativas(prof)==0);
 			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
-			assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+			assertTrue(controller.getAvaliacoesNegativas(prof)==1);
 			//Cria pela segunda vez
 			controller.criarAvaliacao(cpf,prof.getNumeroRegistro(),negativa);
 			fail();
@@ -243,7 +238,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		}
 		
 		assertNotNull(exception);
-		assertTrue(controller.getAvaliacoesNegativas(prof.getNumeroRegistro())==1);
+		assertTrue(controller.getAvaliacoesNegativas(prof)==1);
 
 		try {
 			controller.removerProfissional(prof);
