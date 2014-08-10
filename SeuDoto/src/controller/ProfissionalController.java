@@ -17,8 +17,7 @@ import util.Especialidade;
 public class ProfissionalController implements ProfissionalInterface {
 	
 	private static ProfissionalController instance;
-	
-	private DAOREST dao;
+
 	private DAOParse daoParse;
 	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
@@ -42,7 +41,6 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalSaude profissional;
 		try {
 			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
-			getDao().persistir(profissional);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ProfissionalSaudeException();
@@ -51,31 +49,31 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException{
-		//getDao().persistir(prof);
-		//getDao().cadastrarProfissional(prof);
 		getDaoParse().cadastrarProfissional(prof);
 	}
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorNome(String nome) {
-		return  getDao().findByName(nome);
+		//TODO
+		return null;
 	}
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
 			Especialidade especialidade) throws ProfissionalSaudeException {
-		return getDao().findByEspecialidade(especialidade.toString());
+		//TODO
+		return null;
 	}
 
 	@Override
 	public ProfissionalSaude buscarProfissionalPorIdentificacao(
 			String identificacao) {
-		return (ProfissionalSaude) getDao().findByIndentificao(identificacao);
+		return null;
 	}
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorTipo(TipoProfissional tipo) {
-		return getDao().findByTipo(tipo);
+		return null;
 	}
 
 	@Override
@@ -83,18 +81,18 @@ public class ProfissionalController implements ProfissionalInterface {
 			TipoProfissional tipoProfissional, int identificacao,
 			Especialidade especialidade, Convenio convenio) {
 		
-		
+		//TODO
 		return null;
 	}
 
 	@Override
 	public void atualizarProfissional(ProfissionalSaude profissional) {
-		getDao().update(profissional);
+		//TODO
 	}
 
 	@Override
 	public void removerProfissional(ProfissionalSaude profissional) throws ProfissionalSaudeException {
-		getDao().remover(profissional);
+		//TODO
 	}
 
 	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
@@ -106,17 +104,6 @@ public class ProfissionalController implements ProfissionalInterface {
 			resultadoBuscaSimples = resultado;
 	}
 
-	public DAOREST getDao() {
-		if(dao==null){
-			dao = DAOREST.getInstance(context);
-		}
-		return dao;
-	}
-
-	public void setDao(DAOREST dao) {
-		this.dao = dao;
-	}
-	
 	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio) throws ProfissionalSaudeException, ParseException{
 		ArrayList<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenio);
 		setResultadoBuscaSimples(resultado);
