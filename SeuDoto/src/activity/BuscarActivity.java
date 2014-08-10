@@ -3,8 +3,13 @@ package activity;
 import util.Convenio;
 import util.Especialidade;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.location.LocationListener;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -15,7 +20,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import com.example.seudoto.R;
+import com.parse.ParseException;
 
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
@@ -40,30 +47,15 @@ public class BuscarActivity extends Activity {
 		carregarConvenios();
 		carregarEspecialidades();
 		carregarTiposProfissionais();
-
-		final Toast alertaBusca = Toast.makeText(this,
-				"Nenhum profissional foi encontrado!", Toast.LENGTH_LONG);
 		
 		botaoPesquisar = (ImageButton) findViewById(R.id.botaoPesquisar);
 		botaoPesquisar.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				
-				try {
-					profissionalController.buscaSimples(getTipo(), getEspecialidade(), getConvenio(), getCidade());
-				} catch (ProfissionalSaudeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-				if(!profissionalController.getResultadoBuscaSimples().isEmpty()){
-					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
-					BuscarActivity.this.startActivity(telaLista);
-				}else{
-					alertaBusca.show();
-				}
-				
+
+				EsperandoConsulta espera = new EsperandoConsulta();
+				espera.execute(new String[] { "Seu Doto" });
 
 			}
 		});
@@ -171,7 +163,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] {"Selecione", "Joï¿½o Pessoa", "Campina Grande",
+		final String[] cidades = new String[] {"Selecione", "Joãoo Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -204,7 +196,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] {"Selecione", "Mï¿½dico", "Dentista",
+		final String[] tiposProfissionais = new String[] {"Selecione", "Médico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
@@ -280,5 +272,66 @@ public class BuscarActivity extends Activity {
 	private void setResultadoBusca(String resposta){
 		//TODO resposta busca
 	}
+	
+	
+	//Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
+	private class EsperandoConsulta extends AsyncTask<String, Integer, String>{
+
+			private ProgressDialog mProgressDialog;
+			
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				Context contexto = BuscarActivity.this;
+				mProgressDialog = new ProgressDialog(contexto);
+				
+				mProgressDialog.setMessage("Pesquisando...");
+				mProgressDialog.setIndeterminate(false);
+				mProgressDialog.setCancelable(false);
+				mProgressDialog.show();
+			}
+			
+			@Override
+			protected String doInBackground(String... params) {
+				
+				boolean concluido = false;
+				
+				try {
+					if(tipo!=null && especialidade!=null && convenio!=null){
+						try {
+							profissionalController.buscaSimples(tipo, especialidade,convenio);
+							concluido = true;
+						} catch (ParseException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					
+				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				while(!concluido){
+	
+				}
+				
+				return null;
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				mProgressDialog.dismiss();
+				if(!profissionalController.getResultadoBuscaSimples().isEmpty()){
+					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
+					startActivity(telaLista);
+				}else{
+					Toast alertaBusca = Toast.makeText(BuscarActivity.this,
+							"Nenhum profissional foi encontrado!", Toast.LENGTH_LONG);
+					alertaBusca.show();
+				}
+				
+			}
+		}
 
 }

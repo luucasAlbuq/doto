@@ -3,7 +3,10 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parse.ParseException;
+
 import android.content.Context;
+import dao.DAOParse;
 import dao.DAOREST;
 import exception.ProfissionalSaudeException;
 import model.ProfissionalSaude;
@@ -16,6 +19,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	private static ProfissionalController instance;
 	
 	private DAOREST dao;
+	private DAOParse daoParse;
 	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
 	private Context context;
@@ -47,8 +51,9 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException{
-		getDao().persistir(prof);
-		getDao().cadastrarProfissional(prof);
+		//getDao().persistir(prof);
+		//getDao().cadastrarProfissional(prof);
+		getDaoParse().cadastrarProfissional(prof);
 	}
 
 	@Override
@@ -112,16 +117,16 @@ public class ProfissionalController implements ProfissionalInterface {
 		this.dao = dao;
 	}
 	
-	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio,String cidade) throws ProfissionalSaudeException{
-		
-		ArrayList<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDao().buscaSimples(tipo, especialidade, convenio,cidade);
+	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio) throws ProfissionalSaudeException, ParseException{
+		ArrayList<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenio);
 		setResultadoBuscaSimples(resultado);
 		return resultado;
 	}
 	
 	
 	public List<ProfissionalSaude> buscarTodos() throws ProfissionalSaudeException{
-		return getDao().findAll();
+		setResultadoBuscaSimples((ArrayList<ProfissionalSaude>) getDaoParse().findAll());
+		return getResultadoBuscaSimples();
 	}
 
 	public static ProfissionalSaude getProfissionalSelecionado() {
@@ -144,5 +149,18 @@ public class ProfissionalController implements ProfissionalInterface {
 	public int getAvaliacoesNegativas(String crm) throws ProfissionalSaudeException{
 		return getDao().getAvaliacoesNegativas(crm);
 	}
+
+	public DAOParse getDaoParse() {
+		if(daoParse==null){
+			daoParse = DAOParse.getInstance();
+		}
+		return daoParse;
+	}
+
+	public void setDaoParse(DAOParse daoParse) {
+		this.daoParse = daoParse;
+	}
+	
+	
 
 }

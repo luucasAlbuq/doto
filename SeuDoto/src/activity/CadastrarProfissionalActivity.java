@@ -4,7 +4,10 @@ import model.ProfissionalSaude;
 import util.Convenio;
 import util.Especialidade;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,11 +24,14 @@ import android.widget.Toast;
 import com.example.seudoto.R;
 
 import controller.ProfissionalController;
+import exception.ProfissionalSaudeException;
 
 public class CadastrarProfissionalActivity extends Activity {
 
 	private String nome, indentificacao, tipo, especialidade, convenio;
 	private ProfissionalController controler;
+	private ProfissionalSaude profissionalParaCadastrar = null;
+	private EditText nomeText,numeroRegistro;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,19 +45,19 @@ public class CadastrarProfissionalActivity extends Activity {
 
 		controler = ProfissionalController.getInstance(this);
 
-		final EditText nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
-		final EditText numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
+		nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
+		numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
 
 		ImageButton salvar = (ImageButton) findViewById(R.id.SaveimageView);
-
-		final Toast alertaSucesso = Toast.makeText(this,
-				"Profissional Cadastrado com Sucesso", Toast.LENGTH_LONG);
+		
+		
 		final Toast alertaFalha = Toast.makeText(this,
 				"Erro ao cadastrado um profissional", Toast.LENGTH_LONG);
-		final Toast alertaCampos = Toast.makeText(this,
-				"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios", Toast.LENGTH_LONG);
-		final Toast alertaCRM = Toast.makeText(this,
-				"Número de registro já foi cadastrado", Toast.LENGTH_LONG);
+		
+		final Toast alertaCampos = Toast
+				.makeText(this,"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios",Toast.LENGTH_LONG);
+		
+		
 		salvar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -61,27 +67,21 @@ public class CadastrarProfissionalActivity extends Activity {
 				indentificacao = numeroRegistro.getText().toString();
 
 				try {
-					
-					if(isCamposValidos()){
-						if(controler.getDao().isCrmValido(numeroRegistro.getText().toString())){
-							ProfissionalSaude prof = new ProfissionalSaude(tipo, numeroRegistro.getText().toString(), nome, especialidade, convenio);
-							controler.cadastrarProfissionalSaude(prof);
-							
-							nomeText.setText("");
-							numeroRegistro.setText("");
-							alertaSucesso.show();
-						}else{
-							alertaCRM.show();
-							numeroRegistro.setText("");
-						}
-						
-						
-					}else{
+
+					if (isCamposValidos()) {
+							profissionalParaCadastrar = new ProfissionalSaude(tipo,
+									numeroRegistro.getText().toString(), nome,
+									especialidade, convenio);
+
+							// Mostra um progress bar informando que o profissional
+							// ta sendo persistido no BD online
+							EsperandoConsulta espera = new EsperandoConsulta();
+							espera.execute(new String[] { "Seu Doto" });
+
+					} else {
 						alertaCampos.show();
 					}
-					
-					
-					
+
 				} catch (Exception e) {
 					alertaFalha.show();
 				}
@@ -211,8 +211,6 @@ public class CadastrarProfissionalActivity extends Activity {
 					public void onItemSelected(AdapterView<?> parent,
 							View view, int position, long id) {
 
-						
-
 					}
 
 					@Override
@@ -258,10 +256,72 @@ public class CadastrarProfissionalActivity extends Activity {
 				});
 
 	}
-	
-	private boolean isCamposValidos(){
-		return tipo!=null && !tipo.trim().equals("") && indentificacao!=null && !indentificacao.trim().equals("");
+
+	private boolean isCamposValidos() {
+		return tipo != null && !tipo.trim().equals("")
+				&& indentificacao != null && !indentificacao.trim().equals("");
 	}
-	
-	
+
+	// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
+	private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
+
+		private ProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Context contexto = CadastrarProfissionalActivity.this;
+			mProgressDialog = new ProgressDialog(contexto);
+			mProgressDialog.setMessage("Enviando dados");
+			mProgressDialog.setIndeterminate(false);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+
+			boolean isCrmunico = false;
+			if(profissionalParaCadastrar!=null){
+				isCrmunico = controler.getDaoParse().isCrmUnico(profissionalParaCadastrar.getNumeroRegistro());
+			}
+			
+			if(!isCrmunico){
+				Toast alertaCRM = Toast.makeText(CadastrarProfissionalActivity.this,
+							"Número de registro fornecido já foi cadastrado", Toast.LENGTH_LONG);
+				alertaCRM.show();
+				if(numeroRegistro!=null){
+					numeroRegistro.setText("");
+				}
+			}
+			
+			else if(isCrmunico){
+				try {
+					controler.cadastrarProfissionalSaude(profissionalParaCadastrar);
+				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+
+			mProgressDialog.dismiss();
+			
+			if(nomeText!=null){
+				nomeText.setText("");
+			}if(numeroRegistro!=null){
+				numeroRegistro.setText("");
+			}
+			
+			 Toast alertaSucesso = Toast.makeText(CadastrarProfissionalActivity.this,
+					"Profissional Cadastrado com Sucesso", Toast.LENGTH_LONG);
+			alertaSucesso.show();
+		}
+	}
+
 }
