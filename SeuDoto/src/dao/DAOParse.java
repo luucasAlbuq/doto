@@ -35,6 +35,12 @@ public class DAOParse {
 		return instance;
 	}
 	
+	/**
+	 * Método responsavel por persistir um profissional na nuvem, 
+	 * caso esteja sem conexão o profissional será cadastrado posteriormente quando a conexão voltar.
+	 * @param ProfissionalSaude prof
+	 * @throws ProfissionalSaudeException
+	 */
 	public void cadastrarProfissional(ProfissionalSaude prof) throws ProfissionalSaudeException{
 		ParseObject objeto = null;
 		if(isCrmUnico(prof.getNumeroRegistro())){
@@ -54,6 +60,12 @@ public class DAOParse {
 		}
 	}
 	
+	/**
+	 * Verifica se crm já está cadastrada no BD, 
+	 * se já estiver um profissional cadastrado com esse crm retorna false
+	 * @param String crm
+	 * @return boolean
+	 */
 	@SuppressWarnings("unchecked")
 	public boolean isCrmUnico(String crm){
 		boolean  result = true;
@@ -74,6 +86,13 @@ public class DAOParse {
 		return result;
 	}
 	
+	/**
+	 * Método responsavel por receber uma objeto Parse 
+	 * e retornar um objeto ProfissionalSaude equivalente aos objeto Parse
+	 * @param ParseObject object
+	 * @return ProfissionalSaude profissional
+	 * @throws ProfissionalSaudeException
+	 */
 	private ProfissionalSaude montaProfissionalSaude(ParseObject object) throws ProfissionalSaudeException{
 		String nome = object.getString(ProfissionalTableEnum.COLUNA_NOME.toString());
 		String crm = object.getString(ProfissionalTableEnum.COLUNA_CRM.toString());
@@ -83,6 +102,10 @@ public class DAOParse {
 		return new ProfissionalSaude(tipo, crm, nome, especialidade, "Unimed");
 	}
 	
+	/**
+	 * Retorna todos os profissionais cadastrados no BD.
+	 * @return List<ProfissionalSaude> profissionais
+	 */
 	@SuppressWarnings("unchecked")
 	public List<ProfissionalSaude> findAll(){
 		
@@ -105,7 +128,15 @@ public class DAOParse {
 	}
 	
 	
-	
+	/**
+	 * Metodo responsável por realiza uma busca de profissionais tendo como parametros Especialiadade, Tipo de profissinal e Convênio.
+	 * Se nenhum desses paramtros for especificado será retornada uma lista com todos os profissionais cadastrados.
+	 * @param String especialidade
+	 * @param String tipo
+	 * @param String convenio
+	 * @return ArrayList<ProfissionalSaude> profissionais
+	 * @throws ParseException
+	 */
 	public ArrayList<ProfissionalSaude> buscaSimples(String especialidade, String tipo, String convenio) throws ParseException{
 		ArrayList<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
 		final String SELECIONE = "SELECIONE";
@@ -167,7 +198,10 @@ public class DAOParse {
 		return profisisonais;
 	}
 	
-	
+	/**
+	 * Método responsavel por retorna todas as avaliações cadastradas.
+	 * @return ArrayList<Avaliacao> avaliacoes
+	 */
 	public ArrayList<Avaliacao> getAllAvaliacoes(){
 		List<ParseObject> avaliacoes=null;
 		
@@ -183,6 +217,12 @@ public class DAOParse {
 		return montarAvaliacao(avaliacoes);
 	}
 	
+	/**
+	 * Método responsavel por receber uma lusta de objetos Parse 
+	 * e retornar ums lista de objetos ProfissionalSaude equivalente aos objeto Parse
+	 * @param  List<ParseObject> objs
+	 * @return ArrayList<Avaliacao> avaliacao
+	 */
 	private ArrayList<Avaliacao> montarAvaliacao(List<ParseObject> objs){
 		ArrayList<Avaliacao> avaliacaos = new ArrayList<Avaliacao>();
 		
@@ -196,6 +236,14 @@ public class DAOParse {
 		return avaliacaos;
 	}
 	
+	/**
+	 * Método responsavel por criar uma avaliação única e persisti-la no BD.
+	 * Sendo true equivalente a uma avaliação positiva e false a uma avaliacao negativa.
+	 * @param String crm
+	 * @param String idUser
+	 * @param boolean avaliacao
+	 * @throws ProfissionalSaudeException
+	 */
 	public void criarAvaliacao(String crm,String idUser, boolean avaliacao) throws ProfissionalSaudeException{
 		if(crm!=null && !crm.trim().equals("") && idUser!=null && !idUser.trim().equals("")){
 			if(isAvaliacaoUnica(idUser, crm)){
@@ -219,7 +267,11 @@ public class DAOParse {
 		}
 	}
 	
-	
+	/**
+	 * Retorna o número de avaliações positivas de um Profissional 
+	 * @param ProfissionalSaude prof
+	 * @return Integer avaliaocoesPositivas
+	 */
 	public Integer getAvaliacoesPositivas(ProfissionalSaude prof){
 		Integer avalPositivas = null;
 		
@@ -241,6 +293,11 @@ public class DAOParse {
 		return avalPositivas;
 	}
 	
+	/**
+	 * Retorna o número de avaliações negativas de um Profissional
+	 * @param ProfissionalSaude prof
+	 * @return Integer avaliacoesNegativas
+	 */
 	public Integer getAvaliacoesNegativas(ProfissionalSaude prof){
 		Integer avalNegativas = null;
 		
@@ -262,6 +319,12 @@ public class DAOParse {
 		return avalNegativas;
 	}
 	
+	/**
+	 * Método responsavel por verificar se algum usuário está tentando avaliar um profissional mais de uma vez.
+	 * @param String idUser
+	 * @param String crm
+	 * @return boolean isValido
+	 */
 	public boolean isAvaliacaoUnica(String idUser, String crm){
 		boolean isValido = true;
 		

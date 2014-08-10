@@ -4,6 +4,7 @@ import model.ProfissionalSaude;
 
 import com.example.seudoto.R;
 import com.example.seudoto.R.layout;
+import com.parse.ParseException;
 
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
@@ -51,34 +52,21 @@ public class DetalhesProfissionalActivity extends Activity {
 		
 		final Toast alertaFalha = Toast.makeText(this,
 				"Falha ao computar a Avaliação", Toast.LENGTH_LONG);
-		final Toast alertaAvaliacao = Toast.makeText(this,
-				"Você já avaliou esse profissional anteriormente!", Toast.LENGTH_LONG);
+		
 		
 		
 		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);
 		likeBotao.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
-				try{
-					
-					avaliacao=true;
-					String crm = profissionalSaude.getNumeroRegistro();
-					if(controller.getDao().isAvaliacaoValida(IDUSER, crm)){
-						
-						EsperandoConsulta espera = new EsperandoConsulta();
-						espera.execute(new String[]{"Seu Doto"});
-						
-					}else{
-						alertaAvaliacao.show();
-					}
-				}catch (SQLiteAbortException e){
-					alertaFalha.show();
-				} catch (ProfissionalSaudeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
+
+				setAvaliacaoPositiva(true);
+				String crm = profissionalSaude.getNumeroRegistro();
+
+				EsperandoConsulta espera = new EsperandoConsulta();
+				espera.execute(new String[] { "Seu Doto" });
+
 			}
 		});
 		
@@ -87,25 +75,11 @@ public class DetalhesProfissionalActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				try{
-					avaliacao = false;
-					String crm = profissionalSaude.getNumeroRegistro(); 
-					if(controller.getDao().isAvaliacaoValida(IDUSER,crm )){
-						
-						EsperandoConsulta espera = new EsperandoConsulta();
-						espera.execute(new String[]{"Seu Doto"});
-						
-					}else{
-						alertaAvaliacao.show();
-					}
+				setAvaliacaoPositiva(false);
+				String crm = profissionalSaude.getNumeroRegistro(); 
 					
-					
-				}catch(SQLiteAbortException e){
-					alertaFalha.show();
-				} catch (ProfissionalSaudeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+					EsperandoConsulta espera = new EsperandoConsulta();
+					espera.execute(new String[]{"Seu Doto"});
 				
 			}
 		});
@@ -186,6 +160,16 @@ public class DetalhesProfissionalActivity extends Activity {
 	}
 
 
+	public boolean isAvaliacaoPositiva() {
+		return avaliacao;
+	}
+
+	public void setAvaliacaoPositiva(boolean avaliacao) {
+		this.avaliacao = avaliacao;
+	}
+
+
+
 		// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
 		private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
 
@@ -214,9 +198,9 @@ public class DetalhesProfissionalActivity extends Activity {
 					try {
 						controller.criarAvaliacao(IDUSER, crm, avaliacao);
 						
-						if(avaliacao){
+						if(isAvaliacaoPositiva()){
 							profissionalSaude.addAvaliacaoPositiva();
-						}else if(!avaliacao){
+						}else if(!isAvaliacaoPositiva()){
 							profissionalSaude.addAvaliacaoNegativa();
 						}
 					} catch (ProfissionalSaudeException e) {
