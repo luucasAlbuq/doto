@@ -9,10 +9,11 @@ import model.TipoProfissional;
 import org.junit.Assert;
 import org.junit.Before;
 
+import com.parse.ParseException;
+
 import util.Convenio;
 import util.Especialidade;
 import util.MensagemExcessao;
-
 import android.test.AndroidTestCase;
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
@@ -47,10 +48,19 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			fail();
 		}
 
 		// Verifica se salvou
-		assertTrue(controller.buscarTodos().contains(prof));
+		try {
+			assertTrue(controller.buscarTodos().contains(prof));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			fail();
+		}
 
 		try {
 			controller.removerProfissional(prof);
@@ -71,8 +81,15 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			excption = e;
+		} catch (ParseException e) {
+			excption = e;
 		}
-		assertFalse(controller.buscarTodos().contains(prof));
+		try {
+			assertFalse(controller.buscarTodos().contains(prof));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		assertNotNull(excption);
 		assertEquals(EXCESSAO, excption.getMessage());
 	}
@@ -104,6 +121,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			Assert.fail("Nao Deveria ter lancado excessao");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
@@ -134,7 +154,12 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 
 		assertNotNull(excption);
 		assertEquals(EXCESSAO, excption.getMessage());
-		assertFalse(controller.buscarTodos().contains(prof));
+		try {
+			assertFalse(controller.buscarTodos().contains(prof));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 	
@@ -151,6 +176,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			excption = e;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		assertNotNull(excption);
 		assertEquals(MensagemExcessao.CRM_INVALIDO.toString(), excption.getMessage());
@@ -176,6 +204,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
@@ -191,6 +222,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e1) {
 			e1.printStackTrace();
 			fail();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
@@ -221,6 +255,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
@@ -235,10 +272,18 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e1) {
 			e1.printStackTrace();
 			exception = e1;
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		assertNotNull(exception);
-		assertTrue(controller.getAvaliacoesNegativas(prof)==1);
+		try {
+			assertTrue(controller.getAvaliacoesNegativas(prof)==1);
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
 			controller.removerProfissional(prof);
@@ -266,6 +311,9 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		assertNotNull(profissionais);

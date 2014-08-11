@@ -48,7 +48,7 @@ public class ProfissionalController implements ProfissionalInterface {
 		
 	}
 	
-	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException{
+	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		getDaoParse().cadastrarProfissional(prof);
 	}
 
@@ -111,7 +111,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	
-	public List<ProfissionalSaude> buscarTodos() throws ProfissionalSaudeException{
+	public List<ProfissionalSaude> buscarTodos() throws ProfissionalSaudeException, ParseException{
 		setResultadoBuscaSimples((ArrayList<ProfissionalSaude>) getDaoParse().findAll());
 		return getResultadoBuscaSimples();
 	}
@@ -125,15 +125,15 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalController.profissionalSelecionado = profissionalSelecionado;
 	}
 	
-	public void criarAvaliacao(String idUser, String crm, boolean avaliacao) throws ProfissionalSaudeException{
+	public void criarAvaliacao(String idUser, String crm, boolean avaliacao) throws ProfissionalSaudeException, ParseException{
 		getDaoParse().criarAvaliacao(crm, idUser, avaliacao);
 	}
 	
-	public int getAvaliacoesPositivas(ProfissionalSaude prof) throws ProfissionalSaudeException{
+	public int getAvaliacoesPositivas(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		return getDaoParse().getAvaliacoesPositivas(prof);
 	}
 	
-	public int getAvaliacoesNegativas(ProfissionalSaude prof) throws ProfissionalSaudeException{
+	public int getAvaliacoesNegativas(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		return getDaoParse().getAvaliacoesNegativas(prof);
 	}
 

@@ -22,6 +22,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.seudoto.R;
+import com.parse.ParseException;
 
 import controller.ProfissionalController;
 import exception.ProfissionalSaudeException;
@@ -283,7 +284,12 @@ public class CadastrarProfissionalActivity extends Activity {
 
 			boolean isCrmunico = false;
 			if(profissionalParaCadastrar!=null){
-				isCrmunico = controler.getDaoParse().isCrmUnico(profissionalParaCadastrar.getNumeroRegistro());
+				try {
+					isCrmunico = controler.getDaoParse().isCrmUnico(profissionalParaCadastrar.getNumeroRegistro());
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			if(!isCrmunico){
@@ -299,6 +305,9 @@ public class CadastrarProfissionalActivity extends Activity {
 				try {
 					controler.cadastrarProfissionalSaude(profissionalParaCadastrar);
 				} catch (ProfissionalSaudeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

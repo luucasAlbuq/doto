@@ -40,8 +40,9 @@ public class DAOParse {
 	 * caso esteja sem conexão o profissional será cadastrado posteriormente quando a conexão voltar.
 	 * @param ProfissionalSaude prof
 	 * @throws ProfissionalSaudeException
+	 * @throws ParseException 
 	 */
-	public void cadastrarProfissional(ProfissionalSaude prof) throws ProfissionalSaudeException{
+	public void cadastrarProfissional(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		ParseObject objeto = null;
 		if(isCrmUnico(prof.getNumeroRegistro())){
 			objeto = new ParseObject(ProfissionalTableEnum.NOME_CLASSE.toString());
@@ -65,9 +66,10 @@ public class DAOParse {
 	 * se já estiver um profissional cadastrado com esse crm retorna false
 	 * @param String crm
 	 * @return boolean
+	 * @throws ParseException 
 	 */
 	@SuppressWarnings("unchecked")
-	public boolean isCrmUnico(String crm){
+	public boolean isCrmUnico(String crm) throws ParseException{
 		boolean  result = true;
 		List<ParseObject> objs=null;
 		
@@ -76,8 +78,7 @@ public class DAOParse {
 		try {
 			 objs = query.find();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		if(objs!=null && objs.size()>0){
 			result =false;
@@ -105,9 +106,11 @@ public class DAOParse {
 	/**
 	 * Retorna todos os profissionais cadastrados no BD.
 	 * @return List<ProfissionalSaude> profissionais
+	 * @throws ProfissionalSaudeException 
+	 * @throws ParseException 
 	 */
 	@SuppressWarnings("unchecked")
-	public List<ProfissionalSaude> findAll(){
+	public List<ProfissionalSaude> findAll() throws ProfissionalSaudeException, ParseException{
 		
 		ParseQuery query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 		query.setLimit(50);
@@ -118,11 +121,11 @@ public class DAOParse {
 					ProfissionalSaude prof = montaProfissionalSaude(obj);
 					todosProfissionais.add(prof);
 				} catch (ProfissionalSaudeException e1) {
-					e1.printStackTrace();
+					throw e1;
 				}
 			}
 		} catch (ParseException e) {
-			e.printStackTrace();
+			throw e;
 		}	
 		return getTodosProfissionais();
 	}
@@ -136,8 +139,9 @@ public class DAOParse {
 	 * @param String convenio
 	 * @return ArrayList<ProfissionalSaude> profissionais
 	 * @throws ParseException
+	 * @throws ProfissionalSaudeException 
 	 */
-	public ArrayList<ProfissionalSaude> buscaSimples(String especialidade, String tipo, String convenio) throws ParseException{
+	public ArrayList<ProfissionalSaude> buscaSimples(String especialidade, String tipo, String convenio) throws ParseException, ProfissionalSaudeException{
 		ArrayList<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
 		final String SELECIONE = "SELECIONE";
 		ParseQuery query = null;
@@ -201,8 +205,9 @@ public class DAOParse {
 	/**
 	 * Método responsavel por retorna todas as avaliações cadastradas.
 	 * @return ArrayList<Avaliacao> avaliacoes
+	 * @throws ParseException 
 	 */
-	public ArrayList<Avaliacao> getAllAvaliacoes(){
+	public ArrayList<Avaliacao> getAllAvaliacoes() throws ParseException{
 		List<ParseObject> avaliacoes=null;
 		
 		ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
@@ -210,8 +215,7 @@ public class DAOParse {
 		try {
 			avaliacoes= query.find();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		
 		return montarAvaliacao(avaliacoes);
@@ -243,8 +247,9 @@ public class DAOParse {
 	 * @param String idUser
 	 * @param boolean avaliacao
 	 * @throws ProfissionalSaudeException
+	 * @throws ParseException 
 	 */
-	public void criarAvaliacao(String crm,String idUser, boolean avaliacao) throws ProfissionalSaudeException{
+	public void criarAvaliacao(String crm,String idUser, boolean avaliacao) throws ProfissionalSaudeException, ParseException{
 		if(crm!=null && !crm.trim().equals("") && idUser!=null && !idUser.trim().equals("")){
 			if(isAvaliacaoUnica(idUser, crm)){
 				ParseObject aval = new ParseObject(AvaliacaoTableEnum.NOME_CLASSE.toString());
@@ -271,8 +276,9 @@ public class DAOParse {
 	 * Retorna o número de avaliações positivas de um Profissional 
 	 * @param ProfissionalSaude prof
 	 * @return Integer avaliaocoesPositivas
+	 * @throws ParseException 
 	 */
-	public Integer getAvaliacoesPositivas(ProfissionalSaude prof){
+	public Integer getAvaliacoesPositivas(ProfissionalSaude prof) throws ParseException{
 		Integer avalPositivas = null;
 		
 		if(prof.getNumeroRegistro()!=null){
@@ -285,8 +291,7 @@ public class DAOParse {
 				 objs = query.find();
 				 avalPositivas = new Integer(objs.size());
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		
@@ -297,8 +302,9 @@ public class DAOParse {
 	 * Retorna o número de avaliações negativas de um Profissional
 	 * @param ProfissionalSaude prof
 	 * @return Integer avaliacoesNegativas
+	 * @throws ParseException 
 	 */
-	public Integer getAvaliacoesNegativas(ProfissionalSaude prof){
+	public Integer getAvaliacoesNegativas(ProfissionalSaude prof) throws ParseException{
 		Integer avalNegativas = null;
 		
 		if(prof.getNumeroRegistro()!=null){
@@ -311,8 +317,7 @@ public class DAOParse {
 				 objs = query.find();
 				 avalNegativas = new Integer(objs.size());
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		
@@ -324,8 +329,9 @@ public class DAOParse {
 	 * @param String idUser
 	 * @param String crm
 	 * @return boolean isValido
+	 * @throws ParseException 
 	 */
-	public boolean isAvaliacaoUnica(String idUser, String crm){
+	public boolean isAvaliacaoUnica(String idUser, String crm) throws ParseException{
 		boolean isValido = true;
 		
 		List<ParseObject> objs=null;
@@ -337,8 +343,7 @@ public class DAOParse {
 			try {
 				 objs = query.find();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		

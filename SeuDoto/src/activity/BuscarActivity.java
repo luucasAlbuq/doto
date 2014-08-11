@@ -302,19 +302,17 @@ public class BuscarActivity extends Activity {
 							profissionalController.buscaSimples(tipo, especialidade,convenio);
 							concluido = true;
 						} catch (ParseException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							concluido = false;
 						}
 					}
 					
 				} catch (ProfissionalSaudeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					concluido = false;
 				}
 				
-				while(!concluido){
+/*				while(!concluido){
 	
-				}
+				}*/
 				
 				return null;
 			}

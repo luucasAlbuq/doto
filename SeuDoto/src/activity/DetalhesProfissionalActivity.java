@@ -191,7 +191,12 @@ public class DetalhesProfissionalActivity extends Activity {
 
 				
 				String crm = profissionalSaude.getNumeroRegistro();
-				setAvaliacaoUnica( controller.getDaoParse().isAvaliacaoUnica(IDUSER, crm));
+				try {
+					setAvaliacaoUnica( controller.getDaoParse().isAvaliacaoUnica(IDUSER, crm));
+				} catch (ParseException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 				
 				if(isAvaliacaoUnica){
@@ -204,6 +209,9 @@ public class DetalhesProfissionalActivity extends Activity {
 							profissionalSaude.addAvaliacaoNegativa();
 						}
 					} catch (ProfissionalSaudeException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
