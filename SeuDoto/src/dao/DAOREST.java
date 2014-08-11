@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
 import java.util.logging.Logger;
+
+import dao.exception.ErroDataBase;
 import util.MensagemExcessao;
 import exception.ProfissionalSaudeException;
 import model.Avaliacao;
@@ -515,7 +516,7 @@ public class DAOREST implements DAOInterface {
 		return Collections.emptyList(); 
 	}
 
-	public boolean cadastrarProfissional(ProfissionalSaude prof) {
+	public boolean cadastrarProfissional(ProfissionalSaude prof) throws ErroDataBase {
 
 		if (!crmJaCadastrado(prof)) {
 
@@ -541,8 +542,7 @@ public class DAOREST implements DAOInterface {
 				conn.close();
 				return true;
 			} catch (Exception e) {
-				System.out.println("ERRO");
-				System.out.println(e);
+				throw new ErroDataBase(e.getMessage());
 
 			}
 		}
@@ -550,7 +550,7 @@ public class DAOREST implements DAOInterface {
 		return false;
 	}
 
-	private boolean crmJaCadastrado(ProfissionalSaude prof) {
+	private boolean crmJaCadastrado(ProfissionalSaude prof) throws ErroDataBase {
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
@@ -566,12 +566,12 @@ public class DAOREST implements DAOInterface {
 
 			conn.close();
 		} catch (Exception e) {
-			// TODO tratar a exception
+			throw new ErroDataBase(e.getMessage());
 		}
 		return false;
 	}
 
-	public void adicionarConvenio(String crm, String convenio) {
+	public void adicionarConvenio(String crm, String convenio) throws ErroDataBase {
 		try {
 			Class.forName(DRIVER).newInstance();
 			Connection conn = DriverManager.getConnection(URL + DB_NAME,
@@ -587,12 +587,11 @@ public class DAOREST implements DAOInterface {
 			conn.close();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ErroDataBase(e.getMessage());
 		}
 	}
 
-	public boolean existeCrm(String crm) {
+	public boolean existeCrm(String crm) throws ErroDataBase {
 
 		try {
 			Class.forName(DRIVER).newInstance();
@@ -609,7 +608,7 @@ public class DAOREST implements DAOInterface {
 
 			conn.close();
 		} catch (Exception e) {
-			// TODO tratar exception
+			throw new ErroDataBase(e.getMessage());
 
 		}
 		return false;
