@@ -23,7 +23,7 @@ public class DAOParse {
 	private static List<ParseObject> resultadoBusca=null;
 	private static ArrayList<ProfissionalSaude> todosProfissionais = new ArrayList<ProfissionalSaude>();
 	
-	public DAOParse() {
+	private DAOParse() {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -36,8 +36,8 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por persistir um profissional na nuvem, 
-	 * caso esteja sem conexão o profissional será cadastrado posteriormente quando a conexão voltar.
+	 * Mï¿½todo responsavel por persistir um profissional na nuvem, 
+	 * caso esteja sem conexï¿½o o profissional serï¿½ cadastrado posteriormente quando a conexï¿½o voltar.
 	 * @param ProfissionalSaude prof
 	 * @throws ProfissionalSaudeException
 	 * @throws ParseException 
@@ -62,8 +62,8 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Verifica se crm já está cadastrada no BD, 
-	 * se já estiver um profissional cadastrado com esse crm retorna false
+	 * Verifica se crm jï¿½ estï¿½ cadastrada no BD, 
+	 * se jï¿½ estiver um profissional cadastrado com esse crm retorna false
 	 * @param String crm
 	 * @return boolean
 	 * @throws ParseException 
@@ -88,7 +88,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por receber uma objeto Parse 
+	 * Mï¿½todo responsavel por receber uma objeto Parse 
 	 * e retornar um objeto ProfissionalSaude equivalente aos objeto Parse
 	 * @param ParseObject object
 	 * @return ProfissionalSaude profissional
@@ -132,8 +132,8 @@ public class DAOParse {
 	
 	
 	/**
-	 * Metodo responsável por realiza uma busca de profissionais tendo como parametros Especialiadade, Tipo de profissinal e Convênio.
-	 * Se nenhum desses paramtros for especificado será retornada uma lista com todos os profissionais cadastrados.
+	 * Metodo responsï¿½vel por realiza uma busca de profissionais tendo como parametros Especialiadade, Tipo de profissinal e Convï¿½nio.
+	 * Se nenhum desses paramtros for especificado serï¿½ retornada uma lista com todos os profissionais cadastrados.
 	 * @param String especialidade
 	 * @param String tipo
 	 * @param String convenio
@@ -203,11 +203,11 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por retorna todas as avaliações cadastradas.
+	 * Mï¿½todo responsavel por retorna todas as avaliaï¿½ï¿½es cadastradas.
 	 * @return ArrayList<Avaliacao> avaliacoes
 	 * @throws ParseException 
 	 */
-	public ArrayList<Avaliacao> getAllAvaliacoes() throws ParseException{
+	private ArrayList<Avaliacao> getAllAvaliacoes() throws ParseException{
 		List<ParseObject> avaliacoes=null;
 		
 		ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
@@ -222,7 +222,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por receber uma lusta de objetos Parse 
+	 * Mï¿½todo responsavel por receber uma lusta de objetos Parse 
 	 * e retornar ums lista de objetos ProfissionalSaude equivalente aos objeto Parse
 	 * @param  List<ParseObject> objs
 	 * @return ArrayList<Avaliacao> avaliacao
@@ -241,8 +241,8 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por criar uma avaliação única e persisti-la no BD.
-	 * Sendo true equivalente a uma avaliação positiva e false a uma avaliacao negativa.
+	 * Mï¿½todo responsavel por criar uma avaliaï¿½ï¿½o ï¿½nica e persisti-la no BD.
+	 * Sendo true equivalente a uma avaliaï¿½ï¿½o positiva e false a uma avaliacao negativa.
 	 * @param String crm
 	 * @param String idUser
 	 * @param boolean avaliacao
@@ -273,7 +273,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Retorna o número de avaliações positivas de um Profissional 
+	 * Retorna o nï¿½mero de avaliaï¿½ï¿½es positivas de um Profissional 
 	 * @param ProfissionalSaude prof
 	 * @return Integer avaliaocoesPositivas
 	 * @throws ParseException 
@@ -299,7 +299,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Retorna o número de avaliações negativas de um Profissional
+	 * Retorna o nï¿½mero de avaliaï¿½ï¿½es negativas de um Profissional
 	 * @param ProfissionalSaude prof
 	 * @return Integer avaliacoesNegativas
 	 * @throws ParseException 
@@ -325,7 +325,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por verificar se algum usuário está tentando avaliar um profissional mais de uma vez.
+	 * Mï¿½todo responsavel por verificar se algum usuï¿½rio estï¿½ tentando avaliar um profissional mais de uma vez.
 	 * @param String idUser
 	 * @param String crm
 	 * @return boolean isValido
