@@ -41,7 +41,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		ProfissionalSaude prof = null;
 
 		try {
-			prof = new ProfissionalSaude("Mï¿½dico", "" + rand.nextInt(),
+			prof = new ProfissionalSaude("Médico", "" + rand.nextInt(),
 					"Lucas Almeida", Especialidade.CARDIOLOGISTA.toString(),
 					Convenio.SMILE.toString());
 			controller.cadastrarProfissionalSaude(prof);
@@ -106,7 +106,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 
 			controller.cadastrarProfissionalSaude(prof.getNome(),
 					prof.getTipo(), prof.getNumeroRegistro(),
-					prof.getEspecialidade(), prof.getConvenio());
+					prof.getEspecialidade(), prof.getConvenios().get(0));
 
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
@@ -143,9 +143,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		try {
 			prof = new ProfissionalSaude(TipoProfissional.MEDICO.toString(), ""+rand.nextInt(), "Fulano gaspar", 
 					Especialidade.CARDIOLOGISTA.toString(), Convenio.UNIMED.toString());
+			
 			controller.cadastrarProfissionalSaude(null, prof.getTipo(),
 					prof.getNumeroRegistro(), prof.getEspecialidade(),
-					prof.getConvenio());
+					prof.getConvenios().get(0));
+			
 			Assert.fail("Deveria ter lancado excessao");
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();

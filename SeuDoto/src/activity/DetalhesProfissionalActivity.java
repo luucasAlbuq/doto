@@ -135,7 +135,7 @@ public class DetalhesProfissionalActivity extends Activity {
 
 		especialidadeText.setText(prof.getEspecialidade());
 
-		convenioText.setText(prof.getConvenio());
+		convenioText.setText(prof.toStringConveios());
 
 		tipoText.setText(prof.getTipo().toString());
 		avaliacaoPosi.setText(""+profissionalSaude.getAvaliacoesPositivas());

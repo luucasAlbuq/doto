@@ -3,7 +3,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry kind="lib" path="libs/mysql-connector-java-5.1.31-bin.jar"/>
 	<classpathentry kind="lib" path="libs/robotium-solo-5.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/Parse-1.5.1.jar"/>
 	<classpathentry kind="src" path="src"/>

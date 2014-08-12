@@ -19,10 +19,10 @@ public class ProfissionalSaude implements Serializable {
 	private String nome;
 	
 	private String especialidade;
-	private String convenio;
+	private ArrayList<String> convenios;
 	private Integer avaliacoesPositivas, avaliacoesNegativas;
 
-	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, String convenio)
+	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, ArrayList<String> convenio)
 			throws ProfissionalSaudeException {
 		
 		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
@@ -33,12 +33,36 @@ public class ProfissionalSaude implements Serializable {
 			avaliacoesNegativas = new Integer(0);
 			avaliacoesPositivas = new Integer(0);
 			
+			if(convenio!=null){
+				convenios = convenio;
+			}else{
+				convenios = new ArrayList<String>();
+			}
+			
 		} else {
 			throw new ProfissionalSaudeException("Parametros invalidos");
 		}
 
+	}
 	
-		this.convenio = convenio;
+	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, String convenio)
+			throws ProfissionalSaudeException {
+		
+		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
+			this.tipo = tipo;
+			this.numeroRegistro = numeroRegistro;
+			this.especialidade = especialidade;
+			this.nome = nome;
+			avaliacoesNegativas = new Integer(0);
+			avaliacoesPositivas = new Integer(0);
+			convenios = new ArrayList<String>();
+			if(convenio!=null && !convenio.equals("")){
+				convenios.add(convenio);
+			}
+			
+		} else {
+			throw new ProfissionalSaudeException("Parametros invalidos");
+		}
 
 	}
 
@@ -76,7 +100,7 @@ public class ProfissionalSaude implements Serializable {
 	}
 
 	public void addConvenio(String convenio) {
-		this.convenio = this.convenio + "\n" + convenio;
+		convenios.add(convenio);
 	}
 
 	public String getNumeroRegistro() {
@@ -103,79 +127,12 @@ public class ProfissionalSaude implements Serializable {
 		this.especialidade = especialidade;
 	}
 
-	public String getConvenio() {
-		return convenio;
+	public ArrayList<String> getConvenios() {
+		return convenios;
 	}
 
-	public void setConvenio(String convenio) {
-		this.convenio = convenio;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((convenio == null) ? 0 : convenio.hashCode());
-		result = prime * result
-				+ ((especialidade == null) ? 0 : especialidade.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result
-				+ ((numeroRegistro == null) ? 0 : numeroRegistro.hashCode());
-		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj){
-			return true;
-		}
-		if (obj == null){
-			return false;
-		}
-			
-		if (getClass() != obj.getClass()){
-			return false;
-			}
-		ProfissionalSaude other = (ProfissionalSaude) obj;
-		if (convenio == null) {
-			if (other.convenio != null){
-				return false;
-				}
-		} else if (!convenio.equals(other.convenio)){
-			return false;
-			}
-
-		if (especialidade == null) {
-			if (other.especialidade != null){
-				return false;
-				}
-		} else if (!especialidade.equals(other.especialidade)){
-			return false;
-			}
-		if (nome == null) {
-			if (other.nome != null){
-				return false;
-				}
-		} else if (!nome.equals(other.nome)){
-			return false;
-			}
-		if (numeroRegistro == null) {
-			if (other.numeroRegistro != null){
-				return false;
-				}
-		} else if (!numeroRegistro.equals(other.numeroRegistro)){
-			return false;
-			}
-		if (tipo == null) {
-			if (other.tipo != null){
-				return false;
-				}
-		} else if (!tipo.equals(other.tipo)) {
-			return false;
-			}
-		return true;
+	public void setConvenios(ArrayList<String> convenios) {
+		this.convenios = convenios;
 	}
 
 	public Integer getAvaliacoesPositivas() {
@@ -193,7 +150,49 @@ public class ProfissionalSaude implements Serializable {
 	public void setAvaliacoesNegativas(Integer avaliacoesNegativas) {
 		this.avaliacoesNegativas = avaliacoesNegativas;
 	}
-	
-	
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result
+				+ ((numeroRegistro == null) ? 0 : numeroRegistro.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ProfissionalSaude other = (ProfissionalSaude) obj;
+		if (nome == null) {
+			if (other.nome != null)
+				return false;
+		} else if (!nome.equals(other.nome))
+			return false;
+		if (numeroRegistro == null) {
+			if (other.numeroRegistro != null)
+				return false;
+		} else if (!numeroRegistro.equals(other.numeroRegistro))
+			return false;
+		return true;
+	}
+	
+	public String toStringConveios(){
+		String saida = "";
+		if(getConvenios()!=null && getConvenios().size()>0){
+			for(String conv : getConvenios()){
+				saida = saida.concat(conv+" ");
+			}
+		}else{
+			saida = "Sem Cobertura";
+		}
+		
+		return saida;
+	}
 }

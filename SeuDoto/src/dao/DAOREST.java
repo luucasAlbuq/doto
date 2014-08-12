@@ -63,7 +63,7 @@ public class DAOREST implements DAOInterface {
 						prof.getEspecialidade());
 				valores.put(ProfissionalBD.IDENTIFICACAO_PROF,
 						prof.getNumeroRegistro());
-				valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenio());
+				valores.put(ProfissionalBD.CONVENIO_PROF, prof.getConvenios().get(0));
 				valores.put(ProfissionalBD.TIPO_PROF, prof.getTipo().toString());
 				
 				database = criaBD.getReadableDatabase();
@@ -478,139 +478,139 @@ public class DAOREST implements DAOInterface {
 
 	}
 
-	// ///////////////////////////////////// METODOS DO BD NA NUVEM
-	// ////////////////////////////////////////////
-
-	public List<ProfissionalSaude> findByName(String nomeProf) {
-		List<ProfissionalSaude> listaProf = new ArrayList<ProfissionalSaude>();
-
-		try {
-			Class.forName(DRIVER).newInstance();
-			Connection conn = DriverManager.getConnection(URL + DB_NAME,
-					USER_NAME, PASSWORD);
-			Statement st = conn.createStatement();
-			ResultSet res = st
-					.executeQuery("select * from Profissional where nome ='"
-							+ nomeProf + "'");
-
-			while (res.next()) {
-				String crm = res.getString("crm");
-				String nome = res.getString("nome");
-				String tipo = res.getString("tipo_prof");
-				// TODO falta encontrar o resto dos dados de Profissional no BD
-				listaProf
-						.add(new ProfissionalSaude(tipo, crm, nome, null, null));
-			}
-
-			conn.close();
-		} catch (Exception e) {
-			// TODO tratar exception
-
-		}
-
-		return listaProf;
-	}
-
-	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
-		// TODO Auto-generated method stub
-		return Collections.emptyList(); 
-	}
-
-	public boolean cadastrarProfissional(ProfissionalSaude prof) throws ErroDataBase {
-
-		if (!crmJaCadastrado(prof)) {
-
-			try {
-				Class.forName(DRIVER).newInstance();
-				Connection conn = DriverManager.getConnection(URL + DB_NAME,
-						USER_NAME, PASSWORD);
-
-				Statement st = conn.createStatement();
-
-				String sql = "INSERT INTO Profissional VALUES ('"
-						+ prof.getNumeroRegistro() + "', '" + prof.getTipo()
-						+ "', '" + prof.getNome() + "')";
-
-				st.executeUpdate(sql);
-
-				sql = "INSERT INTO ConvenioProf VALUES ('"
-						+ prof.getNumeroRegistro() + "', '"
-						+ prof.getConvenio() + "')";
-
-				st.executeUpdate(sql);
-
-				conn.close();
-				return true;
-			} catch (Exception e) {
-				throw new ErroDataBase(e.getMessage());
-
-			}
-		}
-
-		return false;
-	}
-
-	private boolean crmJaCadastrado(ProfissionalSaude prof) throws ErroDataBase {
-		try {
-			Class.forName(DRIVER).newInstance();
-			Connection conn = DriverManager.getConnection(URL + DB_NAME,
-					USER_NAME, PASSWORD);
-			Statement st = conn.createStatement();
-			ResultSet res = st
-					.executeQuery("select * from Profissional where crm ='"
-							+ prof.getNumeroRegistro() + "'");
-
-			while (res.next()) {
-				return true;
-			}
-
-			conn.close();
-		} catch (Exception e) {
-			throw new ErroDataBase(e.getMessage());
-		}
-		return false;
-	}
-
-	public void adicionarConvenio(String crm, String convenio) throws ErroDataBase {
-		try {
-			Class.forName(DRIVER).newInstance();
-			Connection conn = DriverManager.getConnection(URL + DB_NAME,
-					USER_NAME, PASSWORD);
-
-			Statement st = conn.createStatement();
-
-			String sql = "INSERT INTO ConvenioProf VALUES ('" + crm + "', '"
-					+ convenio + "')";
-
-			st.executeUpdate(sql);
-
-			conn.close();
-
-		} catch (Exception e) {
-			throw new ErroDataBase(e.getMessage());
-		}
-	}
-
-	public boolean existeCrm(String crm) throws ErroDataBase {
-
-		try {
-			Class.forName(DRIVER).newInstance();
-			Connection conn = DriverManager.getConnection(URL + DB_NAME,
-					USER_NAME, PASSWORD);
-			Statement st = conn.createStatement();
-			ResultSet res = st
-					.executeQuery("select * from Profissional where crm ='"
-							+ crm + "'");
-
-			while (res.next()) {
-				return true;
-			}
-
-			conn.close();
-		} catch (Exception e) {
-			throw new ErroDataBase(e.getMessage());
-
-		}
-		return false;
-	}
+//	// ///////////////////////////////////// METODOS DO BD NA NUVEM
+//	// ////////////////////////////////////////////
+//
+//	public List<ProfissionalSaude> findByName(String nomeProf) {
+//		List<ProfissionalSaude> listaProf = new ArrayList<ProfissionalSaude>();
+//
+//		try {
+//			Class.forName(DRIVER).newInstance();
+//			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+//					USER_NAME, PASSWORD);
+//			Statement st = conn.createStatement();
+//			ResultSet res = st
+//					.executeQuery("select * from Profissional where nome ='"
+//							+ nomeProf + "'");
+//
+//			while (res.next()) {
+//				String crm = res.getString("crm");
+//				String nome = res.getString("nome");
+//				String tipo = res.getString("tipo_prof");
+//				// TODO falta encontrar o resto dos dados de Profissional no BD
+//				listaProf
+//						.add(new ProfissionalSaude(tipo, crm, nome, null, null));
+//			}
+//
+//			conn.close();
+//		} catch (Exception e) {
+//			// TODO tratar exception
+//
+//		}
+//
+//		return listaProf;
+//	}
+//
+//	public List<ProfissionalSaude> findByTipo(TipoProfissional tipo) {
+//		// TODO Auto-generated method stub
+//		return Collections.emptyList(); 
+//	}
+//
+//	public boolean cadastrarProfissional(ProfissionalSaude prof) throws ErroDataBase {
+//
+//		if (!crmJaCadastrado(prof)) {
+//
+//			try {
+//				Class.forName(DRIVER).newInstance();
+//				Connection conn = DriverManager.getConnection(URL + DB_NAME,
+//						USER_NAME, PASSWORD);
+//
+//				Statement st = conn.createStatement();
+//
+//				String sql = "INSERT INTO Profissional VALUES ('"
+//						+ prof.getNumeroRegistro() + "', '" + prof.getTipo()
+//						+ "', '" + prof.getNome() + "')";
+//
+//				st.executeUpdate(sql);
+//
+//				sql = "INSERT INTO ConvenioProf VALUES ('"
+//						+ prof.getNumeroRegistro() + "', '"
+//						+ prof.getConvenio() + "')";
+//
+//				st.executeUpdate(sql);
+//
+//				conn.close();
+//				return true;
+//			} catch (Exception e) {
+//				throw new ErroDataBase(e.getMessage());
+//
+//			}
+//		}
+//
+//		return false;
+//	}
+//
+//	private boolean crmJaCadastrado(ProfissionalSaude prof) throws ErroDataBase {
+//		try {
+//			Class.forName(DRIVER).newInstance();
+//			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+//					USER_NAME, PASSWORD);
+//			Statement st = conn.createStatement();
+//			ResultSet res = st
+//					.executeQuery("select * from Profissional where crm ='"
+//							+ prof.getNumeroRegistro() + "'");
+//
+//			while (res.next()) {
+//				return true;
+//			}
+//
+//			conn.close();
+//		} catch (Exception e) {
+//			throw new ErroDataBase(e.getMessage());
+//		}
+//		return false;
+//	}
+//
+//	public void adicionarConvenio(String crm, String convenio) throws ErroDataBase {
+//		try {
+//			Class.forName(DRIVER).newInstance();
+//			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+//					USER_NAME, PASSWORD);
+//
+//			Statement st = conn.createStatement();
+//
+//			String sql = "INSERT INTO ConvenioProf VALUES ('" + crm + "', '"
+//					+ convenio + "')";
+//
+//			st.executeUpdate(sql);
+//
+//			conn.close();
+//
+//		} catch (Exception e) {
+//			throw new ErroDataBase(e.getMessage());
+//		}
+//	}
+//
+//	public boolean existeCrm(String crm) throws ErroDataBase {
+//
+//		try {
+//			Class.forName(DRIVER).newInstance();
+//			Connection conn = DriverManager.getConnection(URL + DB_NAME,
+//					USER_NAME, PASSWORD);
+//			Statement st = conn.createStatement();
+//			ResultSet res = st
+//					.executeQuery("select * from Profissional where crm ='"
+//							+ crm + "'");
+//
+//			while (res.next()) {
+//				return true;
+//			}
+//
+//			conn.close();
+//		} catch (Exception e) {
+//			throw new ErroDataBase(e.getMessage());
+//
+//		}
+//		return false;
+//	}
 }

@@ -156,7 +156,7 @@ public class ListaProfissionaisActivity extends Activity {
 			
 			campo.campoNome.setText(String.valueOf(profListagem.getNome()));
 			campo.campoCRM.setText(String.valueOf(profListagem.getNumeroRegistro()));
-			campo.campoConvenio.setText(String.valueOf(profListagem.getConvenio()));
+			campo.campoConvenio.setText(String.valueOf(profListagem.toStringConveios()));
 			
 			int avaliacoesNegativas=0;
 			int avaliacoesPositivas = 0;

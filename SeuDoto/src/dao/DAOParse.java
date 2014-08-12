@@ -3,6 +3,8 @@ package dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+
 import util.AvaliacaoTableEnum;
 import util.ProfissionalTableEnum;
 
@@ -50,6 +52,8 @@ public class DAOParse {
 			objeto.put(ProfissionalTableEnum.COLUNA_CRM.toString(), prof.getNumeroRegistro());
 			objeto.put(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(), prof.getEspecialidade());
 			objeto.put(ProfissionalTableEnum.COLUNA_TIPO.toString(), prof.getTipo());
+			objeto.put(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), prof.getConvenios());
+			
 			try{
 				objeto.saveInBackground();
 			}catch(Exception e){
@@ -100,7 +104,14 @@ public class DAOParse {
 		String tipo = object.getString(ProfissionalTableEnum.COLUNA_TIPO.toString());
 		String especialidade = object.getString(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString());
 		
-		return new ProfissionalSaude(tipo, crm, nome, especialidade, "Unimed");
+		ArrayList<String> convenios = null;
+		try{
+			convenios = (ArrayList<String>) object.get(ProfissionalTableEnum.COLUNA_CONVENIOS.toString());
+		}catch(Exception e){
+			throw new ProfissionalSaudeException();
+		}
+		
+		return new ProfissionalSaude(tipo, crm, nome, especialidade, convenios);
 	}
 	
 	/**
@@ -147,31 +158,57 @@ public class DAOParse {
 		ParseQuery query = null;
 		
 		//Se for especificado tipo e especialidade
-		if(especialidade!=null && !especialidade.trim().equals("") && !especialidade.toUpperCase().equals(SELECIONE)
-				&& tipo!=null && !tipo.trim().equals("") && !tipo.toUpperCase().equals(SELECIONE)){
+		if(isEspecialidadeValida(especialidade) && isTipoValido(tipo) && !isConvenioValido(convenio)){
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),especialidade);
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_TIPO.toString(),tipo);
 		}
 		
 		//Se so especificado apenas especialidade
-		if(especialidade!=null && !especialidade.trim().equals("") && !especialidade.toUpperCase().equals(SELECIONE)
-				&& (tipo==null || tipo.toUpperCase().equals(SELECIONE))){
+		if(isEspecialidadeValida(especialidade) && !isConvenioValido(convenio) && !isTipoValido(tipo)){
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),especialidade);
 		}
 		
 		//Se so especificado apenas tipos
-		if((especialidade==null || especialidade.toUpperCase().equals(SELECIONE)) &&
-				tipo!=null && !tipo.trim().equals("") && !tipo.toUpperCase().equals(SELECIONE)){
+		if(!isEspecialidadeValida(especialidade) && !isConvenioValido(convenio) && isTipoValido(tipo)){
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_TIPO.toString(),tipo);
 		}
 		
+		//Se so for especificado apenas o convenio
+		if(!isEspecialidadeValida(especialidade) && !isTipoValido(tipo) && isConvenioValido(convenio)){
+			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(),convenio);
+		}
+		
+		//Se so for informado conveio e especialdiade
+		if(isEspecialidadeValida(especialidade) && isConvenioValido(convenio) && !isTipoValido(tipo)){
+			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),especialidade);
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(),convenio);
+		}
+		
+		//Se so for informado convenio e tipo
+		if(!isEspecialidadeValida(especialidade) && isTipoValido(tipo) && isConvenioValido(convenio)){
+			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(),convenio);
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_TIPO.toString(),tipo);
+		}
+		
+		//Se for iformado convenio, especialidade e tipo
+		if(isConvenioValido(convenio) && isEspecialidadeValida(especialidade) && isTipoValido(tipo)){
+			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(),convenio);
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),especialidade);
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_TIPO.toString(),tipo);
+		}
+		
 		//Se nao for especificado nada
-		if(tipo.toUpperCase().equals(SELECIONE) && especialidade.toUpperCase().equals(SELECIONE)){
+		if(!isConvenioValido(convenio) && !isEspecialidadeValida(especialidade) && !isTipoValido(tipo)){
 			profisisonais = (ArrayList<ProfissionalSaude>) findAll();
 		}
+		
 		
 		if(query!=null){
 			query.setLimit(50);
@@ -200,6 +237,23 @@ public class DAOParse {
 		}
 		
 		return profisisonais;
+	}
+	
+	private boolean isEspecialidadeValida(String especialidade){
+		String SELECIONE = "SELECIONE";
+		return especialidade!=null && !especialidade.trim().equals("") && 
+				!especialidade.toUpperCase().equals(SELECIONE);
+	}
+	
+	private boolean isTipoValido(String tipo){
+		String SELECIONE = "SELECIONE";
+		return tipo!=null && !tipo.trim().equals("") && 
+				!tipo.toUpperCase().equals(SELECIONE);
+	}
+	
+	private boolean isConvenioValido(String convenio){
+		String SELECIONE = "SELECIONE";
+		return convenio!=null && !convenio.trim().equals("") && !convenio.toUpperCase().equals(SELECIONE);
 	}
 	
 	/**
