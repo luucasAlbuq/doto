@@ -45,7 +45,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		carregarTiposProfissionais();
 
 		controler = ProfissionalController.getInstance(this);
-
+		
 		nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
 		numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
 

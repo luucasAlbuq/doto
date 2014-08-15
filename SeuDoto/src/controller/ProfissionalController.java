@@ -91,8 +91,8 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	@Override
-	public void removerProfissional(ProfissionalSaude profissional) throws ProfissionalSaudeException {
-		//TODO
+	public void removerProfissional(String crm) throws ProfissionalSaudeException, ParseException {
+		getDaoParse().removerProfissional(crm);
 	}
 
 	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {

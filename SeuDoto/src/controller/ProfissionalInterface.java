@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parse.ParseException;
+
 import exception.ProfissionalSaudeException;
 import util.Convenio;
 import util.Especialidade;
@@ -106,7 +108,9 @@ public interface ProfissionalInterface {
 	 * 
 	 * @param ProfissionalSaude profissional
 	 * @throws ProfissionalSaudeException 
+	 * @throws ParseException 
 	 */
-	void removerProfissional(ProfissionalSaude profissional) throws ProfissionalSaudeException;
-
+	 void removerProfissional(String profissional)
+			throws ProfissionalSaudeException, ParseException;
+;
 }

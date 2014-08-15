@@ -2,8 +2,6 @@ package com.example.seudoto.test;
 
 import java.util.Random;
 
-import model.ProfissionalSaude;
-
 import org.junit.Before;
 
 import com.parse.Parse;
