@@ -23,11 +23,10 @@ public class TestDAOParse extends AndroidTestCase {
 	}
 	
 	protected void tearDown() throws Exception {
-		removeProfissinaisFakeFromTest();
 		super.tearDown();
 	}
 
-	public void testCadastrarProfissionalComSucesso(){
+	public void testACadastrarProfissionalComSucesso(){
 		Exception exception = new Exception();
 		try {
 			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy", "Psiquiatra", "Particular");
@@ -60,7 +59,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertNull(exception);
 	}
 	
-	public void testCadastrarProfissionalCRMLongoComSucesso(){
+	public void testBCadastrarProfissionalCRMLongoComSucesso(){
 		Exception exception = new Exception();
 		try {
 			ProfissionalSaude p3 = new ProfissionalSaude("Medico", "101010100001111000011110000111100001111", "Nazareno", "Terapeuta Social", "SUS");			
@@ -78,7 +77,7 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		exception = new Exception();
 		try {
-			ProfissionalSaude p4 = new ProfissionalSaude("Medico", "101010100001111000011110000111100001110", "Gesuis Krysto Todo Poderoso Alpha e Omega e etc e tal", "Placebista", "UniCristao");
+			ProfissionalSaude p4 = new ProfissionalSaude("Medico", "1010101000", "Pajé", "Curandeiro", "UniIndio");
 			DAOParse.getInstance().cadastrarProfissional(p4);		
 			crmProfsFake.add(p4.getNumeroRegistro());
 			exception = null;
@@ -92,7 +91,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertNull(exception);
 	}
 	
-	public void testCadastrarProfissionalCRMRepetido(){
+	public void testCCadastrarProfissionalCRMRepetido(){
 		boolean uniqueCRM = true;
 		try {
 			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy-CRMRepetido", "Psiquiatra", "Particular");			
@@ -105,7 +104,7 @@ public class TestDAOParse extends AndroidTestCase {
 			e.printStackTrace();
 			fail("Problemas com Parse");
 		}
-		assertTrue(uniqueCRM);
+		assertFalse(uniqueCRM);
 		
 		uniqueCRM = true;
 		try {
@@ -119,10 +118,10 @@ public class TestDAOParse extends AndroidTestCase {
 			e.printStackTrace();
 			fail("Problemas com Parse");
 		}
-		assertTrue(uniqueCRM);
+		assertFalse(uniqueCRM);
 	}
 	
-	public void testCadastrarProfissionalComFalhas(){
+	public void testDCadastrarProfissionalComFalhas(){
 		Exception exception = new Exception();	
 		//Tipo null
 		try {
@@ -215,7 +214,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertNotNull(exception);
 	}
 	
-	private void removeProfissinaisFakeFromTest() {
+	public void testZremoveProfissinaisFakeFromTest() {
 		System.out.println("CRM " + crmProfsFake.size());
 		
 		try {
@@ -237,7 +236,7 @@ public class TestDAOParse extends AndroidTestCase {
 			e.printStackTrace();
 		}
 		try {
-			DAOParse.getInstance().removerProfissional("101010100001111000011110000111100001110");
+			DAOParse.getInstance().removerProfissional("1010101000");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
