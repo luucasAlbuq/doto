@@ -3,6 +3,8 @@ package com.example.seudoto.test;
 import java.util.List;
 import java.util.Random;
 
+import junit.framework.Assert;
+
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 
@@ -59,8 +61,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		}
 
 		try {
-			controller.removerProfissional(prof);
+			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
@@ -123,8 +128,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		}
 
 		try {
-			controller.removerProfissional(prof);
+			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
@@ -228,8 +236,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		
 
 		try {
-			controller.removerProfissional(prof);
+			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
@@ -284,8 +295,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		}
 
 		try {
-			controller.removerProfissional(prof);
+			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
@@ -322,8 +336,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		}
 
 		try {
-			controller.removerProfissional(prof);
+			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
+		} catch (ParseException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
