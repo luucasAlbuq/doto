@@ -4,8 +4,6 @@ import java.util.Random;
 
 import model.ProfissionalSaude;
 
-import org.junit.Before;
-
 import com.parse.Parse;
 import com.parse.ParseException;
 
@@ -13,12 +11,10 @@ import controller.ProfissionalController;
 import dao.DAOParse;
 import exception.ProfissionalSaudeException;
 import android.test.AndroidTestCase;
-
 import com.parse.*;
 
 public class TestDAOParse extends AndroidTestCase {
 	
-	@Before
 	protected void setUp() throws Exception {
 		
 		super.setUp();

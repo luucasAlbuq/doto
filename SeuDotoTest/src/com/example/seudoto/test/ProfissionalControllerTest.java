@@ -6,10 +6,6 @@ import java.util.Random;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 
-import org.junit.Assert;
-import org.junit.Before;
-
-import com.parse.Parse;
 import com.parse.ParseException;
 
 import util.Convenio;
@@ -26,10 +22,8 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 	
 	Random rand;
 	
-	@Before
 	protected void setUp() throws Exception {
 		super.setUp();
-		Parse.initialize(getContext(), "7EqoOy2DDnMMHlXUGAbi9aJkqIgryikPIRv7CzX3", "nvT2iYY8AfuMJgH7cJQeoemBFFQsrXDqoR4wy2OJ");
 		controller = ProfissionalController.getInstance();
 		rand = new Random();
 	}
@@ -39,26 +33,36 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 	}
 
 	public void testCadastrarProfissionalSucesso()
-			throws ProfissionalSaudeException, ParseException, InterruptedException {
+			throws ProfissionalSaudeException {
 		ProfissionalSaude prof = null;
 
 		try {
-			prof = new ProfissionalSaude("Médico", "" + rand.nextInt(),
+			prof = new ProfissionalSaude("Mï¿½dico", "" + rand.nextInt(),
 					"Lucas Almeida", Especialidade.CARDIOLOGISTA.toString(),
 					Convenio.SMILE.toString());
 			controller.cadastrarProfissionalSaude(prof);
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			fail();
 		} catch (ParseException e) {
+			// TODO Auto-generated catch block
 			fail();
 		}
 
 		// Verifica se salvou
 		try {
 			assertTrue(controller.buscarTodos().contains(prof));
-			controller.removerProfissional(prof.getNumeroRegistro());
 		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 			fail();
+		}
+
+		try {
+			controller.removerProfissional(prof);
+		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
+			fail("Nao deveria ter lancado excessao");
 		}
 	}
 
@@ -71,6 +75,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			controller.cadastrarProfissionalSaude(prof);
 			Assert.fail("Deveria ter lancado excessao");
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			excption = e;
 		} catch (ParseException e) {
 			excption = e;
@@ -78,13 +83,14 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		try {
 			assertFalse(controller.buscarTodos().contains(prof));
 		} catch (ParseException e) {
-			
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		assertNotNull(excption);
 		assertEquals(EXCESSAO, excption.getMessage());
 	}
 
-	public void testCadastrarProfissionalPassandoParametros() throws ParseException {
+	public void testCadastrarProfissionalPassandoParametros() {
 		Exception excption = null;
 		ProfissionalSaude prof = null;
 
@@ -99,6 +105,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 					prof.getEspecialidade(), prof.getConvenios().get(0));
 
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			excption = e;
 			Assert.fail("Nao Deveria ter lancado excessao");
 		}
@@ -111,12 +118,14 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			e.printStackTrace();
 			Assert.fail("Nao Deveria ter lancado excessao");
 		} catch (ParseException e) {
-			Assert.fail("Nao Deveria ter lancado excessao");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
-			controller.removerProfissional(prof.getNumeroRegistro());
+			controller.removerProfissional(prof);
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
 
@@ -146,7 +155,8 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 		try {
 			assertFalse(controller.buscarTodos().contains(prof));
 		} catch (ParseException e) {
-			fail();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -165,14 +175,15 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			e.printStackTrace();
 			excption = e;
 		} catch (ParseException e) {
-			fail();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		assertNotNull(excption);
-		assertEquals(MensagemExcessao.ERRO.toString(), excption.getMessage());
+		assertEquals(MensagemExcessao.CRM_INVALIDO.toString(), excption.getMessage());
 	}
 	
 	
-	public void testAvaliar() throws ParseException{
+	public void testAvaliar(){
 		ProfissionalSaude prof = null;
 		final String cpf=""+rand.nextInt();
 		final String cpf2=""+rand.nextInt();
@@ -189,9 +200,11 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			
 
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		} catch (ParseException e) {
-			fail("Nao deveria ter lancado excessao");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
@@ -205,23 +218,24 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			assertTrue(controller.getAvaliacoesPositivas(prof)==1);
 			
 		} catch (ProfissionalSaudeException e1) {
+			e1.printStackTrace();
 			fail();
 		} catch (ParseException e) {
-			fail();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		
 
 		try {
-			controller.removerAvalicao(cpf, prof.getNumeroRegistro());
-			controller.removerAvalicao(cpf2, prof.getNumeroRegistro());
-			controller.removerProfissional(prof.getNumeroRegistro());
+			controller.removerProfissional(prof);
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		}
 	}
 	
-	public void testAvaliacaoDuplicada() throws ProfissionalSaudeException, ParseException{
+	public void testAvaliacaoDuplicada() throws ProfissionalSaudeException{
 		ProfissionalSaude prof = null;
 		final String cpf=""+rand.nextInt();
 		Exception exception=null;
@@ -240,7 +254,8 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		} catch (ParseException e) {
-			fail();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		try {
@@ -256,18 +271,20 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			e1.printStackTrace();
 			exception = e1;
 		} catch (ParseException e) {
-			fail();
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		assertNotNull(exception);
 		try {
 			assertTrue(controller.getAvaliacoesNegativas(prof)==1);
 		} catch (ParseException e1) {
-			fail();
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 
 		try {
-			controller.removerProfissional(prof.getNumeroRegistro());
+			controller.removerProfissional(prof);
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
@@ -275,38 +292,7 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 	
 	}
 	
-	public void testRemoverProfissional() throws ProfissionalSaudeException, ParseException{
-		ProfissionalSaude prof = null;
-
-		try {
-			prof = new ProfissionalSaude("Médico", "" + rand.nextInt(),
-					"Lucas Almeida", Especialidade.CARDIOLOGISTA.toString(),
-					Convenio.SMILE.toString());
-			controller.cadastrarProfissionalSaude(prof);
-		} catch (ProfissionalSaudeException e) {
-			fail();
-		} catch (ParseException e) {
-			fail();
-		}
-
-		// Verifica se salvou
-		try {
-			assertTrue(controller.buscarTodos().contains(prof));
-		} catch (ParseException e1) {
-			fail();
-		}
-
-		try {
-			controller.removerProfissional(prof.getNumeroRegistro());
-		} catch (ProfissionalSaudeException e) {
-			fail("Nao deveria ter lancado excessao");
-		}
-		
-		ProfissionalSaude profRemoveu = controller.buscarProfissionalPorIdentificacao(prof.getNumeroRegistro());
-		assertNull(profRemoveu);
-	}
-	
-	public void testBuscarPorEspecialidade() throws ParseException {
+	public void testBuscarPorEspecialidade() {
 		List<ProfissionalSaude> profissionais = null;
 		ProfissionalSaude prof = null;
 
@@ -321,20 +307,22 @@ public class ProfissionalControllerTest extends AndroidTestCase {
 			profissionais = controller
 					.buscarProfissionalPorEspecialidade(Especialidade.PEDIATRA);
 		} catch (ProfissionalSaudeException e) {
+			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
 		} catch (ParseException e) {
-			fail("Nao deveria ter lancado excessao");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 		assertNotNull(profissionais);
 
 		for (ProfissionalSaude profissional : profissionais) {
-			assertEquals(Especialidade.PEDIATRA.toString(),
+			assertSame(Especialidade.PEDIATRA.toString(),
 					profissional.getEspecialidade());
 		}
 
 		try {
-			controller.removerProfissional(prof.getNumeroRegistro());
+			controller.removerProfissional(prof);
 		} catch (ProfissionalSaudeException e) {
 			e.printStackTrace();
 			fail("Nao deveria ter lancado excessao");
