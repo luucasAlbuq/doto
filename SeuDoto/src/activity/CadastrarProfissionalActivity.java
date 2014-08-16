@@ -32,7 +32,8 @@ public class CadastrarProfissionalActivity extends Activity {
 	private String nome, indentificacao, tipo, especialidade, convenio;
 	private ProfissionalController controler;
 	private ProfissionalSaude profissionalParaCadastrar = null;
-	private EditText nomeText,numeroRegistro;
+	private EditText nomeText, numeroRegistro;
+	boolean isCrmunico = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,20 +46,21 @@ public class CadastrarProfissionalActivity extends Activity {
 		carregarTiposProfissionais();
 
 		controler = ProfissionalController.getInstance(this);
-		
+
 		nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
 		numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
 
 		ImageButton salvar = (ImageButton) findViewById(R.id.SaveimageView);
-		
-		
+
 		final Toast alertaFalha = Toast.makeText(this,
-				"Erro ao cadastrado um profissional", Toast.LENGTH_LONG);
-		
+				"Erro ao cadastrar um profissional", Toast.LENGTH_LONG);
+
 		final Toast alertaCampos = Toast
-				.makeText(this,"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios",Toast.LENGTH_LONG);
-		
-		
+				.makeText(
+						this,
+						"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios",
+						Toast.LENGTH_LONG);
+
 		salvar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -70,14 +72,14 @@ public class CadastrarProfissionalActivity extends Activity {
 				try {
 
 					if (isCamposValidos()) {
-							profissionalParaCadastrar = new ProfissionalSaude(tipo,
-									numeroRegistro.getText().toString(), nome,
-									especialidade, convenio);
+						profissionalParaCadastrar = new ProfissionalSaude(tipo,
+								numeroRegistro.getText().toString(), nome,
+								especialidade, convenio);
 
-							// Mostra um progress bar informando que o profissional
-							// ta sendo persistido no BD online
-							EsperandoConsulta espera = new EsperandoConsulta();
-							espera.execute(new String[] { "Seu Doto" });
+						// Mostra um progress bar informando que o profissional
+						// ta sendo persistido no BD online
+						EsperandoConsulta espera = new EsperandoConsulta();
+						espera.execute(new String[] { "Seu Doto" });
 
 					} else {
 						alertaCampos.show();
@@ -259,7 +261,7 @@ public class CadastrarProfissionalActivity extends Activity {
 	}
 
 	private boolean isCamposValidos() {
-		return tipo != null && !tipo.trim().equals("")
+		return nome!=null && !nome.trim().equals("") && tipo != null && !tipo.trim().equals("")
 				&& indentificacao != null && !indentificacao.trim().equals("");
 	}
 
@@ -282,36 +284,28 @@ public class CadastrarProfissionalActivity extends Activity {
 		@Override
 		protected String doInBackground(String... params) {
 
-			boolean isCrmunico = false;
-			if(profissionalParaCadastrar!=null){
+			if (profissionalParaCadastrar != null) {
 				try {
-					isCrmunico = controler.getDaoParse().isCrmUnico(profissionalParaCadastrar.getNumeroRegistro());
+					isCrmunico = controler.getDaoParse().isCrmUnico(
+							profissionalParaCadastrar.getNumeroRegistro());
+					
+					if (isCrmunico) {
+						try {
+							controler
+									.cadastrarProfissionalSaude(profissionalParaCadastrar);
+						} catch (ProfissionalSaudeException e) {
+							e.getMessage();
+						} catch (ParseException e) {
+							e.getMessage();
+						}
+					}
+					
 				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					e.getMessage();
 				}
 			}
+
 			
-			if(!isCrmunico){
-				Toast alertaCRM = Toast.makeText(CadastrarProfissionalActivity.this,
-							"Número de registro fornecido já foi cadastrado", Toast.LENGTH_LONG);
-				alertaCRM.show();
-				if(numeroRegistro!=null){
-					numeroRegistro.setText("");
-				}
-			}
-			
-			else if(isCrmunico){
-				try {
-					controler.cadastrarProfissionalSaude(profissionalParaCadastrar);
-				} catch (ProfissionalSaudeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
 
 			return null;
 		}
@@ -320,16 +314,34 @@ public class CadastrarProfissionalActivity extends Activity {
 		protected void onPostExecute(String result) {
 
 			mProgressDialog.dismiss();
-			
-			if(nomeText!=null){
-				nomeText.setText("");
-			}if(numeroRegistro!=null){
-				numeroRegistro.setText("");
+
+			if (!isCrmunico) {
+				Toast alertaCRM = Toast.makeText(
+						CadastrarProfissionalActivity.this,
+						"Identificação inválida!",
+						Toast.LENGTH_LONG);
+				alertaCRM.show();
+
+				if (numeroRegistro != null) {
+					numeroRegistro.setText("");
+				}
+
+			} else {
+
+				if (numeroRegistro != null) {
+					numeroRegistro.setText("");
+				}
+				if (nomeText != null) {
+					nomeText.setText("");
+				}
+
+				Toast alertaSucesso = Toast.makeText(
+						CadastrarProfissionalActivity.this,
+						"Profissional Cadastrado com Sucesso",
+						Toast.LENGTH_LONG);
+				alertaSucesso.show();
 			}
-			
-			 Toast alertaSucesso = Toast.makeText(CadastrarProfissionalActivity.this,
-					"Profissional Cadastrado com Sucesso", Toast.LENGTH_LONG);
-			alertaSucesso.show();
+
 		}
 	}
 

@@ -31,7 +31,7 @@ public class DetalhesProfissionalActivity extends Activity {
 			tipoText;
 	private ProfissionalController controller;
 	private boolean avaliacao;
-	final String IDUSER ="12345";
+	final String IDUSER ="3876";
 	boolean isAvaliacaoUnica = false;
 	
 
@@ -194,8 +194,7 @@ public class DetalhesProfissionalActivity extends Activity {
 				try {
 					setAvaliacaoUnica( controller.getDaoParse().isAvaliacaoUnica(IDUSER, crm));
 				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					e1.getMessage();
 				}
 				
 				

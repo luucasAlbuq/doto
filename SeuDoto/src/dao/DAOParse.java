@@ -70,6 +70,8 @@ public class DAOParse {
 					prof.getTipo());
 			objeto.put(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(),
 					prof.getConvenios());
+			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString(), 0);
+			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString(), 0);
 
 			try {
 				objeto.saveInBackground();
@@ -130,6 +132,9 @@ public class DAOParse {
 		String especialidade = object
 				.getString(ProfissionalTableEnum.COLUNA_ESPECIALIDADE
 						.toString());
+		
+		Integer avaliacoesPositivas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString());
+		Integer avaliacoesNegativas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString()); 
 
 		ArrayList<String> convenios = null;
 		try {
@@ -138,8 +143,11 @@ public class DAOParse {
 		} catch (Exception e) {
 			throw new ProfissionalSaudeException();
 		}
-
-		return new ProfissionalSaude(tipo, crm, nome, especialidade, convenios);
+		
+		ProfissionalSaude prof = new ProfissionalSaude(tipo, crm, nome, especialidade, convenios);
+		prof.setAvaliacoesPositivas(avaliacoesPositivas);
+		prof.setAvaliacoesNegativas(avaliacoesNegativas);
+		return prof;
 	}
 
 	/**
@@ -158,10 +166,11 @@ public class DAOParse {
 		query.setLimit(50);
 		try {
 			List<ParseObject> objects = query.find();
+			setTodosProfissionais(new ArrayList<ProfissionalSaude>());
 			for (ParseObject obj : objects) {
 				try {
 					ProfissionalSaude prof = montaProfissionalSaude(obj);
-					todosProfissionais.add(prof);
+					getTodosProfissionais().add(prof);
 				} catch (ProfissionalSaudeException e1) {
 					throw e1;
 				}
@@ -283,20 +292,6 @@ public class DAOParse {
 			}
 		}
 
-		// Carregando avaliacoes
-		ArrayList<Avaliacao> avaliacoes = getAllAvaliacoes();
-		for (ProfissionalSaude prof : profisisonais) {
-			for (Avaliacao aval : avaliacoes) {
-				if (prof.getNumeroRegistro().equals(aval.getCrm())) {
-					if (aval.isAvaliacao()) {
-						prof.addAvaliacaoPositiva();
-					} else {
-						prof.addAvaliacaoNegativa();
-					}
-				}
-			}
-		}
-
 		return profisisonais;
 	}
 
@@ -390,6 +385,7 @@ public class DAOParse {
 
 				try {
 					aval.saveInBackground();
+					atualizaAvaliacoesProfissional(crm,avaliacao);
 				} catch (Exception e) {
 					e.getStackTrace();
 					aval.saveEventually();
@@ -402,9 +398,27 @@ public class DAOParse {
 			throw new ProfissionalSaudeException();
 		}
 	}
+	
+	/**
+	 * Metodo responsavel por atualizar as avaliacoes de um Profissional
+	 * @param String crm
+	 * @param String avaliaco
+	 * @throws ParseException
+	 */
+	private void atualizaAvaliacoesProfissional(String crm, boolean avaliaco) throws ParseException{
+		ParseObject prof = getProfissinal(crm);
+		if(avaliaco){
+			Integer avaliacoesPositivasDesatualizadas = (Integer) prof.get(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString());
+			prof.put(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString(), avaliacoesPositivasDesatualizadas+1);
+		}else{
+			Integer avaliacoesNegativasDesatualizadas = (Integer) prof.get(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString());
+			prof.put(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString(), avaliacoesNegativasDesatualizadas+1);
+		}
+		prof.save();
+	}
 
 	/**
-	 * Retorna o número de avaliações positivas de um Profissional
+	 * Retorna o numero de avaliacoes positivas de um Profissional
 	 * 
 	 * @param ProfissionalSaude
 	 *            prof
@@ -436,7 +450,7 @@ public class DAOParse {
 	}
 
 	/**
-	 * Retorna o número de avaliações negativas de um Profissional
+	 * Retorna o numero de avaliacoes negativas de um Profissional
 	 * 
 	 * @param ProfissionalSaude
 	 *            prof
@@ -468,7 +482,7 @@ public class DAOParse {
 	}
 
 	/**
-	 * Método responsavel por verificar se algum usuário está tentando
+	 * Metodo responsavel por verificar se algum usuario esta tentando
 	 * avaliar um profissional mais de uma vez.
 	 * 
 	 * @param String
