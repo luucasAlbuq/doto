@@ -94,6 +94,10 @@ public class ProfissionalController implements ProfissionalInterface {
 	public void removerProfissional(String crm) throws ProfissionalSaudeException, ParseException {
 		getDaoParse().removerProfissional(crm);
 	}
+	
+	public void removerAvalicao(String idUser, String crm) throws ParseException{
+		getDaoParse().removerAvaliacao(idUser, crm);
+	}
 
 	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
 		return resultadoBuscaSimples;

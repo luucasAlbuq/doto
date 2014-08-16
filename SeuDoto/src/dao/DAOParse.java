@@ -21,6 +21,11 @@ import bd.ProfissionalBD;
 import model.Avaliacao;
 import model.ProfissionalSaude;
 
+/**
+ * Classe responsavel por manipular instancias de Objetos e persistir-las no BD.
+ * @author Lucas
+ *
+ */
 public class DAOParse {
 
 	private static DAOParse instance;
@@ -40,9 +45,9 @@ public class DAOParse {
 	}
 
 	/**
-	 * Método responsavel por persistir um profissional na nuvem, caso esteja
-	 * sem conexão o profissional será cadastrado posteriormente quando a
-	 * conexão voltar.
+	 * Metodo responsavel por persistir um profissional na nuvem, caso esteja
+	 * sem conexao o profissional sera cadastrado posteriormente quando a
+	 * conexao voltar.
 	 * 
 	 * @param ProfissionalSaude
 	 *            prof
@@ -78,11 +83,10 @@ public class DAOParse {
 	}
 
 	/**
-	 * Verifica se crm já está cadastrada no BD, se já estiver um
+	 * Verifica se crm ja estao cadastrada no BD, se ja estiver um
 	 * profissional cadastrado com esse crm retorna false
 	 * 
-	 * @param String
-	 *            crm
+	 * @param String crm
 	 * @return boolean
 	 * @throws ParseException
 	 */
@@ -107,7 +111,7 @@ public class DAOParse {
 	}
 
 	/**
-	 * Método responsavel por receber uma objeto Parse e retornar um objeto
+	 * Metodo responsavel por receber uma objeto Parse e retornar um objeto
 	 * ProfissionalSaude equivalente aos objeto Parse
 	 * 
 	 * @param ParseObject
@@ -169,9 +173,9 @@ public class DAOParse {
 	}
 
 	/**
-	 * Metodo responsável por realiza uma busca de profissionais tendo como
-	 * parametros Especialiadade, Tipo de profissinal e Convênio. Se nenhum
-	 * desses paramtros for especificado será retornada uma lista com todos os
+	 * Metodo responsavel por realiza uma busca de profissionais tendo como
+	 * parametros Especialiadade, Tipo de profissinal e Convenio. Se nenhum
+	 * desses paramtros for especificado sera retornada uma lista com todos os
 	 * profissionais cadastrados.
 	 * 
 	 * @param String
@@ -336,7 +340,7 @@ public class DAOParse {
 	}
 
 	/**
-	 * Método responsavel por receber uma lusta de objetos Parse e retornar ums
+	 * Metodo responsavel por receber uma lusta de objetos Parse e retornar ums
 	 * lista de objetos ProfissionalSaude equivalente aos objeto Parse
 	 * 
 	 * @param List
@@ -512,12 +516,49 @@ public class DAOParse {
 		ParseObject object = getProfissinal(crm);
 		object.deleteInBackground();
 	}
-
-	@SuppressWarnings("unchecked")
+	
+	/**
+	 * Metodo responsavel por retornar um ParseObject referente a um Profissinal
+	 * @param String crm
+	 * @return ParseObject profissinal
+	 * @throws ParseException
+	 */
 	private ParseObject getProfissinal(String crm) throws ParseException {
 		ParseObject obj = null;
 		ParseQuery query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 		query.whereEqualTo(ProfissionalTableEnum.COLUNA_CRM.toString(),crm);
+		try {
+			obj = query.getFirst();
+		} catch (ParseException e) {
+			throw new ParseException(0, e.getMessage());
+		}
+		
+		return obj;
+	}
+	
+	/**
+	 *  Metodo responsavel por remover uma avaliacao cadastrada no BD
+	 * @param String idUser
+	 * @param String crm
+	 * @throws ParseException
+	 */
+	public void removerAvaliacao(String idUser, String crm) throws ParseException{
+		ParseObject object = getAvaliacao(idUser,crm);
+		object.deleteInBackground();
+	}
+	
+	/**
+	 * Metodo responsavel por retorna uma ParseObject referente a uma avaliacao
+	 * @param idUser
+	 * @param crm
+	 * @return ParseObject avaliacao
+	 * @throws ParseException
+	 */
+	private ParseObject getAvaliacao(String idUser, String crm) throws ParseException{
+		ParseObject obj = null;
+		ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+		query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(),crm);
+		query.whereEqualTo(AvaliacaoTableEnum.COLUNA_USER.toString(), idUser);
 		try {
 			obj = query.getFirst();
 		} catch (ParseException e) {
