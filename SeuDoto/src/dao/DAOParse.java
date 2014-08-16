@@ -17,7 +17,6 @@ import com.parse.ParseQuery;
 
 import exception.ProfissionalSaudeException;
 import android.content.Context;
-import bd.ProfissionalBD;
 import model.Avaliacao;
 import model.ProfissionalSaude;
 
@@ -57,7 +56,7 @@ public class DAOParse {
 	public void cadastrarProfissional(ProfissionalSaude prof)
 			throws ProfissionalSaudeException, ParseException {
 		ParseObject objeto = null;
-		if (isCrmUnico(prof.getNumeroRegistro())) {
+		if (prof!=null && isCrmUnico(prof.getNumeroRegistro())) {
 			objeto = new ParseObject(
 					ProfissionalTableEnum.NOME_CLASSE.toString());
 			objeto.put(ProfissionalTableEnum.COLUNA_NOME.toString(),
@@ -82,6 +81,27 @@ public class DAOParse {
 		} else {
 			throw new ProfissionalSaudeException();
 		}
+	}
+	
+	/**
+	 * Metodo responsavel por retornar um profissional 
+	 * de acordo com o crm que ele foi cadastrado
+	 * 
+	 * @param String crm
+	 * @return ProfissionalSaude profissional
+	 * @throws ParseException
+	 * @throws ProfissionalSaudeException
+	 */
+	public ProfissionalSaude buscarProfissinalPorCRM(String crm) throws ParseException, ProfissionalSaudeException{
+		ProfissionalSaude prof = null;
+		if(crm!=null && !crm.trim().equals("")){
+			ParseQuery query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CRM.toString(), crm);
+			ParseObject obj = query.getFirst();
+			prof = montaProfissionalSaude(obj);
+		}
+		
+		return prof;
 	}
 
 	/**
@@ -293,6 +313,37 @@ public class DAOParse {
 		}
 
 		return profisisonais;
+	}
+	
+	/**
+	 * Metodo responsavel por retornar uma lista de profissinais que possui um determinada especialidade
+	 * @param Stirng especialidade
+	 * @return ArrayList<ProfissionalSaude> profissionais
+	 * @throws ParseException
+	 */
+	public ArrayList<ProfissionalSaude> buscarPorEspecialidade(String especialidade) throws ParseException{
+		ArrayList<ProfissionalSaude> resultadoPesquisa = null;
+		if(isEspecialidadeValida(especialidade)){
+			resultadoPesquisa = new ArrayList<ProfissionalSaude>();
+			
+			ParseQuery query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),especialidade);
+			
+			if (query != null) {
+				query.setLimit(50);
+				List<ParseObject> objs = query.find();
+				for (ParseObject prof : objs) {
+					try {
+						resultadoPesquisa.add(montaProfissionalSaude(prof));
+					} catch (ProfissionalSaudeException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
+		
+		
+		return resultadoPesquisa;
 	}
 
 	private boolean isEspecialidadeValida(String especialidade) {

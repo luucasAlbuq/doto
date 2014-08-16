@@ -5,9 +5,7 @@ import java.util.List;
 
 import com.parse.ParseException;
 
-import android.content.Context;
 import dao.DAOParse;
-import dao.DAOREST;
 import exception.ProfissionalSaudeException;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
@@ -21,15 +19,15 @@ public class ProfissionalController implements ProfissionalInterface {
 	private DAOParse daoParse;
 	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
-	private Context context;
+
 	
-	private ProfissionalController(Context context) {
-		this.context = context;
+	private ProfissionalController() {
+		
 	}
 
-	public static ProfissionalController getInstance(Context context) {
+	public static ProfissionalController getInstance() {
 		if (instance == null){
-			instance = new ProfissionalController(context);
+			instance = new ProfissionalController();
 		}
 			
 		return instance;
@@ -41,6 +39,7 @@ public class ProfissionalController implements ProfissionalInterface {
 		ProfissionalSaude profissional;
 		try {
 			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
+			getDaoParse().cadastrarProfissional(profissional);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new ProfissionalSaudeException();
@@ -60,9 +59,8 @@ public class ProfissionalController implements ProfissionalInterface {
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
-			Especialidade especialidade) throws ProfissionalSaudeException {
-		//TODO
-		return null;
+			Especialidade especialidade) throws ProfissionalSaudeException, ParseException {
+		return getDaoParse().buscarPorEspecialidade(especialidade.toString());
 	}
 
 	@Override
@@ -140,6 +138,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	public int getAvaliacoesNegativas(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		return getDaoParse().getAvaliacoesNegativas(prof);
 	}
+
 
 	public DAOParse getDaoParse() {
 		if(daoParse==null){

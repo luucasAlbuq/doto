@@ -40,7 +40,7 @@ public class DetalhesProfissionalActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_detalhes_profissional);
 
-		controller = ProfissionalController.getInstance(this);
+		controller = ProfissionalController.getInstance();
 		profissionalSaude = controller.getProfissionalSelecionado();
 
 		try {

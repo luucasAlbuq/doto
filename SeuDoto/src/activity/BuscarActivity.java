@@ -41,7 +41,7 @@ public class BuscarActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar);
 		
-		profissionalController = ProfissionalController.getInstance(this);
+		profissionalController = ProfissionalController.getInstance();
 		
 		carregarCidades();
 		carregarConvenios();

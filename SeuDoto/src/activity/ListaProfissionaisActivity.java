@@ -38,7 +38,7 @@ public class ListaProfissionaisActivity extends Activity {
 		setContentView(R.layout.activity_lista_profissionais);
 
 		listaProfissional = ProfissionalController.getResultadoBuscaSimples();
-		controller = ProfissionalController.getInstance(this);
+		controller = ProfissionalController.getInstance();
 
 		resultadoPesquisa = (ListView) findViewById(R.id.resultadoPesquisa);
 		resultadoPesquisa.setAdapter(new EfficientAdapter(this,

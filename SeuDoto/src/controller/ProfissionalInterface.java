@@ -53,9 +53,10 @@ public interface ProfissionalInterface {
 	 *            especialidade
 	 * @return ProfissionalSaude profissional
 	 * @throws ProfissionalSaudeException 
+	 * @throws ParseException 
 	 */
 	List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
-			Especialidade especialidade) throws ProfissionalSaudeException;
+			Especialidade especialidade) throws ProfissionalSaudeException, ParseException;
 
 	/**
 	 * Método responsavel por realizar uma busca de Profissionais tendo como
