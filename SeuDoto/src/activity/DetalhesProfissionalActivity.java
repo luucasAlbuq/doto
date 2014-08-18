@@ -33,7 +33,7 @@ public class DetalhesProfissionalActivity extends Activity {
 	private ProfissionalController controller;
 	private UserController userController;
 	private boolean avaliacao;
-	String IDUSER ="3876";
+	String IDUSER = UserController.getInstance().getIdUser();
 	boolean isAvaliacaoUnica = false;
 	
 
