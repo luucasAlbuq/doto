@@ -8,5 +8,6 @@
     <string name="title_activity_lista_profissionais">Profissionais Disponíveis</string>
     <string name="title_activity_detalhes_profissional">Detalhes Profissional</string>
     <string name="title_activity_cadastrar_profissional">Cadastrar Profissional</string>
+    <string name="app_id">1460332747563538</string>
 
 </resources>
