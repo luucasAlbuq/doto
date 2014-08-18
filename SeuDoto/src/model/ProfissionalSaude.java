@@ -56,7 +56,7 @@ public class ProfissionalSaude implements Serializable {
 			avaliacoesNegativas = new Integer(0);
 			avaliacoesPositivas = new Integer(0);
 			convenios = new ArrayList<String>();
-			if(convenio!=null && !convenio.equals("")){
+			if(convenio!=null && !"".equals(convenio)){
 				convenios.add(convenio);
 			}
 			

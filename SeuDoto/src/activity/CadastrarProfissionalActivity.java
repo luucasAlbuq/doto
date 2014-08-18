@@ -58,7 +58,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		final Toast alertaCampos = Toast
 				.makeText(
 						this,
-						"Os campos Tipo, Nome, Identificação e Especialidade são obrigatórios",
+						"Os campos Tipo, Nome, Identificaï¿½ï¿½o e Especialidade sï¿½o obrigatï¿½rios",
 						Toast.LENGTH_LONG);
 
 		salvar.setOnClickListener(new OnClickListener() {
@@ -194,7 +194,7 @@ public class CadastrarProfissionalActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] { "João Pessoa",
+		final String[] cidades = new String[] { "Joï¿½o Pessoa",
 				"Campina Grande", "Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -227,7 +227,7 @@ public class CadastrarProfissionalActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] { "Médico",
+		final String[] tiposProfissionais = new String[] { "Mï¿½dico",
 				"Dentista", "Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
@@ -261,8 +261,8 @@ public class CadastrarProfissionalActivity extends Activity {
 	}
 
 	private boolean isCamposValidos() {
-		return nome!=null && !nome.trim().equals("") && tipo != null && !tipo.trim().equals("")
-				&& indentificacao != null && !indentificacao.trim().equals("");
+		return nome!=null && !"".equals(nome.trim()) && tipo != null && !"".equals(tipo.trim())
+				&& indentificacao != null && !"".equals(indentificacao.trim());
 	}
 
 	// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
@@ -318,7 +318,7 @@ public class CadastrarProfissionalActivity extends Activity {
 			if (!isCrmunico) {
 				Toast alertaCRM = Toast.makeText(
 						CadastrarProfissionalActivity.this,
-						"Identificação inválida!",
+						"Identificaï¿½ï¿½o invï¿½lida!",
 						Toast.LENGTH_LONG);
 				alertaCRM.show();
 

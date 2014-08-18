@@ -94,7 +94,7 @@ public class DAOParse {
 	 */
 	public ProfissionalSaude buscarProfissinalPorCRM(String crm) throws ParseException, ProfissionalSaudeException{
 		ProfissionalSaude prof = null;
-		if(crm!=null && !crm.trim().equals("")){
+		if(crm!=null && !"".equals(crm.trim())){
 			ParseQuery query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_CRM.toString(), crm);
 			ParseObject obj = query.getFirst();
@@ -348,19 +348,19 @@ public class DAOParse {
 
 	private boolean isEspecialidadeValida(String especialidade) {
 		String SELECIONE = "SELECIONE";
-		return especialidade != null && !especialidade.trim().equals("")
+		return especialidade != null && !"".equals(especialidade.trim())
 				&& !especialidade.toUpperCase().equals(SELECIONE);
 	}
 
 	private boolean isTipoValido(String tipo) {
 		String SELECIONE = "SELECIONE";
-		return tipo != null && !tipo.trim().equals("")
+		return tipo != null && !"".equals(tipo.trim())
 				&& !tipo.toUpperCase().equals(SELECIONE);
 	}
 
 	private boolean isConvenioValido(String convenio) {
 		String SELECIONE = "SELECIONE";
-		return convenio != null && !convenio.trim().equals("")
+		return convenio != null && !"".equals(convenio.trim())
 				&& !convenio.toUpperCase().equals(SELECIONE);
 	}
 
@@ -424,8 +424,8 @@ public class DAOParse {
 	 */
 	public void criarAvaliacao(String crm, String idUser, boolean avaliacao)
 			throws ProfissionalSaudeException, ParseException {
-		if (crm != null && !crm.trim().equals("") && idUser != null
-				&& !idUser.trim().equals("")) {
+		if (crm != null && !"".equals(crm.trim()) && idUser != null
+				&& !"".equals(idUser.trim())) {
 			if (isAvaliacaoUnica(idUser, crm)) {
 				ParseObject aval = new ParseObject(
 						AvaliacaoTableEnum.NOME_CLASSE.toString());
@@ -549,8 +549,8 @@ public class DAOParse {
 
 		List<ParseObject> objs = null;
 
-		if (idUser != null && crm != null && !idUser.equals("")
-				&& !crm.trim().equals("")) {
+		if (idUser != null && crm != null && !"".equals(idUser)
+				&& !"".equals(crm.trim())) {
 			ParseQuery query = new ParseQuery(
 					AvaliacaoTableEnum.NOME_CLASSE.toString());
 			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_USER.toString(),
