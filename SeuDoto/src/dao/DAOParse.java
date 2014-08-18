@@ -161,7 +161,7 @@ public class DAOParse {
 			convenios = (ArrayList<String>) object
 					.get(ProfissionalTableEnum.COLUNA_CONVENIOS.toString());
 		} catch (Exception e) {
-			throw new ProfissionalSaudeException();
+			throw new ProfissionalSaudeException(e.getMessage());
 		}
 		
 		ProfissionalSaude prof = new ProfissionalSaude(tipo, crm, nome, especialidade, convenios);
@@ -319,8 +319,9 @@ public class DAOParse {
 	 * @param Stirng especialidade
 	 * @return ArrayList<ProfissionalSaude> profissionais
 	 * @throws ParseException
+	 * @throws ProfissionalSaudeException
 	 */
-	public List<ProfissionalSaude> buscarPorEspecialidade(String especialidade) throws ParseException{
+	public List<ProfissionalSaude> buscarPorEspecialidade(String especialidade) throws ParseException, ProfissionalSaudeException{
 		List<ProfissionalSaude> resultadoPesquisa = null;
 		if(isEspecialidadeValida(especialidade)){
 			resultadoPesquisa = new ArrayList<ProfissionalSaude>();
