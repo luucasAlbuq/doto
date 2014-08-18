@@ -1150,7 +1150,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f020065;
         public static final int com_facebook_loginbutton_silver=0x7f020066;
         public static final int com_facebook_logo=0x7f020067;
-        public static final int com_facebook_picker_default_separator_color=0x7f02008d;
+        public static final int com_facebook_picker_default_separator_color=0x7f02008b;
         public static final int com_facebook_picker_item_background=0x7f020068;
         public static final int com_facebook_picker_list_focused=0x7f020069;
         public static final int com_facebook_picker_list_longpressed=0x7f02006a;
@@ -1181,13 +1181,11 @@ containing a value of this type.
         public static final int home_icon=0x7f020083;
         public static final int ic_launcher=0x7f020084;
         public static final int like_icon=0x7f020085;
-        public static final int loginface=0x7f020086;
-        public static final int loginfacebook2=0x7f020087;
-        public static final int more_icon=0x7f020088;
-        public static final int pesquisa_icon=0x7f020089;
-        public static final int plus_icon=0x7f02008a;
-        public static final int save_icon=0x7f02008b;
-        public static final int search_icon=0x7f02008c;
+        public static final int more_icon=0x7f020086;
+        public static final int pesquisa_icon=0x7f020087;
+        public static final int plus_icon=0x7f020088;
+        public static final int save_icon=0x7f020089;
+        public static final int search_icon=0x7f02008a;
     }
     public static final class id {
         public static final int SaveimageView=0x7f050053;
@@ -2745,7 +2743,7 @@ containing a value of this type.
          */
         public static final int[] MenuView = {
             0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e,
-            0x0101012f, 0x01010130, 0x01010131, 0x010103f8
+            0x0101012f, 0x01010130, 0x01010131, 0x01010435
         };
         /**
           <p>

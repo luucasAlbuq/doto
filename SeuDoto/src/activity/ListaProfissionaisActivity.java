@@ -58,6 +58,7 @@ public class ListaProfissionaisActivity extends Activity {
 						ListaProfissionaisActivity.this,
 						DetalhesProfissionalActivity.class);
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
+				finish();
 
 			}
 

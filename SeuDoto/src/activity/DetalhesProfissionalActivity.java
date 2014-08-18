@@ -7,6 +7,7 @@ import com.example.seudoto.R.layout;
 import com.parse.ParseException;
 
 import controller.ProfissionalController;
+import controller.UserController;
 import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -30,8 +31,9 @@ public class DetalhesProfissionalActivity extends Activity {
 	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,avaliacaoPosi,
 			tipoText;
 	private ProfissionalController controller;
+	private UserController userController;
 	private boolean avaliacao;
-	final String IDUSER ="3876";
+	String IDUSER ="3876";
 	boolean isAvaliacaoUnica = false;
 	
 
@@ -41,7 +43,12 @@ public class DetalhesProfissionalActivity extends Activity {
 		setContentView(R.layout.activity_detalhes_profissional);
 
 		controller = ProfissionalController.getInstance();
+		userController = UserController.getInstance();
 		profissionalSaude = controller.getProfissionalSelecionado();
+		
+		if(userController.getIdUser()!=null){
+			IDUSER = userController.getIdUser();
+		}
 
 		try {
 			preencherCampos(profissionalSaude);
