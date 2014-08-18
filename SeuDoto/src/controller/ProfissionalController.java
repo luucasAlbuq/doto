@@ -17,7 +17,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	private static ProfissionalController instance;
 
 	private DAOParse daoParse;
-	private static ArrayList<ProfissionalSaude> resultadoBuscaSimples;
+	private static List<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
 
 	
@@ -41,7 +41,7 @@ public class ProfissionalController implements ProfissionalInterface {
 			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
 			getDaoParse().cadastrarProfissional(profissional);
 		} catch (Exception e) {
-			e.printStackTrace();
+			e.getMessage();
 			throw new ProfissionalSaudeException();
 		}
 		
@@ -97,17 +97,17 @@ public class ProfissionalController implements ProfissionalInterface {
 		getDaoParse().removerAvaliacao(idUser, crm);
 	}
 
-	public static ArrayList<ProfissionalSaude> getResultadoBuscaSimples() {
+	public static List<ProfissionalSaude> getResultadoBuscaSimples() {
 		return resultadoBuscaSimples;
 	}
 
 	public static void setResultadoBuscaSimples(
-			ArrayList<ProfissionalSaude> resultado){
+			List<ProfissionalSaude> resultado){
 			resultadoBuscaSimples = resultado;
 	}
 
 	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio) throws ProfissionalSaudeException, ParseException{
-		ArrayList<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenio);
+		List<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenio);
 		setResultadoBuscaSimples(resultado);
 		return resultado;
 	}

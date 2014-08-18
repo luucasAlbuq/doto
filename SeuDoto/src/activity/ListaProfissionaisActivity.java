@@ -1,6 +1,7 @@
 package activity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Endereco;
 import model.ProfissionalSaude;
@@ -29,7 +30,7 @@ import android.widget.TextView;
 public class ListaProfissionaisActivity extends Activity {
 
 	private ListView resultadoPesquisa;
-	private ArrayList<ProfissionalSaude> listaProfissional;
+	private List<ProfissionalSaude> listaProfissional;
 	private static ProfissionalController controller;
 
 	@Override
@@ -58,7 +59,6 @@ public class ListaProfissionaisActivity extends Activity {
 						ListaProfissionaisActivity.this,
 						DetalhesProfissionalActivity.class);
 				ListaProfissionaisActivity.this.startActivity(telaDetalhes);
-				finish();
 
 			}
 

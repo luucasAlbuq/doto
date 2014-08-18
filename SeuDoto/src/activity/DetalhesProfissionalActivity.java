@@ -7,7 +7,6 @@ import com.example.seudoto.R.layout;
 import com.parse.ParseException;
 
 import controller.ProfissionalController;
-import controller.UserController;
 import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -31,9 +30,8 @@ public class DetalhesProfissionalActivity extends Activity {
 	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,avaliacaoPosi,
 			tipoText;
 	private ProfissionalController controller;
-	private UserController userController;
 	private boolean avaliacao;
-	String IDUSER = UserController.getInstance().getIdUser();
+	final static String IDUSER ="3876";
 	boolean isAvaliacaoUnica = false;
 	
 
@@ -43,22 +41,17 @@ public class DetalhesProfissionalActivity extends Activity {
 		setContentView(R.layout.activity_detalhes_profissional);
 
 		controller = ProfissionalController.getInstance();
-		userController = UserController.getInstance();
 		profissionalSaude = controller.getProfissionalSelecionado();
-		
-		if(userController.getIdUser()!=null){
-			IDUSER = userController.getIdUser();
-		}
 
 		try {
 			preencherCampos(profissionalSaude);
 		} catch (ProfissionalSaudeException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e1.getMessage();
 		}
 		
 		final Toast alertaFalha = Toast.makeText(this,
-				"Falha ao computar a Avaliação", Toast.LENGTH_LONG);
+				"Falha ao computar a Avaliaï¿½ï¿½o", Toast.LENGTH_LONG);
 		
 		
 		
@@ -216,10 +209,10 @@ public class DetalhesProfissionalActivity extends Activity {
 						}
 					} catch (ProfissionalSaudeException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						e.getMessage();
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						e.getMessage();
 					}
 				}
 
@@ -231,14 +224,14 @@ public class DetalhesProfissionalActivity extends Activity {
 				if(!isAvaliacaoUnica()){
 					mProgressDialog.dismiss();
 					Toast alertaAvaliacao = Toast.makeText(DetalhesProfissionalActivity.this,
-								"Você já avaliou esse profissional!", Toast.LENGTH_LONG);
+								"Vocï¿½ jï¿½ avaliou esse profissional!", Toast.LENGTH_LONG);
 					alertaAvaliacao.show();
 				}else{
 					avaliacaoPosi.setText(""+profissionalSaude.getAvaliacoesPositivas());
 					avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
 					mProgressDialog.dismiss();
 					Toast alertaSucesso = Toast.makeText(DetalhesProfissionalActivity.this,
-							"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+							"Avaliaï¿½ï¿½o computada com Sucesso", Toast.LENGTH_LONG);
 					alertaSucesso.show();
 				}
 				
