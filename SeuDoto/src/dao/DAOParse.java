@@ -125,7 +125,7 @@ public class DAOParse {
 		} catch (ParseException e) {
 			throw e;
 		}
-		if (objs != null && objs.size() > 0) {
+		if (objs != null && !objs.isEmpty()) {
 			result = false;
 		}
 
@@ -221,7 +221,6 @@ public class DAOParse {
 			String tipo, String convenio) throws ParseException,
 			ProfissionalSaudeException {
 		List<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
-		final String SELECIONE = "SELECIONE";
 		ParseQuery query = null;
 
 		// Se for especificado tipo e especialidade
@@ -347,21 +346,21 @@ public class DAOParse {
 	}
 
 	private boolean isEspecialidadeValida(String especialidade) {
-		String SELECIONE = "SELECIONE";
+		String selecione = "SELECIONE";
 		return especialidade != null && !"".equals(especialidade.trim())
-				&& !especialidade.toUpperCase().equals(SELECIONE);
+				&& !especialidade.equalsIgnoreCase(selecione);
 	}
 
 	private boolean isTipoValido(String tipo) {
-		String SELECIONE = "SELECIONE";
+		String selecione = "SELECIONE";
 		return tipo != null && !"".equals(tipo.trim())
-				&& !tipo.toUpperCase().equals(SELECIONE);
+				&& !tipo.equalsIgnoreCase(selecione);
 	}
 
 	private boolean isConvenioValido(String convenio) {
-		String SELECIONE = "SELECIONE";
+		String selecione = "SELECIONE";
 		return convenio != null && !"".equals(convenio.trim())
-				&& !convenio.toUpperCase().equals(SELECIONE);
+				&& !convenio.equalsIgnoreCase(selecione);
 	}
 
 	/**
@@ -563,7 +562,7 @@ public class DAOParse {
 			}
 		}
 
-		if (objs != null && objs.size() > 0) {
+		if (objs != null && !objs.isEmpty()) {
 			isValido = false;
 		}
 

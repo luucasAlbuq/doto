@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.parse.ParseException;
@@ -54,7 +55,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorNome(String nome) {
 		//TODO
-		return null;
+		return Collections.emptyList(); 
 	}
 
 	@Override
@@ -71,7 +72,7 @@ public class ProfissionalController implements ProfissionalInterface {
 
 	@Override
 	public List<ProfissionalSaude> buscarProfissionalPorTipo(TipoProfissional tipo) {
-		return null;
+		return Collections.emptyList(); 
 	}
 
 	@Override

@@ -50,8 +50,6 @@ public class DetalhesProfissionalActivity extends Activity {
 			e1.getMessage();
 		}
 		
-		final Toast alertaFalha = Toast.makeText(this,
-				"Falha ao computar a Avalia��o", Toast.LENGTH_LONG);
 		
 		
 		
@@ -62,7 +60,6 @@ public class DetalhesProfissionalActivity extends Activity {
 			public void onClick(View v) {
 
 				setAvaliacaoPositiva(true);
-				String crm = profissionalSaude.getNumeroRegistro();
 
 				EsperandoConsulta espera = new EsperandoConsulta();
 				espera.execute(new String[] { "Seu Doto" });
@@ -76,7 +73,6 @@ public class DetalhesProfissionalActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				setAvaliacaoPositiva(false);
-				String crm = profissionalSaude.getNumeroRegistro(); 
 					
 					EsperandoConsulta espera = new EsperandoConsulta();
 					espera.execute(new String[]{"Seu Doto"});
@@ -98,17 +94,17 @@ public class DetalhesProfissionalActivity extends Activity {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			LocationFound(R.id.action_search);
+			locationFound(R.id.action_search);
 			return true;
 		case R.id.action_home_main:
-			LocationFound(R.id.action_home_main);
+			locationFound(R.id.action_home_main);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void LocationFound(int id) {
+	private void locationFound(int id) {
 		if(id==R.id.action_search){
 			Intent i = new Intent(DetalhesProfissionalActivity.this,
 					CadastrarProfissionalActivity.class);
@@ -170,7 +166,7 @@ public class DetalhesProfissionalActivity extends Activity {
 
 
 
-		// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
+		
 		private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
 
 			private ProgressDialog mProgressDialog;

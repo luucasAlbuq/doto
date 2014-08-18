@@ -62,25 +62,16 @@ public class CadastrarProfissionalActivity extends Activity {
 						Toast.LENGTH_LONG);
 
 		salvar.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
-
 				nome = nomeText.getText().toString();
 				indentificacao = numeroRegistro.getText().toString();
-
 				try {
-
 					if (isCamposValidos()) {
-						profissionalParaCadastrar = new ProfissionalSaude(tipo,
-								numeroRegistro.getText().toString(), nome,
-								especialidade, convenio);
-
-						// Mostra um progress bar informando que o profissional
-						// ta sendo persistido no BD online
+						profissionalParaCadastrar = new ProfissionalSaude(tipo, numeroRegistro.getText().toString(), nome,
+					    especialidade, convenio);
 						EsperandoConsulta espera = new EsperandoConsulta();
 						espera.execute(new String[] { "Seu Doto" });
-
 					} else {
 						alertaCampos.show();
 					}
@@ -88,7 +79,6 @@ public class CadastrarProfissionalActivity extends Activity {
 				} catch (Exception e) {
 					alertaFalha.show();
 				}
-
 			}
 		});
 	}
@@ -106,14 +96,14 @@ public class CadastrarProfissionalActivity extends Activity {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_home:
-			LocationFound();
+			locationFound();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void LocationFound() {
+	private void locationFound() {
 		Intent i = new Intent(CadastrarProfissionalActivity.this,
 				BuscarActivity.class);
 		startActivity(i);
@@ -265,7 +255,6 @@ public class CadastrarProfissionalActivity extends Activity {
 				&& indentificacao != null && !"".equals(indentificacao.trim());
 	}
 
-	// Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
 	private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
 
 		private ProgressDialog mProgressDialog;

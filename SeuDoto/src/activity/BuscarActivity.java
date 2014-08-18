@@ -163,7 +163,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] {"Selecione", "Joãoo Pessoa", "Campina Grande",
+		final String[] cidades = new String[] {"Selecione", "Joï¿½oo Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -196,7 +196,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] {"Selecione", "Médico", "Dentista",
+		final String[] tiposProfissionais = new String[] {"Selecione", "Mï¿½dico", "Dentista",
 				"Fisioterapeuta", "Nutricionista", "Psicologo" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
@@ -274,7 +274,6 @@ public class BuscarActivity extends Activity {
 	}
 	
 	
-	//Para chamar a AsyncTask: new nomeDaAsyncTask().execute();
 	private class EsperandoConsulta extends AsyncTask<String, Integer, String>{
 
 			private ProgressDialog mProgressDialog;
@@ -309,10 +308,6 @@ public class BuscarActivity extends Activity {
 				} catch (ProfissionalSaudeException e) {
 					concluido = false;
 				}
-				
-/*				while(!concluido){
-	
-				}*/
 				
 				return null;
 			}

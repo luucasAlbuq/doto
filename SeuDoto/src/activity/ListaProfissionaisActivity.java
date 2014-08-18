@@ -78,17 +78,17 @@ public class ListaProfissionaisActivity extends Activity {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_search:
-			LocationFound(R.id.action_search);
+			locationFound(R.id.action_search);
 			return true;
 		case R.id.action_home_main:
-			LocationFound(R.id.action_home_main);
+			locationFound(R.id.action_home_main);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 
-	private void LocationFound(int id) {
+	private void locationFound(int id) {
 		if(id==R.id.action_search){
 			Intent i = new Intent(ListaProfissionaisActivity.this,
 					CadastrarProfissionalActivity.class);

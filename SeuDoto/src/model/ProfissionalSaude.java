@@ -192,7 +192,7 @@ public class ProfissionalSaude implements Serializable {
 	
 	public String toStringConveios(){
 		String saida = "";
-		if(getConvenios()!=null && getConvenios().size()>0){
+		if(getConvenios()!=null && !getConvenios().isEmpty()){
 			for(String conv : getConvenios()){
 				saida = saida.concat(conv+" ");
 			}
