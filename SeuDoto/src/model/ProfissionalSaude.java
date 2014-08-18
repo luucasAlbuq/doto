@@ -19,10 +19,10 @@ public class ProfissionalSaude implements Serializable {
 	private String nome;
 	
 	private String especialidade;
-	private ArrayList<String> convenios;
+	private List<String> convenios;
 	private Integer avaliacoesPositivas, avaliacoesNegativas;
 
-	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, ArrayList<String> convenio)
+	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, List<String> convenio)
 			throws ProfissionalSaudeException {
 		
 		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
@@ -127,11 +127,11 @@ public class ProfissionalSaude implements Serializable {
 		this.especialidade = especialidade;
 	}
 
-	public ArrayList<String> getConvenios() {
+	public List<String> getConvenios() {
 		return convenios;
 	}
 
-	public void setConvenios(ArrayList<String> convenios) {
+	public void setConvenios(List<String> convenios) {
 		this.convenios = convenios;
 	}
 
@@ -163,23 +163,30 @@ public class ProfissionalSaude implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj){
 			return true;
-		if (obj == null)
+		}
+		if (obj == null){
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()){
 			return false;
+		}
 		ProfissionalSaude other = (ProfissionalSaude) obj;
 		if (nome == null) {
-			if (other.nome != null)
+			if (other.nome != null){
 				return false;
-		} else if (!nome.equals(other.nome))
+			}
+		} else if (!nome.equals(other.nome)){
 			return false;
+		}
 		if (numeroRegistro == null) {
-			if (other.numeroRegistro != null)
+			if (other.numeroRegistro != null){
 				return false;
-		} else if (!numeroRegistro.equals(other.numeroRegistro))
+			}
+		} else if (!numeroRegistro.equals(other.numeroRegistro)){
 			return false;
+		}
 		return true;
 	}
 	

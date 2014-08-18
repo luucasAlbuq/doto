@@ -29,7 +29,7 @@ public class DAOParse {
 
 	private static DAOParse instance;
 	private static List<ParseObject> resultadoBusca = null;
-	private static ArrayList<ProfissionalSaude> todosProfissionais = new ArrayList<ProfissionalSaude>();
+	private static List<ProfissionalSaude> todosProfissionais = new ArrayList<ProfissionalSaude>();
 	
 	private DAOParse() {
 		// TODO Auto-generated constructor stub
@@ -156,7 +156,7 @@ public class DAOParse {
 		Integer avaliacoesPositivas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString());
 		Integer avaliacoesNegativas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString()); 
 
-		ArrayList<String> convenios = null;
+		List<String> convenios = null;
 		try {
 			convenios = (ArrayList<String>) object
 					.get(ProfissionalTableEnum.COLUNA_CONVENIOS.toString());
@@ -217,10 +217,10 @@ public class DAOParse {
 	 * @throws ParseException
 	 * @throws ProfissionalSaudeException
 	 */
-	public ArrayList<ProfissionalSaude> buscaSimples(String especialidade,
+	public List<ProfissionalSaude> buscaSimples(String especialidade,
 			String tipo, String convenio) throws ParseException,
 			ProfissionalSaudeException {
-		ArrayList<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
+		List<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
 		final String SELECIONE = "SELECIONE";
 		ParseQuery query = null;
 
@@ -307,7 +307,7 @@ public class DAOParse {
 				try {
 					profisisonais.add(montaProfissionalSaude(prof));
 				} catch (ProfissionalSaudeException e) {
-					e.printStackTrace();
+					e.getMessage();
 				}
 			}
 		}
@@ -321,8 +321,8 @@ public class DAOParse {
 	 * @return ArrayList<ProfissionalSaude> profissionais
 	 * @throws ParseException
 	 */
-	public ArrayList<ProfissionalSaude> buscarPorEspecialidade(String especialidade) throws ParseException{
-		ArrayList<ProfissionalSaude> resultadoPesquisa = null;
+	public List<ProfissionalSaude> buscarPorEspecialidade(String especialidade) throws ParseException{
+		List<ProfissionalSaude> resultadoPesquisa = null;
 		if(isEspecialidadeValida(especialidade)){
 			resultadoPesquisa = new ArrayList<ProfissionalSaude>();
 			
@@ -336,7 +336,7 @@ public class DAOParse {
 					try {
 						resultadoPesquisa.add(montaProfissionalSaude(prof));
 					} catch (ProfissionalSaudeException e) {
-						e.printStackTrace();
+						e.getMessage();
 					}
 				}
 			}
@@ -370,7 +370,7 @@ public class DAOParse {
 	 * @return ArrayList<Avaliacao> avaliacoes
 	 * @throws ParseException
 	 */
-	public ArrayList<Avaliacao> getAllAvaliacoes() throws ParseException {
+	public List<Avaliacao> getAllAvaliacoes() throws ParseException {
 		List<ParseObject> avaliacoes = null;
 
 		ParseQuery query = new ParseQuery(
@@ -393,8 +393,8 @@ public class DAOParse {
 	 *            <ParseObject> objs
 	 * @return ArrayList<Avaliacao> avaliacao
 	 */
-	private ArrayList<Avaliacao> montarAvaliacao(List<ParseObject> objs) {
-		ArrayList<Avaliacao> avaliacaos = new ArrayList<Avaliacao>();
+	private List<Avaliacao> montarAvaliacao(List<ParseObject> objs) {
+		List<Avaliacao> avaliacaos = new ArrayList<Avaliacao>();
 
 		for (ParseObject par : objs) {
 			String idUser = par.getString(AvaliacaoTableEnum.COLUNA_USER
@@ -641,12 +641,12 @@ public class DAOParse {
 		DAOParse.resultadoBusca = resultadoBusca;
 	}
 
-	public static ArrayList<ProfissionalSaude> getTodosProfissionais() {
+	public static List<ProfissionalSaude> getTodosProfissionais() {
 		return todosProfissionais;
 	}
 
 	public static void setTodosProfissionais(
-			ArrayList<ProfissionalSaude> todosProfissionais) {
+			List<ProfissionalSaude> todosProfissionais) {
 		DAOParse.todosProfissionais = todosProfissionais;
 	}
 
