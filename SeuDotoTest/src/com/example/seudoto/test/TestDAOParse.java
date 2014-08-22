@@ -286,7 +286,7 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		ArrayList<ProfissionalSaude> profs = new ArrayList<ProfissionalSaude>();
 		try {
-			profs = DAOParse.getInstance().buscaSimples("Psiquiatra", "Médico", "Particular");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("Psiquiatra", "Médico", "Particular");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -306,7 +306,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("", "Medico", "Particular");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("", "Medico", "Particular");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -326,7 +326,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("Psiquiatra", "", "Particular");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("Psiquiatra", "", "Particular");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -346,7 +346,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("", "", "Particular");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("", "", "Particular");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -366,7 +366,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("Psiquiatra", "Médico", "");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("Psiquiatra", "Médico", "");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -386,7 +386,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("", "Médico", "");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("", "Médico", "");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -406,7 +406,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("Psiquiatra", "", "");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("Psiquiatra", "", "");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -426,7 +426,7 @@ public class TestDAOParse extends AndroidTestCase {
 		teste = false;
 		
 		try {
-			profs = DAOParse.getInstance().buscaSimples("", "", "");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscaSimples("", "", "");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();
@@ -449,7 +449,7 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		ArrayList<ProfissionalSaude> profs = new ArrayList<ProfissionalSaude>();
 		try {
-			profs = DAOParse.getInstance().buscarPorEspecialidade("Curandeiro");
+			profs = (ArrayList<ProfissionalSaude>) DAOParse.getInstance().buscarPorEspecialidade("Curandeiro");
 		} catch (Exception e) {
 			exception = e;
 			e.printStackTrace();

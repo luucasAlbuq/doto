@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.seudoto.R;
+import com.facebook.android.Facebook;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -17,6 +18,8 @@ import android.widget.ImageButton;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
 import com.parse.ParseObject;
+
+import controller.UserController;
 
 public class MainActivity extends Activity {
 	
@@ -34,7 +37,6 @@ public class MainActivity extends Activity {
         botaoLogin.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-		 
 				Intent telaBusca = new Intent(MainActivity.this, BuscarActivity.class);
 				MainActivity.this.startActivity(telaBusca);
 			}

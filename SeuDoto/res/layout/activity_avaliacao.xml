@@ -1,0 +1,161 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${packageName}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/avaliacao_nome_prof1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/shapetitulo"
+        android:text="Gabriela Oliveira"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="25sp" />
+
+    <LinearLayout
+        android:id="@+id/avaliacao_layout_comentario"
+        android:layout_width="300dp"
+        android:layout_height="210dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Escreva um depoimento"
+            android:textColor="#000066"
+            android:textSize="15dp" >
+        </TextView>
+
+        <LinearLayout
+            android:id="@+id/avaliacao_layout_comentario"
+            android:layout_width="300dp"
+            android:layout_height="165dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shapelinear"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/txtStatus"
+                android:layout_width="300dp"
+                android:layout_height="165dp"
+                android:maxLength="140"
+                android:textColor="#FFFFFF"
+                 >
+
+                <requestFocus>
+                </requestFocus>
+            </EditText>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/lblCount"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:layout_weight="1"
+                android:gravity="right|center"
+                android:paddingRight="10dp"
+                android:text="140"
+                android:textColor="#4682B4"
+                android:textSize="15dp" >
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="25dp"
+        android:alignmentMode="alignBounds"
+        android:background="@drawable/shapelinear"
+        android:columnCount="2"
+        android:columnOrderPreserved="false"
+        android:useDefaultMargins="true" >
+
+        <TextView
+            android:id="@+id/avaliacao_avaliacao_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Avaliações(+)"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/avaliacao_avaliacao_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/avaliacao_avaliacao_neg_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="0"
+            android:layout_gravity="center_horizontal"
+            android:text="Avaliações(-)"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/avaliacao_avaliacao_neg_resp_prof1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_column="1"
+            android:layout_gravity="center_horizontal"
+            android:text=""
+            android:textColor="#FFFFFF"
+            android:textSize="20sp" />
+    </GridLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/detalhes_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="20dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/botaolike" />
+
+        <ImageButton
+            android:id="@+id/detalhes_dislike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/botaounlike" />
+    </LinearLayout>
+
+</LinearLayout>

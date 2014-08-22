@@ -2,6 +2,10 @@ package activity;
 
 import util.Convenio;
 import util.Especialidade;
+import android.animation.Animator;
+import android.animation.AnimatorInflater;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -49,6 +53,9 @@ public class BuscarActivity extends Activity {
 		carregarTiposProfissionais();
 		
 		botaoPesquisar = (ImageButton) findViewById(R.id.botaoPesquisar);
+		
+		
+		
 		botaoPesquisar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -61,6 +68,7 @@ public class BuscarActivity extends Activity {
 		});
 
 	}
+
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -163,7 +171,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] {"Selecione", "Joï¿½oo Pessoa", "Campina Grande",
+		final String[] cidades = new String[] {"Selecione", "João Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
