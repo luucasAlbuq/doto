@@ -31,7 +31,7 @@ public class DetalhesProfissionalActivity extends Activity {
 			tipoText;
 	private ProfissionalController controller;
 	private boolean avaliacao;
-	final static String IDUSER ="3876";
+	final static String IDUSER ="12345";
 	boolean isAvaliacaoUnica = false;
 	
 
@@ -59,7 +59,6 @@ public class DetalhesProfissionalActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 
-				
 
 			}
 		});
@@ -70,9 +69,8 @@ public class DetalhesProfissionalActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				
-				Intent telaAvaliar = new Intent(DetalhesProfissionalActivity.this,
-						AvaliacaoActivity.class);
-				DetalhesProfissionalActivity.this.startActivity(telaAvaliar);
+				EsperandoConsulta espera = new EsperandoConsulta();
+				espera.execute(new String[]{"Seu Doto"});
 				
 			}
 		});
@@ -159,6 +157,45 @@ public class DetalhesProfissionalActivity extends Activity {
 
 	public void setAvaliacaoPositiva(boolean avaliacao) {
 		this.avaliacao = avaliacao;
+	}
+	
+	
+	private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
+
+		private ProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Context contexto = DetalhesProfissionalActivity.this;
+			mProgressDialog = new ProgressDialog(contexto);
+			mProgressDialog.setMessage("Colhendo dados");
+			mProgressDialog.setIndeterminate(false);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			
+			try {
+				controller.getAvaliacao(IDUSER, profissionalSaude.getNumeroRegistro());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			mProgressDialog.dismiss();
+			Intent telaAvaliacao = new Intent(
+					DetalhesProfissionalActivity.this, AvaliacaoActivity.class);
+			startActivity(telaAvaliacao);
+
+		}
 	}
 	
 }

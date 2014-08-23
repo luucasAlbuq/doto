@@ -2,23 +2,17 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Future;
 
-import org.json.JSONArray;
-
+import model.Avaliacao;
+import model.ProfissionalSaude;
 import util.AvaliacaoTableEnum;
 import util.ProfissionalTableEnum;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import exception.ProfissionalSaudeException;
-import android.content.Context;
-import model.Avaliacao;
-import model.ProfissionalSaude;
 
 /**
  * Classe responsavel por manipular instancias de Objetos e persistir-las no BD.
@@ -403,7 +397,8 @@ public class DAOParse {
 					.getString(AvaliacaoTableEnum.COLUNA_CRM.toString());
 			boolean aval = (Boolean) par
 					.get(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString());
-			avaliacaos.add(new Avaliacao(crm, idUser, aval));
+			String comentario = par.getString(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString());
+			avaliacaos.add(new Avaliacao(crm, idUser, aval,comentario));
 		}
 
 		return avaliacaos;
@@ -447,6 +442,68 @@ public class DAOParse {
 
 		} else {
 			throw new ProfissionalSaudeException();
+		}
+	}
+	
+	/**
+	 * Método responsavel por criar uma avaliacao unica e persisti-la no BD.
+	 * Sendo true equivalente a uma avaliacao positiva e false a uma avaliacao
+	 * negativa.
+	 * @param crm
+	 * @param idUser
+	 * @param avaliacao
+	 * @param comentario
+	 * @throws ProfissionalSaudeException
+	 * @throws ParseException
+	 */
+	public void criarAvaliacao(String crm, String idUser, boolean avaliacao, String comentario) throws ProfissionalSaudeException, ParseException{
+		if(comentario==null || !comentario.trim().equals("")){
+			criarAvaliacao(crm, idUser, avaliacao);
+		}else{
+			if (crm != null && !"".equals(crm.trim()) && idUser != null
+					&& !"".equals(idUser.trim())) {
+				if (isAvaliacaoUnica(idUser, crm)) {
+					ParseObject aval = new ParseObject(
+							AvaliacaoTableEnum.NOME_CLASSE.toString());
+					aval.put(AvaliacaoTableEnum.COLUNA_CRM.toString(), crm);
+					aval.put(AvaliacaoTableEnum.COLUNA_USER.toString(), idUser);
+					aval.put(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString(),
+							avaliacao);
+					aval.put(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString(), comentario);
+
+					try {
+						aval.saveInBackground();
+						atualizaAvaliacoesProfissional(crm,avaliacao);
+					} catch (Exception e) {
+						e.getStackTrace();
+						aval.saveEventually();
+					}
+				} else {
+					throw new ProfissionalSaudeException();
+				}
+
+			} else {
+				throw new ProfissionalSaudeException();
+			}
+		}
+	}
+	
+	/**
+	 * Metodo responsavel por adicionar um comentario em uma determinada avalaicao
+	 * @param idUser
+	 * @param crm
+	 * @param comentario
+	 * @throws ParseException
+	 */
+	public void addComentario(String idUser, String crm, String comentario)
+			throws ParseException {
+		
+		ParseObject aval = getParseAvaliacao(idUser, crm);
+		String isComentarioVazio = aval.getString(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString());
+		
+		if(isComentarioVazio==null || isComentarioVazio.trim().equals("")){
+			aval.put(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString(), comentario);
+			aval.save();
 		}
 	}
 	
@@ -602,13 +659,13 @@ public class DAOParse {
 	}
 	
 	/**
-	 *  Metodo responsavel por remover uma avaliacao cadastrada no BD
+	 *  Metodo responsavel por remover um objeto Parse referente a avaliacao cadastrada no BD
 	 * @param String idUser
 	 * @param String crm
 	 * @throws ParseException
 	 */
 	public void removerAvaliacao(String idUser, String crm) throws ParseException{
-		ParseObject object = getAvaliacao(idUser,crm);
+		ParseObject object = getParseAvaliacao(idUser,crm);
 		object.deleteInBackground();
 	}
 	
@@ -619,7 +676,7 @@ public class DAOParse {
 	 * @return ParseObject avaliacao
 	 * @throws ParseException
 	 */
-	private ParseObject getAvaliacao(String idUser, String crm) throws ParseException{
+	private ParseObject getParseAvaliacao(String idUser, String crm) throws ParseException{
 		ParseObject obj = null;
 		ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
 		query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(),crm);
@@ -631,6 +688,25 @@ public class DAOParse {
 		}
 		
 		return obj;
+	}
+	
+	/**
+	 * Retorna um objeto do tipo Avaliacao
+	 * @param idUser
+	 * @param crm
+	 * @return Avaliacao avaliacao
+	 * @throws ParseException 
+	 */
+	public Avaliacao getObjetoAvaliacao(String idUser, String crm) throws ParseException{
+		ParseObject aval = getParseAvaliacao(idUser, crm);
+		String user = aval.getString(AvaliacaoTableEnum.COLUNA_USER.toString());
+		String medico = aval
+				.getString(AvaliacaoTableEnum.COLUNA_CRM.toString());
+		boolean avaliacao = (Boolean) aval
+				.get(AvaliacaoTableEnum.COLUNA_AVALIACAO.toString());
+		String comentario = (String) aval.get(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString());
+
+		return new Avaliacao(crm, idUser, avaliacao, comentario );  
 	}
 
 	public static List<ParseObject> getResultadoBusca() {

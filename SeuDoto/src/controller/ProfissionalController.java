@@ -8,6 +8,7 @@ import com.parse.ParseException;
 
 import dao.DAOParse;
 import exception.ProfissionalSaudeException;
+import model.Avaliacao;
 import model.ProfissionalSaude;
 import model.TipoProfissional;
 import util.Convenio;
@@ -20,6 +21,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	private DAOParse daoParse;
 	private static List<ProfissionalSaude> resultadoBuscaSimples;
 	private static ProfissionalSaude profissionalSelecionado;
+	private static Avaliacao avaliacaoCorrente;
 
 	
 	private ProfissionalController() {
@@ -97,6 +99,10 @@ public class ProfissionalController implements ProfissionalInterface {
 	public void removerAvalicao(String idUser, String crm) throws ParseException{
 		getDaoParse().removerAvaliacao(idUser, crm);
 	}
+	
+	public void addComentario(String idUser, String crm, String comentario) throws ParseException{
+		getDaoParse().addComentario(idUser, crm, comentario);
+	}
 
 	public static List<ProfissionalSaude> getResultadoBuscaSimples() {
 		return resultadoBuscaSimples;
@@ -132,12 +138,22 @@ public class ProfissionalController implements ProfissionalInterface {
 		getDaoParse().criarAvaliacao(crm, idUser, avaliacao);
 	}
 	
+	public void criarAvaliacao(String idUser, String crm, boolean avaliacao, String comentario) throws ProfissionalSaudeException, ParseException{
+		getDaoParse().criarAvaliacao(crm, idUser, avaliacao, comentario);
+	}
+	
 	public int getAvaliacoesPositivas(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		return getDaoParse().getAvaliacoesPositivas(prof);
 	}
 	
 	public int getAvaliacoesNegativas(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		return getDaoParse().getAvaliacoesNegativas(prof);
+	}
+	
+	public Avaliacao getAvaliacao(String id, String crm) throws ParseException{
+		Avaliacao aval = getDaoParse().getObjetoAvaliacao(id, crm);
+		setAvaliacaoCorrente(aval);
+		return aval;
 	}
 
 
@@ -151,7 +167,13 @@ public class ProfissionalController implements ProfissionalInterface {
 	public void setDaoParse(DAOParse daoParse) {
 		this.daoParse = daoParse;
 	}
-	
-	
 
+	public static Avaliacao getAvaliacaoCorrente() {
+				return avaliacaoCorrente;
+	}
+
+	public static void setAvaliacaoCorrente(Avaliacao avaliacaoCorrente) {
+		ProfissionalController.avaliacaoCorrente = avaliacaoCorrente;
+	}
+	
 }

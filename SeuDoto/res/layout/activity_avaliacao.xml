@@ -37,19 +37,19 @@
         <LinearLayout
             android:id="@+id/avaliacao_layout_comentario"
             android:layout_width="300dp"
-            android:layout_height="165dp"
+            android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:background="@drawable/shapelinear"
             android:orientation="vertical" >
 
             <EditText
-                android:id="@+id/txtStatus"
+                android:id="@+id/txtComentarioAnonimo"
                 android:layout_width="300dp"
                 android:layout_height="165dp"
                 android:maxLength="140"
                 android:textColor="#FFFFFF"
-                 >
+                android:textSize="17dp">
 
                 <requestFocus>
                 </requestFocus>
@@ -73,6 +73,16 @@
                 android:textColor="#4682B4"
                 android:textSize="15dp" >
             </TextView>
+            
+            <Button 
+				android:id="@+id/button1" 
+				android:layout_height="wrap_content"
+	            android:layout_width="wrap_content" 
+	            android:text="Salvar"
+	            android:layout_gravity="left"
+	            android:layout_weight="0.25">
+            </Button>
+            
         </LinearLayout>
     </LinearLayout>
 
@@ -96,7 +106,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Avaliações(+)"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/avaliacao_avaliacao_resp_prof1"
@@ -106,7 +116,7 @@
             android:layout_gravity="center_horizontal"
             android:text=""
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/avaliacao_avaliacao_neg_prof1"
@@ -116,7 +126,7 @@
             android:layout_gravity="center_horizontal"
             android:text="Avaliações(-)"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/avaliacao_avaliacao_neg_resp_prof1"
@@ -126,7 +136,7 @@
             android:layout_gravity="center_horizontal"
             android:text=""
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
     </GridLayout>
 
     <LinearLayout

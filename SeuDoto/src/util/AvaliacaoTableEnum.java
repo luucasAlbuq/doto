@@ -1,7 +1,7 @@
 package util;
 
 public enum AvaliacaoTableEnum {
-NOME_CLASSE("Avaliacao"), COLUNA_USER("idUser"),COLUNA_CRM("crm"),COLUNA_AVALIACAO("avaliacao");
+NOME_CLASSE("Avaliacao"), COLUNA_USER("idUser"),COLUNA_CRM("crm"),COLUNA_AVALIACAO("avaliacao"), COLUNA_COMENTARIO("comentario");
 	
 	private final String text;
 	
