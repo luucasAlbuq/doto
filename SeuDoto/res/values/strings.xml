@@ -10,5 +10,6 @@
     <string name="title_activity_cadastrar_profissional">Cadastrar Profissional</string>
     <string name="app_id">1460332747563538</string>
     <string name="title_activity_avaliacao">AvaliacaoActivity</string>
+    <string name="title_activity_comentarios">ComentariosActivity</string>
 
 </resources>

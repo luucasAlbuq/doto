@@ -62,6 +62,10 @@
             android:name="activity.AvaliacaoActivity"
             android:label="@string/title_activity_avaliacao" >
         </activity>
+        <activity
+            android:name="activity.ComentariosActivity"
+            android:label="@string/title_activity_comentarios" >
+        </activity>
     </application>
 
 </manifest>

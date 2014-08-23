@@ -359,7 +359,7 @@ public class DAOParse {
 	}
 
 	/**
-	 * Método responsavel por retorna todas as avaliações cadastradas.
+	 * Metodo responsavel por retorna todas as avaliacoes cadastradas.
 	 * 
 	 * @return ArrayList<Avaliacao> avaliacoes
 	 * @throws ParseException
@@ -376,6 +376,30 @@ public class DAOParse {
 			throw e;
 		}
 
+		return montarAvaliacao(avaliacoes);
+	}
+	
+	/**
+	 * Metodo responsavel por retorna todas as avaliacoes de um medico especifico
+	 * @param String crm
+	 * @return List<Avaliacao> avaliacoes
+	 * @throws ParseException 
+	 */
+	public List<Avaliacao> getAvaliacoesByCrm(String crm) throws ParseException{
+		List<ParseObject> avaliacoes = null;
+		
+		if(!isCrmUnico(crm)){
+			ParseQuery query = new ParseQuery(AvaliacaoTableEnum.NOME_CLASSE.toString());
+			query.whereEqualTo(AvaliacaoTableEnum.COLUNA_CRM.toString(), crm);
+			query.setLimit(50);
+
+			try {
+				avaliacoes = query.find();
+			} catch (ParseException e) {
+				throw e;
+			}
+		}
+		
 		return montarAvaliacao(avaliacoes);
 	}
 

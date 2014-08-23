@@ -1,5 +1,6 @@
 package activity;
 
+import model.Avaliacao;
 import model.ProfissionalSaude;
 
 import com.example.seudoto.R;
@@ -51,15 +52,14 @@ public class DetalhesProfissionalActivity extends Activity {
 		}
 		
 		
-		
-		
 		ImageButton comentarios = (ImageButton) findViewById(R.id.detalhes_comentarios);
 		comentarios.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 
-
+				EsperandoPorAvaliacoes espera = new EsperandoPorAvaliacoes();
+				espera.execute(new String[]{"Seu Doto"});
 			}
 		});
 		
@@ -159,6 +159,64 @@ public class DetalhesProfissionalActivity extends Activity {
 		this.avaliacao = avaliacao;
 	}
 	
+	private class EsperandoPorAvaliacoes extends AsyncTask<String, Integer, String> {
+
+		private ProgressDialog mProgressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			Context contexto = DetalhesProfissionalActivity.this;
+			mProgressDialog = new ProgressDialog(contexto);
+			mProgressDialog.setMessage("Colhendo dados");
+			mProgressDialog.setIndeterminate(false);
+			mProgressDialog.setCancelable(false);
+			mProgressDialog.show();
+		}
+
+		@Override
+		protected String doInBackground(String... params) {
+			try {
+				controller.carregaAvaliacoes(profissionalSaude.getNumeroRegistro());
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			mProgressDialog.dismiss();
+
+			if (controller.getAvaliacoes() != null) {
+				boolean temComentarios = false;
+				for(Avaliacao aval : controller.getAvaliacoes()){
+					if(aval.getComentario()!=null && !aval.getComentario().trim().equals("")){
+						temComentarios = true;
+						break;
+					}
+				}
+				
+				if (!temComentarios) {
+					
+					Toast alertaAvaliacao = Toast.makeText(
+							DetalhesProfissionalActivity.this,
+							"Não há depoimentos para "
+									+ profissionalSaude.getNome() + ".",
+							Toast.LENGTH_LONG);
+					alertaAvaliacao.show();
+				} else {
+					Intent telaAvaliacao = new Intent(
+							DetalhesProfissionalActivity.this,
+							ComentariosActivity.class);
+					startActivity(telaAvaliacao);
+				}
+			}
+
+		}
+	}
+	
 	
 	private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
 
@@ -179,7 +237,7 @@ public class DetalhesProfissionalActivity extends Activity {
 		protected String doInBackground(String... params) {
 			
 			try {
-				controller.getAvaliacao(IDUSER, profissionalSaude.getNumeroRegistro());
+				controller.carregaAvaliacaoCorrente(IDUSER, profissionalSaude.getNumeroRegistro());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
