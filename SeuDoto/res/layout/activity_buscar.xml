@@ -3,6 +3,7 @@
     android:id="@+id/telaBusca"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     android:orientation="vertical" >
 
 
@@ -77,6 +78,6 @@
         android:layout_marginTop="15dp"
         android:clickable="true"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/pesquisa_icon" />
+        android:src="@drawable/botaopesquisar" />
     
   </LinearLayout>

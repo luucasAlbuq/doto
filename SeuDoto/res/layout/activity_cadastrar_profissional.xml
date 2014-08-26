@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context="${packageName}.${activityClass}" >
 
     <TextView
@@ -133,7 +134,7 @@
         android:layout_marginTop="7dp"
         android:background="@null"
         android:clickable="true"
-        android:src="@drawable/save_icon" >
+        android:src="@drawable/botaosalvar" >
     </ImageButton>
 
 </LinearLayout>
