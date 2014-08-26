@@ -3,14 +3,16 @@
     android:id="@+id/widget43"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="@drawable/background"
     android:orientation="vertical" >
 
     <ImageView
         android:id="@+id/widget44"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="111dp"
+        android:layout_height="94dp"
+        android:layout_marginTop="70dp"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="50"
+        android:layout_weight="0"
         android:src="@drawable/doctor_icon" >
     </ImageView>
 
@@ -20,9 +22,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
+        android:layout_marginTop="50dp"
         android:background="@null"
         android:clickable="true"
-        android:src="@drawable/acess" >
+        android:src="@drawable/login_facebook" >
     </ImageButton>
 
 </LinearLayout>
