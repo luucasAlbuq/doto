@@ -152,8 +152,11 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 	
 	public void carregaAvaliacaoCorrente(String id, String crm) throws ParseException{
+		setAvaliacaoCorrente(null);
 		Avaliacao aval = getDaoParse().getObjetoAvaliacao(id, crm);
-		setAvaliacaoCorrente(aval);
+		if(aval!=null){
+			setAvaliacaoCorrente(aval);
+		}
 	}
 
 
@@ -169,7 +172,7 @@ public class ProfissionalController implements ProfissionalInterface {
 	}
 
 	public static Avaliacao getAvaliacaoCorrente() {
-				return avaliacaoCorrente;
+		return avaliacaoCorrente;
 	}
 
 	public static void setAvaliacaoCorrente(Avaliacao avaliacaoCorrente) {

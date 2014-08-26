@@ -58,7 +58,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		final Toast alertaCampos = Toast
 				.makeText(
 						this,
-						"Os campos Tipo, Nome, Identifica��o e Especialidade s�o obrigat�rios",
+						"Os campos Tipo, Nome, Identificação e Especialidade são obrigatários",
 						Toast.LENGTH_LONG);
 
 		salvar.setOnClickListener(new OnClickListener() {
@@ -184,7 +184,7 @@ public class CadastrarProfissionalActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] { "Jo�o Pessoa",
+		final String[] cidades = new String[] { "João Pessoa",
 				"Campina Grande", "Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -217,8 +217,7 @@ public class CadastrarProfissionalActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] { "M�dico",
-				"Dentista", "Fisioterapeuta", "Nutricionista", "Psicologo" };
+		final String[] tiposProfissionais = new String[] { "Médico" };
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
 				this, android.R.layout.simple_spinner_item, tiposProfissionais);
@@ -307,7 +306,7 @@ public class CadastrarProfissionalActivity extends Activity {
 			if (!isCrmunico) {
 				Toast alertaCRM = Toast.makeText(
 						CadastrarProfissionalActivity.this,
-						"Identifica��o inv�lida!",
+						"Identificação inválida!",
 						Toast.LENGTH_LONG);
 				alertaCRM.show();
 

@@ -67,7 +67,9 @@ public class AvaliacaoActivity extends Activity {
 		txtComentarioAnonimo = (EditText)findViewById(R.id.txtComentarioAnonimo);
         lblCount = (TextView)findViewById(R.id.lblCount);
         
-        if(avaliacaoCorrente!=null && avaliacaoCorrente.getComentario()!=null){
+        if(avaliacaoCorrente!=null && avaliacaoCorrente.getComentario()!=null 
+        		&& !avaliacaoCorrente.getComentario().trim().equals("")){
+        	
         	txtComentarioAnonimo.setText(avaliacaoCorrente.getComentario());
         	txtComentarioAnonimo.setFocusable(false);
         }
@@ -268,12 +270,12 @@ public class AvaliacaoActivity extends Activity {
 			if(!isAvaliacaoUnica() && !addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaAvaliacao = Toast.makeText(AvaliacaoActivity.this,
-							"Você avaliou esse profissional posteriormente!", Toast.LENGTH_LONG);
+							"VocÃª avaliou esse profissional posteriormente!", Toast.LENGTH_LONG);
 				alertaAvaliacao.show();
 			}else if(!isAvaliacaoUnica() && addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaComentario = Toast.makeText(AvaliacaoActivity.this,
-						"Depoimentos anônimo salvo", Toast.LENGTH_LONG);
+						"Depoimentos anÃ´nimo salvo", Toast.LENGTH_LONG);
 				alertaComentario.show();
 			}
 			
@@ -282,7 +284,7 @@ public class AvaliacaoActivity extends Activity {
 				avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
 				mProgressDialog.dismiss();
 				Toast alertaSucesso = Toast.makeText(AvaliacaoActivity.this,
-						"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+						"AvaliaÃ§Ã£o computada com Sucesso", Toast.LENGTH_LONG);
 				alertaSucesso.show();
 			}
 			

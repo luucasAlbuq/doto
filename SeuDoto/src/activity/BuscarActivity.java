@@ -171,7 +171,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarCidades() {
 
-		final String[] cidades = new String[] {"Selecione", "Jo�o Pessoa", "Campina Grande",
+		final String[] cidades = new String[] {"Selecione", "João Pessoa", "Campina Grande",
 				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
 
 		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
@@ -204,8 +204,7 @@ public class BuscarActivity extends Activity {
 
 	public void carregarTiposProfissionais() {
 
-		final String[] tiposProfissionais = new String[] {"Selecione", "M�dico", "Dentista",
-				"Fisioterapeuta", "Nutricionista", "Psicologo" };
+		final String[] tiposProfissionais = new String[] {"Selecione", "Médico"};
 
 		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
 				this, android.R.layout.simple_spinner_item, tiposProfissionais);

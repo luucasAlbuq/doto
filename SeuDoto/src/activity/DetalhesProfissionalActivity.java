@@ -63,6 +63,7 @@ public class DetalhesProfissionalActivity extends Activity {
 			}
 		});
 		
+		
 		ImageButton avaliar = (ImageButton) findViewById(R.id.detalhes_avaliar);
 		avaliar.setOnClickListener(new OnClickListener() {
 			
@@ -202,7 +203,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 					Toast alertaAvaliacao = Toast.makeText(
 							DetalhesProfissionalActivity.this,
-							"Não há depoimentos para "
+							"Nï¿½o hï¿½ depoimentos para "
 									+ profissionalSaude.getNome() + ".",
 							Toast.LENGTH_LONG);
 					alertaAvaliacao.show();
@@ -237,6 +238,7 @@ public class DetalhesProfissionalActivity extends Activity {
 		protected String doInBackground(String... params) {
 			
 			try {
+				
 				controller.carregaAvaliacaoCorrente(IDUSER, profissionalSaude.getNumeroRegistro());
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
