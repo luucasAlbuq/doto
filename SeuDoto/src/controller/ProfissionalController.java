@@ -114,8 +114,8 @@ public class ProfissionalController implements ProfissionalInterface {
 			resultadoBuscaSimples = resultado;
 	}
 
-	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, String convenio) throws ProfissionalSaudeException, ParseException{
-		List<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenio);
+	public List<ProfissionalSaude> buscaSimples(String tipo, String especialidade, ArrayList<String> convenios) throws ProfissionalSaudeException, ParseException{
+		List<ProfissionalSaude> resultado = (ArrayList<ProfissionalSaude>) getDaoParse().buscaSimples(especialidade, tipo, convenios);
 		setResultadoBuscaSimples(resultado);
 		return resultado;
 	}
@@ -151,9 +151,9 @@ public class ProfissionalController implements ProfissionalInterface {
 		return getDaoParse().getAvaliacoesNegativas(prof);
 	}
 	
-	public void carregaAvaliacaoCorrente(String id, String crm) throws ParseException{
+	public void carregaAvaliacaoCorrente(String idUser, String crm) throws ParseException{
 		setAvaliacaoCorrente(null);
-		Avaliacao aval = getDaoParse().getObjetoAvaliacao(id, crm);
+		Avaliacao aval = getDaoParse().getObjetoAvaliacao(idUser, crm);
 		if(aval!=null){
 			setAvaliacaoCorrente(aval);
 		}

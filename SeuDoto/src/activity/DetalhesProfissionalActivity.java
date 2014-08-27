@@ -203,7 +203,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 					Toast alertaAvaliacao = Toast.makeText(
 							DetalhesProfissionalActivity.this,
-							"N�o h� depoimentos para "
+							"Não há depoimentos para "
 									+ profissionalSaude.getNome() + ".",
 							Toast.LENGTH_LONG);
 					alertaAvaliacao.show();

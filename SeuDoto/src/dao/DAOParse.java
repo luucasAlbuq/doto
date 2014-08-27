@@ -212,7 +212,7 @@ public class DAOParse {
 	 * @throws ProfissionalSaudeException
 	 */
 	public List<ProfissionalSaude> buscaSimples(String especialidade,
-			String tipo, String convenio) throws ParseException,
+			String tipo, ArrayList<String> convenio) throws ParseException,
 			ProfissionalSaudeException {
 		List<ProfissionalSaude> profisisonais = new ArrayList<ProfissionalSaude>();
 		ParseQuery query = null;
@@ -249,8 +249,7 @@ public class DAOParse {
 		if (!isEspecialidadeValida(especialidade) && !isTipoValido(tipo)
 				&& isConvenioValido(convenio)) {
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
-			query.whereEqualTo(
-					ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), convenio);
+			query.whereContainedIn(ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), convenio);
 		}
 
 		// Se so for informado conveio e especialdiade
@@ -260,7 +259,7 @@ public class DAOParse {
 			query.whereEqualTo(
 					ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),
 					especialidade);
-			query.whereEqualTo(
+			query.whereContainedIn(
 					ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), convenio);
 		}
 
@@ -268,7 +267,7 @@ public class DAOParse {
 		if (!isEspecialidadeValida(especialidade) && isTipoValido(tipo)
 				&& isConvenioValido(convenio)) {
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
-			query.whereEqualTo(
+			query.whereContainedIn(
 					ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), convenio);
 			query.whereEqualTo(ProfissionalTableEnum.COLUNA_TIPO.toString(),
 					tipo);
@@ -278,7 +277,7 @@ public class DAOParse {
 		if (isConvenioValido(convenio) && isEspecialidadeValida(especialidade)
 				&& isTipoValido(tipo)) {
 			query = new ParseQuery(ProfissionalTableEnum.NOME_CLASSE.toString());
-			query.whereEqualTo(
+			query.whereContainedIn(
 					ProfissionalTableEnum.COLUNA_CONVENIOS.toString(), convenio);
 			query.whereEqualTo(
 					ProfissionalTableEnum.COLUNA_ESPECIALIDADE.toString(),
@@ -352,10 +351,20 @@ public class DAOParse {
 				&& !tipo.equalsIgnoreCase(selecione);
 	}
 
-	private boolean isConvenioValido(String convenio) {
-		String selecione = "SELECIONE";
-		return convenio != null && !"".equals(convenio.trim())
-				&& !convenio.equalsIgnoreCase(selecione);
+	private boolean isConvenioValido(ArrayList<String> convenios) {
+		boolean isValido = true;
+		if(convenios!=null && convenios.size()>0){
+			for(String conv: convenios){
+				if(conv==null || conv.trim().equals("")){
+					isValido = false;
+					break;
+				}
+			}
+		}else{
+			isValido = false;
+		}
+		
+		return isValido;
 	}
 
 	/**
@@ -470,7 +479,7 @@ public class DAOParse {
 	}
 	
 	/**
-	 * Método responsavel por criar uma avaliacao unica e persisti-la no BD.
+	 * Mï¿½todo responsavel por criar uma avaliacao unica e persisti-la no BD.
 	 * Sendo true equivalente a uma avaliacao positiva e false a uma avaliacao
 	 * negativa.
 	 * @param crm
@@ -521,14 +530,18 @@ public class DAOParse {
 	 */
 	public void addComentario(String idUser, String crm, String comentario)
 			throws ParseException {
-		
-		ParseObject aval = getParseAvaliacao(idUser, crm);
-		String isComentarioVazio = aval.getString(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString());
-		
-		if(isComentarioVazio==null || isComentarioVazio.trim().equals("")){
-			aval.put(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString(), comentario);
-			aval.save();
+		if(comentario!=null && !comentario.trim().equals("")){
+			ParseObject aval = getParseAvaliacao(idUser, crm);
+			String isComentarioVazio = aval.getString(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString());
+			
+			if(isComentarioVazio==null || isComentarioVazio.trim().equals("")){
+				aval.put(AvaliacaoTableEnum.COLUNA_COMENTARIO.toString(), comentario);
+				aval.save();
+			}
+		}else{
+			new ParseException(0, "comentario invalido");
 		}
+		
 	}
 	
 	/**

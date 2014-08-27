@@ -178,7 +178,7 @@ public class CadastrarProfissionalActivity extends Activity {
 									int indice = which;
 									String convenioSelecionado = String.valueOf(convenios[indice]);
 									conveniosSelecionados.add(convenioSelecionado);
-								} else if (conveniosSelecionados.contains(which)) {
+								} else if (conveniosSelecionados.contains(String.valueOf(convenios[which]))) {
 									// Else, if the item is already in the
 									// array, remove it
 									conveniosSelecionados.remove(Integer

@@ -57,16 +57,25 @@ public class AvaliacaoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_avaliacao);
 		
+		
+		final Toast alertaAvaliacaoNaoCriada = Toast.makeText(AvaliacaoActivity.this,"Primeiramente é necessário avaliar o profissional!", Toast.LENGTH_LONG);
+		
+		//Inicializa elementos do controller
 		controller = ProfissionalController.getInstance();
 		avaliacaoCorrente = controller.getAvaliacaoCorrente();
 		profissionalSaude = controller.getProfissionalSelecionado();
 		
+		//Inicializa elementos da GUI
 		nome = (TextView) findViewById(id.avaliacao_nome_prof1);
-		nome.setText(profissionalSaude.getNome());
-		
+		salvarComentario = (Button) findViewById(R.id.botaoSalvarComentario);
 		txtComentarioAnonimo = (EditText)findViewById(R.id.txtComentarioAnonimo);
-        lblCount = (TextView)findViewById(R.id.lblCount);
+		lblCount = (TextView)findViewById(R.id.lblCount);
+		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);
+		ImageButton unLike = (ImageButton) findViewById(R.id.detalhes_dislike);
+		nome.setText(profissionalSaude.getNome());
         
+        
+        //Se ele ja tiver avaliado e add um comentário anteriormente ele exibe o comentario cadastrado e desabilita o campo de texto
         if(avaliacaoCorrente!=null && avaliacaoCorrente.getComentario()!=null 
         		&& !avaliacaoCorrente.getComentario().trim().equals("")){
         	
@@ -74,8 +83,7 @@ public class AvaliacaoActivity extends Activity {
         	txtComentarioAnonimo.setFocusable(false);
         }
         
-        
-		
+		//Carrega as informacoes do profissional na tela
 		try {
 			preencherCampos(profissionalSaude);
 		} catch (ProfissionalSaudeException e) {
@@ -83,19 +91,36 @@ public class AvaliacaoActivity extends Activity {
 			e.printStackTrace();
 		}
 		
-		salvarComentario = (Button) findViewById(R.id.button1);
+		
 		salvarComentario.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				try {
+					
+					/*
+					 * Se ele ja tiver cadastrado uma avaliacao e sem sair da tela quiser cadastrar um depoimento
+					 * ele captura a avaliacao criada, se ele tiver criado corretamenta a avaliacao ele vai chamar o EsperandoConsulta
+					 * onde vai ser add o comentario
+					 */
+					controller.carregaAvaliacaoCorrente(IDUSER, profissionalSaude.getNumeroRegistro());
+					if(controller.getAvaliacaoCorrente()!=null){
+						setAvaliacaoCorrente(controller.getAvaliacaoCorrente());
+						EsperandoConsulta espera = new EsperandoConsulta();
+						espera.execute(new String[] { "Seu Doto" });
+					}else{
+						alertaAvaliacaoNaoCriada.show();
+					}
+					
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				
 			}
 		});
 		
 		
-		
-		ImageButton likeBotao = (ImageButton) findViewById(R.id.detalhes_like);
 		likeBotao.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -110,7 +135,7 @@ public class AvaliacaoActivity extends Activity {
 			}
 		});
 		
-		ImageButton unLike = (ImageButton) findViewById(R.id.detalhes_dislike);
+		
 		unLike.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -254,12 +279,15 @@ public class AvaliacaoActivity extends Activity {
 				 */
 			}else if(avaliacaoCorrente!=null && (avaliacaoCorrente.getComentario()==null || avaliacaoCorrente.getComentario().trim().equals(""))){
 				String comentario = txtComentarioAnonimo.getText().toString();
-				try {
-					controller.addComentario(IDUSER, crm, comentario);
-					addComentario=true;
-				} catch (ParseException e) {
-					 e.getMessage();
+				if(!comentario.trim().equals("")){
+					try {
+						controller.addComentario(IDUSER, crm, comentario);
+						addComentario=true;
+					} catch (ParseException e) {
+						 e.getMessage();
+					}
 				}
+				
 			}
 
 			return null;
@@ -270,13 +298,15 @@ public class AvaliacaoActivity extends Activity {
 			if(!isAvaliacaoUnica() && !addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaAvaliacao = Toast.makeText(AvaliacaoActivity.this,
-							"Você avaliou esse profissional posteriormente!", Toast.LENGTH_LONG);
+							"Você já avaliou e/ou seu depoimentos é inválido para esse profissional!", Toast.LENGTH_LONG);
 				alertaAvaliacao.show();
 			}else if(!isAvaliacaoUnica() && addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaComentario = Toast.makeText(AvaliacaoActivity.this,
 						"Depoimentos anônimo salvo", Toast.LENGTH_LONG);
 				alertaComentario.show();
+				//Nesse momento ele ja add o comentario, logo devemos atualizar a variavel
+				addComentario=false;
 			}
 			
 			else{
@@ -307,6 +337,16 @@ public class AvaliacaoActivity extends Activity {
 
 	public void setAvaliacaoPositiva(boolean avaliacao) {
 		this.avaliacao = avaliacao;
+	}
+
+
+	public Avaliacao getAvaliacaoCorrente() {
+		return avaliacaoCorrente;
+	}
+
+
+	public void setAvaliacaoCorrente(Avaliacao avaliacaoCorrente) {
+		this.avaliacaoCorrente = avaliacaoCorrente;
 	}
 
 	

@@ -1,5 +1,8 @@
 package activity;
 
+import java.util.ArrayList;
+
+import model.TipoProfissional;
 import util.Convenio;
 import util.Especialidade;
 import android.animation.Animator;
@@ -7,8 +10,11 @@ import android.animation.AnimatorInflater;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationListener;
 import android.os.AsyncTask;
@@ -36,26 +42,51 @@ public class BuscarActivity extends Activity {
 	private ImageButton botaoPesquisar;
 	private ProfissionalController profissionalController;
 	private String tipo;
-	private String especialidade;
+	private String especialidadeSelecionada;
 	private String convenio;
 	private String cidade;
+	private ImageButton botaoAddConvenio,botaoAddEspecialidade;
+	
+	//Listas para o dialoga de convenios
+	private ArrayList<String> conveniosSelecionados;
+	boolean[] itemsConvenioChecked = new boolean[Convenio.values().length];
+	CharSequence[] convenios = new CharSequence[Convenio.values().length];
+	
+	//Lista de especialidades	
+	CharSequence[] especialidades = new CharSequence[Especialidade.values().length];
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_buscar);
 		
+		//carregarCidades();
+		
+		
+		// Carregando Intens que seram exibidos no dialogo de convenios
+		// Lista de Convenios
+		for (int i = 0; i < Convenio.values().length; i++) {
+			convenios[i] = (Convenio.values()[i].toString());
+			itemsConvenioChecked[i] = false;
+		}
+		
+		
+		//Carregando Itens que seram exibidos no dialogo de especialidades
+	    for(int i=0;i < Especialidade.values().length;i++){
+	    	especialidades[i]= (Especialidade.values()[i].toString());
+	    }
+	    
+	    
+		
 		profissionalController = ProfissionalController.getInstance();
 		
-		carregarCidades();
-		carregarConvenios();
-		carregarEspecialidades();
-		carregarTiposProfissionais();
-		
 		botaoPesquisar = (ImageButton) findViewById(R.id.botaoPesquisar);
+		botaoAddConvenio = (ImageButton) findViewById(R.id.addPesquisarConvenio);
+		botaoAddEspecialidade = (ImageButton) findViewById(R.id.addPesquisarEspecialidade);
 		
 		
 		
+
 		botaoPesquisar.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -66,9 +97,98 @@ public class BuscarActivity extends Activity {
 
 			}
 		});
+		
+		
+		botaoAddConvenio.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onCreateDialogConvenio().show();
+			}
+		});
+		
+		botaoAddEspecialidade.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				onCreateDialogEspecialidade().show();
+			}
+		});
 
 	}
+	
+	
+	/**
+	 * Metodo responsavel por criar o dialogo de especialidades
+	 * @return Dialog
+	 */
+	public Dialog onCreateDialogEspecialidade() {
+		
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				BuscarActivity.this);
 
+		// Set the dialog title
+		builder.setTitle("Especialidade").setItems(especialidades,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						especialidadeSelecionada = String.valueOf(especialidades[which]);
+					}
+				});
+		
+		return builder.create();
+	}
+	
+	/**
+	 * Metodo responsavel por criar o dialogo de convenios
+	 * @return Dialog
+	 */
+	public Dialog onCreateDialogConvenio() {
+		conveniosSelecionados = new ArrayList(); // Where we track the selected items
+		itemsConvenioChecked = new boolean[Convenio.values().length];
+		AlertDialog.Builder builder = new AlertDialog.Builder(
+				BuscarActivity.this);
+
+		// Set the dialog title
+		builder.setTitle("Convênio")
+
+				.setMultiChoiceItems(convenios, itemsConvenioChecked,
+						new DialogInterface.OnMultiChoiceClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which, boolean isChecked) {
+								if (isChecked) {
+									// If the user checked the item, add it to
+									// the selected items
+									int indice = which;
+									String convenioSelecionado = String.valueOf(convenios[indice]);
+									conveniosSelecionados.add(convenioSelecionado);
+								} else if (conveniosSelecionados.contains(String.valueOf(convenios[which]))) {
+									// Else, if the item is already in the
+									// array, remove it
+									conveniosSelecionados.remove(Integer
+											.valueOf(which));
+								}
+							}
+						})
+
+				// Set the action buttons
+				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+
+					}
+				})
+				.setNegativeButton("Cancelar",
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int id) {
+
+							}
+						});
+
+		return builder.create();
+	}
+	
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -97,144 +217,6 @@ public class BuscarActivity extends Activity {
 	
 	
 
-	public void carregarEspecialidades() {
-		final String[] especialidades = new String[] {"Selecione",
-				Especialidade.CARDIOLOGISTA.toString(),
-				Especialidade.DERMATOLOGISTA.toString(),
-				Especialidade.GINECOLOGISTA.toString(),
-				Especialidade.NEUROLOGISTA.toString(),
-				Especialidade.PEDIATRA.toString() };
-
-		ArrayAdapter<String> adaptadorEspecialidade = new ArrayAdapter<String>(
-				this, android.R.layout.simple_spinner_item, especialidades);
-
-		Spinner especialidadeSpinner = (Spinner) findViewById(R.id.especialidade_spinner);
-
-		adaptadorEspecialidade
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		especialidadeSpinner.setAdapter(adaptadorEspecialidade);
-
-		especialidadeSpinner
-				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						
-						setEspecialidade(especialidades[position]);
-
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-	}
-
-	public void carregarConvenios() {
-
-		final String[] convenios = new String[] {"Selecione", Convenio.SMILE.toString(),
-				Convenio.UNIDENTES.toString(), Convenio.UNIMED.toString() };
-
-		ArrayAdapter<String> adaptadorConvenios = new ArrayAdapter<String>(
-				this, android.R.layout.simple_spinner_item, convenios);
-
-		Spinner convenioSpinner = (Spinner) findViewById(R.id.convenio_spinner);
-
-		adaptadorConvenios
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		convenioSpinner.setAdapter(adaptadorConvenios);
-
-		convenioSpinner
-				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						setConvenio(convenios[position]);
-
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-	}
-
-	public void carregarCidades() {
-
-		final String[] cidades = new String[] {"Selecione", "João Pessoa", "Campina Grande",
-				"Patos", "Cajazeiras", "Guarabira", "Sousa" };
-
-		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, cidades);
-
-		Spinner cidadesSpinner = (Spinner) findViewById(R.id.cidade_spinner);
-
-		adaptadorCidades
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		cidadesSpinner.setAdapter(adaptadorCidades);
-
-		cidadesSpinner
-				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						cidade = cidades[position];
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-	}
-
-	public void carregarTiposProfissionais() {
-
-		final String[] tiposProfissionais = new String[] {"Selecione", "Médico"};
-
-		ArrayAdapter<String> adaptadorTiposProfissionais = new ArrayAdapter<String>(
-				this, android.R.layout.simple_spinner_item, tiposProfissionais);
-
-		Spinner profissionaisSpinner = (Spinner) findViewById(R.id.profissional_spinner);
-
-		adaptadorTiposProfissionais
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-		profissionaisSpinner.setAdapter(adaptadorTiposProfissionais);
-
-		profissionaisSpinner
-				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-					@Override
-					public void onItemSelected(AdapterView<?> parent,
-							View view, int position, long id) {
-						setTipo(tiposProfissionais[position]);
-
-					}
-
-					@Override
-					public void onNothingSelected(AdapterView<?> parent) {
-						// TODO Auto-generated method stub
-
-					}
-				});
-
-	}
-
 	public ProfissionalController getProfissionalController() {
 		return profissionalController;
 	}
@@ -252,12 +234,12 @@ public class BuscarActivity extends Activity {
 		this.tipo = tipo;
 	}
 
-	public String getEspecialidade() {
-		return especialidade;
+	public String getEspecialidadeSelecionada() {
+		return especialidadeSelecionada;
 	}
 
-	public void setEspecialidade(String especialidade) {
-		this.especialidade = especialidade;
+	public void setEspecialidadeSelecionada(String especialidade) {
+		this.especialidadeSelecionada = especialidade;
 	}
 
 	public String getConvenio() {
@@ -303,14 +285,14 @@ public class BuscarActivity extends Activity {
 				boolean concluido = false;
 				
 				try {
-					if(tipo!=null && especialidade!=null && convenio!=null){
+					
 						try {
-							profissionalController.buscaSimples(tipo, especialidade,convenio);
+							profissionalController.buscaSimples(null, especialidadeSelecionada,conveniosSelecionados);
 							concluido = true;
 						} catch (ParseException e) {
 							concluido = false;
 						}
-					}
+					
 					
 				} catch (ProfissionalSaudeException e) {
 					concluido = false;
@@ -322,7 +304,8 @@ public class BuscarActivity extends Activity {
 			@Override
 			protected void onPostExecute(String result) {
 				mProgressDialog.dismiss();
-				if(!profissionalController.getResultadoBuscaSimples().isEmpty()){
+				especialidadeSelecionada = null;
+				if(profissionalController.getResultadoBuscaSimples()!=null && !profissionalController.getResultadoBuscaSimples().isEmpty()){
 					Intent telaLista = new Intent(BuscarActivity.this,ListaProfissionaisActivity.class);
 					startActivity(telaLista);
 				}else{

@@ -5,70 +5,76 @@
     android:layout_height="fill_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
-
-    <GridLayout
-        android:layout_width="wrap_content"
+	
+     <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:columnCount="2"
-        android:layout_marginTop="20dp" >
-
-        <TextView
-            android:id="@+id/textTipo"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Profissional:"
-            android:textSize="20sp"
-            android:textStyle="bold"/>
-
-        <Spinner
-            android:id="@+id/profissional_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right" />
-
-        <TextView
-            android:id="@+id/textEspecialidade"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Especialidade:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/especialidade_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right" />
-
-        <TextView
+        android:background="@drawable/shapelinear"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal" >
+        
+         
+         <TextView
             android:id="@+id/textConvenio"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Convênio:"
             android:textSize="20sp"
+            android:layout_marginLeft="3dp"
+            android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/convenio_spinner"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right" />
-
-        <TextView
-            android:id="@+id/textCidade"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Cidade:"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/cidade_spinner"
+         
+         <ImageButton
+            android:id="@+id/addPesquisarConvenio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right" />
-    </GridLayout>
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="110dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/botaoaddcadastrar" />
+         
+    </LinearLayout>
+    
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_gravity="left"
+         android:layout_marginLeft="10dp"
+         android:background="@drawable/shapelinear"
+         android:layout_marginRight="10dp"
+         android:layout_marginTop="20dp"
+         android:orientation="horizontal" >
+         
+         
+          <TextView
+            android:id="@+id/textEspecialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Especialidade:"
+            android:textSize="20sp"
+            android:layout_marginLeft="3dp"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold" />
+          
+          
+           <ImageButton
+            android:id="@+id/addPesquisarEspecialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="clip_vertical"
+            android:layout_marginLeft="70dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/botaoaddcadastrar" />
+         
+         
+         
+     </LinearLayout>
+
 
     <ImageButton
         android:id="@+id/botaoPesquisar"
