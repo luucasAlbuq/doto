@@ -37,20 +37,8 @@ public class ProfissionalController implements ProfissionalInterface {
 		return instance;
 	}
 
-	@Override
-	public void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) throws ProfissionalSaudeException {
-		
-		ProfissionalSaude profissional;
-		try {
-			profissional = new ProfissionalSaude(tipoProfissinal.toString(), identificacao, nome, especialidade, convenio);
-			getDaoParse().cadastrarProfissional(profissional);
-		} catch (Exception e) {
-			e.getMessage();
-			throw new ProfissionalSaudeException();
-		}
-		
-	}
 	
+	@Override
 	public void cadastrarProfissionalSaude(ProfissionalSaude prof) throws ProfissionalSaudeException, ParseException{
 		getDaoParse().cadastrarProfissional(prof);
 	}
@@ -191,7 +179,6 @@ public class ProfissionalController implements ProfissionalInterface {
 		List<Avaliacao> aval=getDaoParse().getAvaliacoesByCrm(crm);
 		setAvaliacoes(aval);
 	}
-	
-	
+
 	
 }

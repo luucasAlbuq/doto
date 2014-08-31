@@ -39,7 +39,7 @@ public class CadastrarProfissionalActivity extends Activity {
 	private String nome, indentificacao, especialidade;
 	private ProfissionalController controler;
 	private ProfissionalSaude profissionalParaCadastrar = null;
-	private EditText nomeText, numeroRegistro;
+	private EditText nomeText, numeroRegistro, foneText;
 	boolean isCrmunico = false;
 	private ImageButton botaoAddConveio,botaoSalvar, botaoAddEspecialidade;
 	
@@ -81,13 +81,15 @@ public class CadastrarProfissionalActivity extends Activity {
 		//Inicializando componentes
 		nomeText = (EditText) findViewById(R.id.cadastrar_put_nome);
 		numeroRegistro = (EditText) findViewById(R.id.cadastrar_put_crm);
+		foneText = (EditText) findViewById(R.id.cadastrar_put_fone);
 		botaoAddConveio = (ImageButton)findViewById(R.id.addConvenio);
 		botaoSalvar = (ImageButton) findViewById(R.id.SaveimageView);
 		botaoAddEspecialidade = (ImageButton) findViewById(R.id.addEspecialidade);
 		
+		
 		//Mensaggens para acoes de salvar
 		final Toast alertaFalha = Toast.makeText(this,"Erro ao cadastrar um profissional", Toast.LENGTH_LONG);
-		final Toast alertaCampos = Toast.makeText(this,"Os campos Tipo, Nome, Identificação e Especialidade são obrigatários",Toast.LENGTH_LONG);
+		final Toast alertaCampos = Toast.makeText(this,"Os campos Nome, Identificação e Especialidade são obrigatários",Toast.LENGTH_LONG);
 
 		//Botao salvar eh acionado
 		botaoSalvar.setOnClickListener(new OnClickListener() {
@@ -95,10 +97,12 @@ public class CadastrarProfissionalActivity extends Activity {
 			public void onClick(View v) {
 				nome = nomeText.getText().toString();
 				indentificacao = numeroRegistro.getText().toString();
+				String numeroFone = foneText.getText().toString();
+				
 				try {
 					if (isCamposValidos()) {
 						profissionalParaCadastrar = new ProfissionalSaude(TipoProfissional.MEDICO.toString(), numeroRegistro.getText().toString(), nome,
-					    especialidade, conveniosSelecionados);
+					    especialidade, conveniosSelecionados, numeroFone);
 						EsperandoConsulta espera = new EsperandoConsulta();
 						espera.execute(new String[] { "Seu Doto" });
 					} else {
@@ -234,39 +238,6 @@ public class CadastrarProfissionalActivity extends Activity {
 
 
 
-//	public void carregarCidades() {
-//
-//		final String[] cidades = new String[] { "João Pessoa",
-//				"Campina Grande", "Patos", "Cajazeiras", "Guarabira", "Sousa" };
-//
-//		ArrayAdapter<String> adaptadorCidades = new ArrayAdapter<String>(this,
-//				android.R.layout.simple_spinner_item, cidades);
-//
-//		Spinner cidadesSpinner = (Spinner) findViewById(R.id.cadastro_cidade_spinner);
-//
-//		adaptadorCidades
-//				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-//		cidadesSpinner.setAdapter(adaptadorCidades);
-//
-//		cidadesSpinner
-//				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//
-//					@Override
-//					public void onItemSelected(AdapterView<?> parent,
-//							View view, int position, long id) {
-//
-//					}
-//
-//					@Override
-//					public void onNothingSelected(AdapterView<?> parent) {
-//						// TODO Auto-generated method stub
-//
-//					}
-//				});
-//
-//	}
-
 //	public void carregarTiposProfissionais() {
 //
 //		final String[] tiposProfissionais = new String[] { "Médico" };
@@ -303,7 +274,8 @@ public class CadastrarProfissionalActivity extends Activity {
 
 	private boolean isCamposValidos() {
 		return nome!=null && !"".equals(nome.trim())
-				&& indentificacao != null && !"".equals(indentificacao.trim());
+				&& indentificacao != null && !"".equals(indentificacao.trim()) && (especialidade!=null
+				&& !especialidade.trim().equals(""));
 	}
 
 	private class EsperandoConsulta extends AsyncTask<String, Integer, String> {
@@ -373,7 +345,10 @@ public class CadastrarProfissionalActivity extends Activity {
 				}
 				if (nomeText != null) {
 					nomeText.setText("");
+				}if(foneText!=null){
+					foneText.setText("");
 				}
+				
 
 				Toast alertaSucesso = Toast.makeText(
 						CadastrarProfissionalActivity.this,

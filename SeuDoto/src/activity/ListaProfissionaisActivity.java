@@ -156,7 +156,7 @@ public class ListaProfissionaisActivity extends Activity {
 			ProfissionalSaude profListagem = ProfissionalController.getResultadoBuscaSimples().get(position);
 			
 			campo.campoNome.setText(String.valueOf(profListagem.getNome()));
-			campo.campoCRM.setText(String.valueOf(profListagem.getNumeroRegistro()));
+			campo.campoCRM.setText(String.valueOf(profListagem.getNumeroRegistro())+"-PB");
 			campo.campoConvenio.setText(String.valueOf(profListagem.toStringConveios()));
 			
 			int avaliacoesNegativas=0;

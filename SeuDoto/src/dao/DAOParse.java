@@ -65,6 +65,7 @@ public class DAOParse {
 					prof.getConvenios());
 			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString(), 0);
 			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString(), 0);
+			objeto.put(ProfissionalTableEnum.COLUNA_FONE.toString(), prof.getFone());
 
 			try {
 				objeto.saveInBackground();
@@ -147,6 +148,8 @@ public class DAOParse {
 				.getString(ProfissionalTableEnum.COLUNA_ESPECIALIDADE
 						.toString());
 		
+		String fone = object.getString(ProfissionalTableEnum.COLUNA_FONE.toString());
+		
 		Integer avaliacoesPositivas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString());
 		Integer avaliacoesNegativas = (Integer) object.get(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString()); 
 
@@ -158,7 +161,7 @@ public class DAOParse {
 			throw new ProfissionalSaudeException(e.getMessage());
 		}
 		
-		ProfissionalSaude prof = new ProfissionalSaude(tipo, crm, nome, especialidade, convenios);
+		ProfissionalSaude prof = new ProfissionalSaude(tipo, crm, nome, especialidade, convenios,fone);
 		prof.setAvaliacoesPositivas(avaliacoesPositivas);
 		prof.setAvaliacoesNegativas(avaliacoesNegativas);
 		return prof;

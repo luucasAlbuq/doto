@@ -32,11 +32,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
+            android:layout_marginLeft="3dp"
             android:layout_gravity="left"
             android:layout_row="1"
             android:textColor="#FFFFFF"
             android:text="CRM:"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_crm_resp_prof1"
@@ -46,17 +47,18 @@
             android:layout_gravity="center_horizontal"
             android:text="12345"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_tipo_prof1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
+            android:layout_marginLeft="3dp"
             android:layout_gravity="left"
             android:textColor="#FFFFFF"
             android:text="Profissional:"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_tipo_resp_prof1"
@@ -66,7 +68,7 @@
             android:layout_gravity="center_horizontal"
             android:textColor="#FFFFFF"
             android:text="Médico"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_especialidade_prof1"
@@ -74,9 +76,10 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_column="0"
+            android:layout_marginLeft="3dp"
             android:layout_gravity="left"
             android:text="Especialidade:"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_especialidade_resp_prof1"
@@ -86,17 +89,18 @@
             android:layout_column="1"
             android:layout_gravity="center_horizontal"
             android:text="Pediatra"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_convenio_prof1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
+            android:layout_marginLeft="3dp"
             android:textColor="#FFFFFF"
             android:layout_gravity="left"
             android:text="Convênio:"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
             android:id="@+id/detalhes_convenio_resp_prof1"
@@ -106,47 +110,48 @@
             android:layout_column="1"
             android:layout_gravity="center_horizontal"
             android:text="Unimed"
-            android:textSize="20sp" />
+            android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/detalhes_avaliacao_prof1"
+            android:id="@+id/detalhes_fone_prof1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="0"
+            android:layout_marginLeft="3dp"
             android:textColor="#FFFFFF"
             android:layout_gravity="left"
-            android:text="Avaliações(+)"
-            android:textSize="20sp" />
+            android:text="Fone: "
+            android:textSize="17sp" />
 
         <TextView
-            android:id="@+id/detalhes_avaliacao_resp_prof1"
+            android:id="@+id/detalhes_fone_resp_prof1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_column="1"
             android:textColor="#FFFFFF"
             android:layout_gravity="center_horizontal"
             android:text=""
-            android:textSize="20sp" />
+            android:textSize="17sp" />
         
-        <TextView
-            android:id="@+id/detalhes_avaliacao_neg_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_column="0"
-            android:layout_gravity="left"
-            android:textColor="#FFFFFF"
-            android:text="Avaliações(-)"
-            android:textSize="20sp" />
+<!--         <TextView -->
+<!--             android:id="@+id/detalhes_avaliacao_neg_prof1" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_column="0" -->
+<!--             android:layout_gravity="left" -->
+<!--             android:textColor="#FFFFFF" -->
+<!--             android:text="Email:" -->
+<!--             android:textSize="20sp" /> -->
 
-        <TextView
-            android:id="@+id/detalhes_avaliacao_neg_resp_prof1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:layout_column="1"
-            android:layout_gravity="center_horizontal"
-            android:text=""
-            android:textSize="20sp" />
+<!--         <TextView -->
+<!--             android:id="@+id/detalhes_avaliacao_neg_resp_prof1" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:textColor="#FFFFFF" -->
+<!--             android:layout_column="1" -->
+<!--             android:layout_gravity="center_horizontal" -->
+<!--             android:text="-" -->
+<!--             android:textSize="20sp" /> -->
 
         
         
@@ -164,7 +169,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="70dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:background="@null"
             android:clickable="true"
@@ -179,6 +184,16 @@
             android:background="@null"
             android:clickable="true"
             android:src="@drawable/botaoavaliar" />
+        
+        <ImageButton
+            android:id="@+id/detalhes_ligar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="30dp"
+            android:background="@null"
+            android:clickable="true"
+            android:src="@drawable/botaoligar" />
 
         
     </LinearLayout>

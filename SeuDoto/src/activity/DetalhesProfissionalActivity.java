@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteAbortException;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,7 +29,7 @@ import android.widget.Toast;
 public class DetalhesProfissionalActivity extends Activity {
 
 	private ProfissionalSaude profissionalSaude;
-	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,avaliacaoPosi,
+	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,fone,
 			tipoText;
 	private ProfissionalController controller;
 	private boolean avaliacao;
@@ -75,6 +76,26 @@ public class DetalhesProfissionalActivity extends Activity {
 				
 			}
 		});
+		
+		ImageButton ligar = (ImageButton) findViewById(R.id.detalhes_ligar);
+		ligar.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				String foneNumero = fone.getText().toString();
+				if(foneNumero!=null && !foneNumero.equals("")){
+					
+					Intent callIntent = new Intent(Intent.ACTION_CALL);
+					callIntent.setData(Uri.parse("tel:"+fone.getText()));
+					startActivity(callIntent);
+					
+				}else{
+					Toast alertafone = 
+							Toast.makeText(DetalhesProfissionalActivity.this,"Não há um telefone cadastrado para "+ profissionalSaude.getNome() + ".",Toast.LENGTH_LONG);
+					alertafone.show();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -119,19 +140,21 @@ public class DetalhesProfissionalActivity extends Activity {
 		especialidadeText = (TextView) findViewById(R.id.detalhes_especialidade_resp_prof1);
 		convenioText = (TextView) findViewById(R.id.detalhes_convenio_resp_prof1);
 		tipoText = (TextView) findViewById(R.id.detalhes_tipo_resp_prof1);
-		avaliacaoPosi = (TextView) findViewById(R.id.detalhes_avaliacao_resp_prof1);
-		avaliacaoNega = (TextView) findViewById(R.id.detalhes_avaliacao_neg_resp_prof1);
+		fone = (TextView) findViewById(R.id.detalhes_fone_resp_prof1);
 
 		nomeText.setText(prof.getNome());
-		crmText.setText(prof.getNumeroRegistro());
+		crmText.setText(prof.getNumeroRegistro()+"-PB");
 
 		especialidadeText.setText(prof.getEspecialidade());
 
 		convenioText.setText(prof.toStringConveios());
 
 		tipoText.setText(prof.getTipo().toString());
-		avaliacaoPosi.setText(""+profissionalSaude.getAvaliacoesPositivas());
-		avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
+		
+		if(profissionalSaude.getFone()!=null && !profissionalSaude.getFone().trim().equals("")){
+			fone.setText(""+profissionalSaude.getFone());
+		}
+		
 	}
 
 	public ProfissionalSaude getProfissionalSaude() {

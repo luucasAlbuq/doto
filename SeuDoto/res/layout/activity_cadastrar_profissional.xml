@@ -66,7 +66,42 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="number"
-            android:maxLength="30"
+            android:maxLength="4"
+            android:textColor="#FFFFFF"
+            android:textSize="17dp" >
+
+            <requestFocus />
+        </EditText>
+    </LinearLayout>
+    
+     <TextView
+        android:id="@+id/cadastro_fone_prof1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="15dp"
+        android:text="Fone::"
+        android:textSize="20dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shapelinear"
+        android:orientation="horizontal" >
+
+        <EditText
+            android:id="@+id/cadastrar_put_fone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="number"
+            android:maxLength="10"
             android:textColor="#FFFFFF"
             android:textSize="17dp" >
 
@@ -80,7 +115,7 @@
         android:layout_gravity="left"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -110,7 +145,7 @@
         android:layout_gravity="left"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal" >
 
         <TextView
@@ -141,7 +176,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:background="@null"
         android:clickable="true"
         android:src="@drawable/botaosalvar" >

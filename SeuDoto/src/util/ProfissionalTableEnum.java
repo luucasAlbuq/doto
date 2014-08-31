@@ -3,7 +3,8 @@ package util;
 public enum ProfissionalTableEnum {
 	NOME_CLASSE("ProfissionalSaude"), COLUNA_NOME("nome"), COLUNA_CONVENIOS(
 			"convenios"), COLUNA_ESPECIALIDADE("especialidade"), COLUNA_CRM(
-			"crm"), COLUNA_TIPO("tipo"),COLUNA_AVAL_POSI("avaliacoesPositivas"),COLUNA_AVAL_NEGA("avaliacoesNegativas");
+			"crm"), COLUNA_TIPO("tipo"),COLUNA_AVAL_POSI("avaliacoesPositivas"),COLUNA_AVAL_NEGA("avaliacoesNegativas"),
+			COLUNA_FONE("fone");
 
 	private final String text;
 

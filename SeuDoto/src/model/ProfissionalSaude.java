@@ -17,12 +17,13 @@ public class ProfissionalSaude implements Serializable {
 	private String tipo;
 	private String numeroRegistro;
 	private String nome;
+	private String fone;
 	
 	private String especialidade;
 	private List<String> convenios;
 	private Integer avaliacoesPositivas, avaliacoesNegativas;
 
-	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, List<String> convenio)
+	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, List<String> convenio, String fone)
 			throws ProfissionalSaudeException {
 		
 		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
@@ -39,25 +40,8 @@ public class ProfissionalSaude implements Serializable {
 				convenios = new ArrayList<String>();
 			}
 			
-		} else {
-			throw new ProfissionalSaudeException("Parametros invalidos");
-		}
-
-	}
-	
-	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, String convenio)
-			throws ProfissionalSaudeException {
-		
-		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
-			this.tipo = tipo;
-			this.numeroRegistro = numeroRegistro;
-			this.especialidade = especialidade;
-			this.nome = nome;
-			avaliacoesNegativas = new Integer(0);
-			avaliacoesPositivas = new Integer(0);
-			convenios = new ArrayList<String>();
-			if(convenio!=null && !"".equals(convenio)){
-				convenios.add(convenio);
+			if(fone!=null && isDigit(fone)){
+				this.fone = fone;
 			}
 			
 		} else {
@@ -65,6 +49,27 @@ public class ProfissionalSaude implements Serializable {
 		}
 
 	}
+	
+//	public ProfissionalSaude(String tipo, String numeroRegistro, String nome, String especialidade, String convenio)
+//			throws ProfissionalSaudeException {
+//		
+//		if (verificaParametros(tipo, numeroRegistro, nome, especialidade)) {
+//			this.tipo = tipo;
+//			this.numeroRegistro = numeroRegistro;
+//			this.especialidade = especialidade;
+//			this.nome = nome;
+//			avaliacoesNegativas = new Integer(0);
+//			avaliacoesPositivas = new Integer(0);
+//			convenios = new ArrayList<String>();
+//			if(convenio!=null && !"".equals(convenio)){
+//				convenios.add(convenio);
+//			}
+//			
+//		} else {
+//			throw new ProfissionalSaudeException("Parametros invalidos");
+//		}
+//
+//	}
 
 	public boolean verificaParametros(String tipo, String numeroRegistro,
 			String nome, String especialidade) {
@@ -202,4 +207,18 @@ public class ProfissionalSaude implements Serializable {
 		
 		return saida;
 	}
+
+	public String getFone() {
+		return fone;
+	}
+
+	public void setFone(String fone) {
+		this.fone = fone;
+	}
+	
+	private boolean isDigit(String s) {  
+	    return s.matches("[0-9]*");  
+	} 
+	
+	
 }

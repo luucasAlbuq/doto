@@ -13,8 +13,8 @@ import model.ProfissionalSaude;
 import model.TipoProfissional;
 
 /**
- * Interface de serviços basicos para manipulação de um Profissional, essa
- * interface deve servi como base para os serviços que serão implementados no
+ * Interface de serviï¿½os basicos para manipulaï¿½ï¿½o de um Profissional, essa
+ * interface deve servi como base para os serviï¿½os que serï¿½o implementados no
  * controller.
  * 
  * @author Lucas
@@ -23,95 +23,113 @@ import model.TipoProfissional;
 public interface ProfissionalInterface {
 
 	/**
-	 * Método responsavel por criar uma instancia da entidade Profissional e
+	 * Metodo responsavel por criar uma instancia da entidade Profissional e
 	 * persisti-la no BD.
 	 * 
-	 * @param String nome
-	 * @param TipoProfissinal tipoProfissinal
+	 * @param String
+	 *            nome
+	 * @param TipoProfissinal
+	 *            tipoProfissinal
 	 * @param int identificacao
-	 * @param Especialidade especialidade
-	 * @param Endereco endereco
-	 * @param Convenio convenio
-	 * @throws ProfissionalSaudeException 
+	 * @param Especialidade
+	 *            especialidade
+	 * @param Endereco
+	 *            endereco
+	 * @param Convenio
+	 *            convenio
+	 * @throws ProfissionalSaudeException
 	 */
-	void cadastrarProfissionalSaude(String nome,String tipoProfissinal, String identificacao,String especialidade, String convenio) throws ProfissionalSaudeException;
+	void cadastrarProfissionalSaude(ProfissionalSaude prof)
+			throws ProfissionalSaudeException, ParseException;
 
 	/**
-	 * Método responsavel por realizar uma busca de Profissionais tendo como
+	 * Metodo responsavel por realizar uma busca de Profissionais tendo como
 	 * atributo de pesquisa o nome.
 	 * 
-	 * @param String nome
+	 * @param String
+	 *            nome
 	 * @return ProfissionalSaude profissional
 	 */
 	List<ProfissionalSaude> buscarProfissionalPorNome(String nome);
 
 	/**
-	 * Método responsavel por realizar uma busca de Profissionais tendo como
+	 * Metodo responsavel por realizar uma busca de Profissionais tendo como
 	 * atributo de pesquisa a especialidade de um profissional.
 	 * 
 	 * @param Especialidade
 	 *            especialidade
 	 * @return ProfissionalSaude profissional
-	 * @throws ProfissionalSaudeException 
-	 * @throws ParseException 
+	 * @throws ProfissionalSaudeException
+	 * @throws ParseException
 	 */
 	List<ProfissionalSaude> buscarProfissionalPorEspecialidade(
-			Especialidade especialidade) throws ProfissionalSaudeException, ParseException;
+			Especialidade especialidade) throws ProfissionalSaudeException,
+			ParseException;
 
 	/**
-	 * Método responsavel por realizar uma busca de Profissionais tendo como
-	 * atributo de pesquisa o número de identificação do profissional (ex: CRM).
+	 * Metodo responsavel por realizar uma busca de Profissionais tendo como
+	 * atributo de pesquisa o nï¿½mero de identificaï¿½ï¿½o do profissional (ex: CRM).
 	 * 
 	 * @param int identificacao
 	 * @return ProfissionalSaude profissional
 	 */
 	ProfissionalSaude buscarProfissionalPorIdentificacao(String identificacao);
-	
+
 	/**
-	 * Método responsavel por realizar uma busca de Profissionais tendo como
-	 * atributo de pesquisa é o tipo de profissional (ex: Médico)
+	 * Metodo responsavel por realizar uma busca de Profissionais tendo como
+	 * atributo de pesquisa ï¿½ o tipo de profissional (ex: Mï¿½dico)
 	 * 
-	 * @param TipoProfissinal tipo
+	 * @param TipoProfissinal
+	 *            tipo
 	 * @return ProfissionalSaude profissionalSaude
 	 */
 	List<ProfissionalSaude> buscarProfissionalPorTipo(TipoProfissional tipo);
 
 	/**
-	 * Método responsavel por realizar uma busca de Profissionais tendo como
+	 * Metodo responsavel por realizar uma busca de Profissionais tendo como
 	 * atributo de pesquisa todos os atributos de Profissional. O fato de um
-	 * atribuito a ser passado ser null implica em uma desconsideração do tal, a
-	 * consuta deve considerar apenas atributos não nulos portanto deve haver ao
-	 * menos um que não seja nulo.
+	 * atribuito a ser passado ser null implica em uma desconsideraï¿½ï¿½o do tal, a
+	 * consuta deve considerar apenas atributos nï¿½o nulos portanto deve haver ao
+	 * menos um que nï¿½o seja nulo.
 	 * 
-	 * @param String nome
-	 * @param TipoProfissinal tipoProfissinal
+	 * @param String
+	 *            nome
+	 * @param TipoProfissinal
+	 *            tipoProfissinal
 	 * @param int identificacao
-	 * @param Especialidade especialidade
-	 * @param Endereco endereco
-	 * @param Convenio convenio
+	 * @param Especialidade
+	 *            especialidade
+	 * @param Endereco
+	 *            endereco
+	 * @param Convenio
+	 *            convenio
 	 * @return ProfissionalSaude profissional
 	 */
-	ProfissionalSaude buscarProfissional(String nome, TipoProfissional tipoProfissional,int identificacao,
-			Especialidade especialidade,  Convenio convenio);
+	ProfissionalSaude buscarProfissional(String nome,
+			TipoProfissional tipoProfissional, int identificacao,
+			Especialidade especialidade, Convenio convenio);
 
 	/**
-	 * Método responsavel por atualizar um entidade Profissional, após
-	 * modificações em algum atributo de profissional o método deve ser chamado
-	 * para consolidar a mudança no BD.
+	 * Mï¿½todo responsavel por atualizar um entidade Profissional, apos
+	 * modificaï¿½ï¿½es em algum atributo de profissional o mï¿½todo deve ser chamado
+	 * para consolidar a mudanï¿½a no BD.
 	 * 
-	 * @param ProfissionalSaude profissional
+	 * @param ProfissionalSaude
+	 *            profissional
 	 */
 	void atualizarProfissional(ProfissionalSaude profissional);
 
 	/**
-	 * Méotodo responsavel por remover uma entidade Profissional de forma
+	 * Meotodo responsavel por remover uma entidade Profissional de forma
 	 * permanente do BD.
 	 * 
-	 * @param ProfissionalSaude profissional
-	 * @throws ProfissionalSaudeException 
-	 * @throws ParseException 
+	 * @param ProfissionalSaude
+	 *            profissional
+	 * @throws ProfissionalSaudeException
+	 * @throws ParseException
 	 */
-	 void removerProfissional(String profissional)
+	void removerProfissional(String profissional)
 			throws ProfissionalSaudeException, ParseException;
-;
+
+	
 }
