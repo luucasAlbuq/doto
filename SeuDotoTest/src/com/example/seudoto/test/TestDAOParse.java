@@ -32,7 +32,10 @@ public class TestDAOParse extends AndroidTestCase {
 	public void testA_CadastrarProfissionalComSucesso(){
 		Exception exception = new Exception();
 		try {
-			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy", "Psiquiatra", "Particular");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			
+			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy", "Psiquiatra", convenios, null);
 			DAOParse.getInstance().cadastrarProfissional(p1);
 			crmProfsFake.add(p1.getNumeroRegistro());
 			cadastrados.add(p1);
@@ -48,7 +51,9 @@ public class TestDAOParse extends AndroidTestCase {
 
 		exception = new Exception();
 		try {
-			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary", "Experimentalista", "Particular");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary", "Experimentalista", convenios,null);
 			DAOParse.getInstance().cadastrarProfissional(p2);
 			crmProfsFake.add(p2.getNumeroRegistro());
 			cadastrados.add(p2);
@@ -67,7 +72,9 @@ public class TestDAOParse extends AndroidTestCase {
 	public void testB_CadastrarProfissionalCRMLongoComSucesso(){
 		Exception exception = new Exception();
 		try {
-			ProfissionalSaude p3 = new ProfissionalSaude("Medico", "101010100001111000011110000111100001111", "Nazareno", "Terapeuta Social", "SUS");			
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("SUS");
+			ProfissionalSaude p3 = new ProfissionalSaude("Medico", "101010100001111000011110000111100001111", "Nazareno", "Terapeuta Social", convenios,null);			
 			DAOParse.getInstance().cadastrarProfissional(p3);
 			crmProfsFake.add(p3.getNumeroRegistro());
 			cadastrados.add(p3);
@@ -84,7 +91,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();
 		try {
 			exception = null;
-			ProfissionalSaude p4 = new ProfissionalSaude("Medico", "1110101", "Paje", "Curandeiro", "UniIndio");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniIndio");
+			ProfissionalSaude p4 = new ProfissionalSaude("Medico", "1110101", "Paje", "Curandeiro", convenios,null);
 			DAOParse.getInstance().cadastrarProfissional(p4);		
 			crmProfsFake.add(p4.getNumeroRegistro());
 			cadastrados.add(p4);
@@ -102,7 +111,9 @@ public class TestDAOParse extends AndroidTestCase {
 	public void testC_CadastrarProfissionalCRMRepetido(){
 		boolean uniqueCRM = true;
 		try {
-			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy-CRMRepetido", "Psiquiatra", "Particular");			
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy-CRMRepetido", "Psiquiatra",convenios,null);			
 			uniqueCRM = DAOParse.getInstance().isCrmUnico(p1.getNumeroRegistro());
 			
 		} catch (ProfissionalSaudeException e) {
@@ -116,7 +127,9 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		uniqueCRM = true;
 		try {
-			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary - CRMRepetido", "Experimentalista", "Particular");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary - CRMRepetido", "Experimentalista", convenios, null);
 			uniqueCRM = DAOParse.getInstance().isCrmUnico(p2.getNumeroRegistro());
 			
 		} catch (ProfissionalSaudeException e) {
@@ -133,7 +146,9 @@ public class TestDAOParse extends AndroidTestCase {
 		Exception exception = new Exception();	
 		//Tipo null
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude(null, "123null456", "Dr Fake", "Placebologista", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude(null, "123null456", "Dr Fake", "Placebologista", convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -146,7 +161,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//CRM null
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", null, "Dr Fake", "Placebologista", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", null, "Dr Fake", "Placebologista", convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -159,7 +176,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//CRM string vazia
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "", "Dr Fake", "Placebologista", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "", "Dr Fake", "Placebologista",convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -172,7 +191,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//Nome null
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", null, "Placebologista", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", null, "Placebologista", convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -185,7 +206,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//Nome vazio
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "", "Placebologista", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "", "Placebologista", convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -198,7 +221,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//Especialidade null
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "Dr Fake", null, "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "Dr Fake", null, convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -211,7 +236,9 @@ public class TestDAOParse extends AndroidTestCase {
 		exception = new Exception();	
 		//Especialidade vazio
 		try {
-			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "Dr Fake", "", "UniT");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("UniT");
+			ProfissionalSaude p5 = new ProfissionalSaude("Médico", "314156", "Dr Fake", "", convenios,null);
 			crmProfsFake.add(p5.getNumeroRegistro());
 			exception = null;
 			
@@ -225,7 +252,9 @@ public class TestDAOParse extends AndroidTestCase {
 	public void testE_CadastrarProfissionalCRMRepetido(){
 		boolean uniqueCRM = true;
 		try {
-			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy-CRMRepetido", "Psiquiatra", "Particular");			
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			ProfissionalSaude p1 = new ProfissionalSaude("Medico", "abc-124", "TalesBoy-CRMRepetido", "Psiquiatra",convenios,null);			
 			uniqueCRM = DAOParse.getInstance().isCrmUnico(p1.getNumeroRegistro());
 			
 		} catch (ProfissionalSaudeException e) {
@@ -239,7 +268,9 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		uniqueCRM = true;
 		try {
-			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary - CRMRepetido", "Experimentalista", "Particular");
+			ArrayList<String> convenios = new ArrayList<String>();
+			convenios.add("Particular");
+			ProfissionalSaude p2 = new ProfissionalSaude("Medico", "1010101", "Timothy Leary - CRMRepetido", "Experimentalista", convenios,null);
 			uniqueCRM = DAOParse.getInstance().isCrmUnico(p2.getNumeroRegistro());
 			
 		} catch (ProfissionalSaudeException e) {
