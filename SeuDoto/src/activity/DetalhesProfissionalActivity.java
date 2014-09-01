@@ -8,6 +8,7 @@ import com.example.seudoto.R.layout;
 import com.parse.ParseException;
 
 import controller.ProfissionalController;
+import controller.UserController;
 import exception.ProfissionalSaudeException;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -33,7 +34,8 @@ public class DetalhesProfissionalActivity extends Activity {
 			tipoText;
 	private ProfissionalController controller;
 	private boolean avaliacao;
-	final static String IDUSER ="12345";
+//	final static String IDUSER ="12345";
+	final static String IDUSER = UserController.getInstance().getIdUser();
 	boolean isAvaliacaoUnica = false;
 	
 

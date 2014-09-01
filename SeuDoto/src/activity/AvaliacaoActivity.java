@@ -39,8 +39,8 @@ public class AvaliacaoActivity extends Activity {
 	private ProfissionalSaude profissionalSaude;
 	private ProfissionalController controller;
 	private boolean avaliacao;
-//	final static String IDUSER = UserController.getInstance().getIdUser();
-	final static String IDUSER = "12345";
+	final static String IDUSER = UserController.getInstance().getIdUser();
+//	final static String IDUSER = "12345";
 	private Button salvarComentario;
 	private Avaliacao avaliacaoCorrente; 
 	

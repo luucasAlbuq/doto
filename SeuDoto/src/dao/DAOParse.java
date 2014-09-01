@@ -65,8 +65,11 @@ public class DAOParse {
 					prof.getConvenios());
 			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_POSI.toString(), 0);
 			objeto.put(ProfissionalTableEnum.COLUNA_AVAL_NEGA.toString(), 0);
-			objeto.put(ProfissionalTableEnum.COLUNA_FONE.toString(), prof.getFone());
-
+			
+			if(prof.getFone()!=null){
+				objeto.put(ProfissionalTableEnum.COLUNA_FONE.toString(), prof.getFone());
+			}
+			
 			try {
 				objeto.saveInBackground();
 			} catch (Exception e) {
