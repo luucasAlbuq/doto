@@ -74,7 +74,7 @@ public class TestDAOParse extends AndroidTestCase {
 		try {
 			ArrayList<String> convenios = new ArrayList<String>();
 			convenios.add("SUS");
-			ProfissionalSaude p3 = new ProfissionalSaude("Medico", "101010100001111000011110000111100001111", "Nazareno", "Terapeuta Social", convenios,null);			
+			ProfissionalSaude p3 = new ProfissionalSaude("Medico", "1111110", "Nazareno", "Terapeuta Social", convenios,null);			
 			DAOParse.getInstance().cadastrarProfissional(p3);
 			crmProfsFake.add(p3.getNumeroRegistro());
 			cadastrados.add(p3);
@@ -304,14 +304,14 @@ public class TestDAOParse extends AndroidTestCase {
 		
 		assertNull(exception);
 		assertTrue(crms.contains("abc-124"));
+		assertTrue(crms.contains("1110101"));
+		assertTrue(crms.contains("1111110"));
 		assertTrue(crms.contains("1010101"));
-		assertTrue(crms.contains("101010100001111000011110000111100001111"));
-		assertTrue(crms.contains("1010101000"));
 		
 	}
 	
 	public void testG_BuscaSimples(){
-		Exception exception = new Exception();
+		Exception exception = null;
 
 		boolean teste = false;
 		
@@ -325,6 +325,7 @@ public class TestDAOParse extends AndroidTestCase {
 			e.printStackTrace();
 		} 
 		assertNull(exception);
+		
 		for (ProfissionalSaude p : profs) {
 			if(p.getNumeroRegistro().equals("abc-123")){
 				System.out.println(p.getNumeroRegistro());
@@ -335,7 +336,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -357,7 +358,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -379,7 +380,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -401,7 +402,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -422,7 +423,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -443,7 +444,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -464,7 +465,7 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(teste);
 		
 		//zerando as variaveis de teste
-		exception = new Exception();		
+		exception = null;		
 		teste = false;
 		
 		try {
@@ -486,7 +487,7 @@ public class TestDAOParse extends AndroidTestCase {
 	}
 	
 	public void testH_BuscaPorEspecialidade(){
-		Exception exception = new Exception();
+		Exception exception = null;
 
 		boolean teste = false;
 		
@@ -510,7 +511,7 @@ public class TestDAOParse extends AndroidTestCase {
 	
 	
 	public void testI_BuscaPorCRM(){
-		Exception exception = new Exception();
+		Exception exception = null;
 		
 		ProfissionalSaude prof = null;
 		try {
@@ -541,19 +542,19 @@ public class TestDAOParse extends AndroidTestCase {
 			e.printStackTrace();
 		}
 		try {
-			DAOParse.getInstance().removerProfissional("1010101");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			DAOParse.getInstance().removerProfissional("101010100001111000011110000111100001111");
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			DAOParse.getInstance().removerProfissional("1110101");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			DAOParse.getInstance().removerProfissional("1111110");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			DAOParse.getInstance().removerProfissional("1010101");
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
