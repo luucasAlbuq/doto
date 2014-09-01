@@ -4,9 +4,7 @@ import model.Avaliacao;
 import model.ProfissionalSaude;
 
 import com.example.seudoto.R;
-import com.example.seudoto.R.layout;
 import com.parse.ParseException;
-
 import controller.ProfissionalController;
 import controller.UserController;
 import exception.ProfissionalSaudeException;
@@ -14,7 +12,6 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.database.sqlite.SQLiteAbortException;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -30,11 +27,9 @@ import android.widget.Toast;
 public class DetalhesProfissionalActivity extends Activity {
 
 	private ProfissionalSaude profissionalSaude;
-	private TextView nomeText, crmText, especialidadeText, convenioText,avaliacaoNega,fone,
-			tipoText;
+	private TextView nomeText, crmText, especialidadeText, convenioText, fone, tipoText;
 	private ProfissionalController controller;
 	private boolean avaliacao;
-//	final static String IDUSER ="12345";
 	final static String IDUSER = UserController.getInstance().getIdUser();
 	boolean isAvaliacaoUnica = false;
 	
@@ -93,7 +88,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 				}else{
 					Toast alertafone = 
-							Toast.makeText(DetalhesProfissionalActivity.this,"N√£o h√° um telefone cadastrado para "+ profissionalSaude.getNome() + ".",Toast.LENGTH_LONG);
+							Toast.makeText(DetalhesProfissionalActivity.this,"N„o h· um telefone cadastrado para "+ profissionalSaude.getNome() + ".",Toast.LENGTH_LONG);
 					alertafone.show();
 				}
 			}
@@ -228,7 +223,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 					Toast alertaAvaliacao = Toast.makeText(
 							DetalhesProfissionalActivity.this,
-							"N√£o h√° depoimentos para "
+							"N„o h· depoimentos para "
 									+ profissionalSaude.getNome() + ".",
 							Toast.LENGTH_LONG);
 					alertaAvaliacao.show();
@@ -253,7 +248,7 @@ public class DetalhesProfissionalActivity extends Activity {
 			super.onPreExecute();
 			Context contexto = DetalhesProfissionalActivity.this;
 			mProgressDialog = new ProgressDialog(contexto);
-			mProgressDialog.setMessage("Colhendo dados");
+			mProgressDialog.setMessage("Colhendo dados ...");
 			mProgressDialog.setIndeterminate(false);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();

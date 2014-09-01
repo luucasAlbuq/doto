@@ -2,13 +2,8 @@ package activity;
 
 import java.util.ArrayList;
 
-import model.TipoProfissional;
 import util.Convenio;
 import util.Especialidade;
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,19 +11,14 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.LocationListener;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.seudoto.R;
@@ -46,6 +36,9 @@ public class BuscarActivity extends Activity {
 	private String convenio;
 	private String cidade;
 	private ImageButton botaoAddConvenio,botaoAddEspecialidade;
+	
+	//Ultima especialidade selecionada
+	private int lastSelectEspecialidade = -1;
 	
 	//Listas para o dialoga de convenios
 	private ArrayList<String> conveniosSelecionados;
@@ -128,12 +121,20 @@ public class BuscarActivity extends Activity {
 				BuscarActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("Especialidade").setItems(especialidades,
+		builder.setTitle("Especialidade").setSingleChoiceItems(especialidades, lastSelectEspecialidade,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						especialidadeSelecionada = String.valueOf(especialidades[which]);
-					}
-				});
+						lastSelectEspecialidade = which;
+							}
+						})
+				.setCancelable(false)
+				.setPositiveButton("Fechar",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// do things
+							}
+						});
 		
 		return builder.create();
 	}
@@ -149,7 +150,7 @@ public class BuscarActivity extends Activity {
 				BuscarActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("ConvÃªnio")
+		builder.setTitle("Convênio")
 
 				.setMultiChoiceItems(convenios, itemsConvenioChecked,
 						new DialogInterface.OnMultiChoiceClickListener() {
@@ -160,9 +161,13 @@ public class BuscarActivity extends Activity {
 									// If the user checked the item, add it to
 									// the selected items
 									int indice = which;
-									String convenioSelecionado = String.valueOf(convenios[indice]);
-									conveniosSelecionados.add(convenioSelecionado);
-								} else if (conveniosSelecionados.contains(String.valueOf(convenios[which]))) {
+									String convenioSelecionado = String
+											.valueOf(convenios[indice]);
+									conveniosSelecionados
+											.add(convenioSelecionado);
+								} else if (conveniosSelecionados
+										.contains(String
+												.valueOf(convenios[which]))) {
 									// Else, if the item is already in the
 									// array, remove it
 									conveniosSelecionados.remove(Integer
@@ -170,19 +175,11 @@ public class BuscarActivity extends Activity {
 								}
 							}
 						})
-
-				// Set the action buttons
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-
-					}
-				})
-				.setNegativeButton("Cancelar",
+				.setCancelable(false)
+				.setPositiveButton("Fechar",
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog, int id) {
-
+								// do things
 							}
 						});
 
@@ -258,11 +255,6 @@ public class BuscarActivity extends Activity {
 		this.cidade = cidade;
 	}
 	
-	private void setResultadoBusca(String resposta){
-		//TODO resposta busca
-	}
-	
-	
 	private class EsperandoConsulta extends AsyncTask<String, Integer, String>{
 
 			private ProgressDialog mProgressDialog;
@@ -273,7 +265,7 @@ public class BuscarActivity extends Activity {
 				Context contexto = BuscarActivity.this;
 				mProgressDialog = new ProgressDialog(contexto);
 				
-				mProgressDialog.setMessage("Pesquisando...");
+				mProgressDialog.setMessage("Pesquisando ...");
 				mProgressDialog.setIndeterminate(false);
 				mProgressDialog.setCancelable(false);
 				mProgressDialog.show();

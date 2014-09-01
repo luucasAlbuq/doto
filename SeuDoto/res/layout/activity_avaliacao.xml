@@ -45,6 +45,8 @@
 
             <EditText
                 android:id="@+id/txtComentarioAnonimo"
+                android:gravity="top"
+                android:hint="Mensagem"
                 android:layout_width="300dp"
                 android:layout_height="165dp"
                 android:maxLength="140"

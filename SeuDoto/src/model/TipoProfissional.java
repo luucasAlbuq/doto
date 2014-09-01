@@ -2,7 +2,7 @@ package model;
 
 public enum TipoProfissional {
 	
-	MEDICO("MÃ©dico"), FISIOTERAPEUTA("Fisioterapeuta"), DENTISTA("Dentista"), ENFERMEIRO("Enfermeiro"),PSICOLOGO("Psicologo"),NUTRICIONISTA("Nutricionista");
+	MEDICO("Médico"), FISIOTERAPEUTA("Fisioterapeuta"), DENTISTA("Dentista"), ENFERMEIRO("Enfermeiro"),PSICOLOGO("Psicologo"),NUTRICIONISTA("Nutricionista");
 	
 	private final String tipo;
 	

@@ -51,6 +51,8 @@ public class CadastrarProfissionalActivity extends Activity {
 	//Lista de especialidades	
 	CharSequence[] especialidades = new CharSequence[Especialidade.values().length];
 	
+	//Ultima especialidade selecionada
+	private int lastSelectEspecialidade = -1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +91,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		
 		//Mensaggens para acoes de salvar
 		final Toast alertaFalha = Toast.makeText(this,"Erro ao cadastrar um profissional", Toast.LENGTH_LONG);
-		final Toast alertaCampos = Toast.makeText(this,"Os campos Nome, IdentificaÃ§Ã£o e Especialidade sÃ£o obrigatÃ¡rios",Toast.LENGTH_LONG);
+		final Toast alertaCampos = Toast.makeText(this,"Os campos Nome, Identificação e Especialidade são obrigatórios",Toast.LENGTH_LONG);
 
 		//Botao salvar eh acionado
 		botaoSalvar.setOnClickListener(new OnClickListener() {
@@ -148,12 +150,20 @@ public class CadastrarProfissionalActivity extends Activity {
 				CadastrarProfissionalActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("Especialidade").setItems(especialidades,
+		builder.setTitle("Especialidade").setSingleChoiceItems(especialidades, lastSelectEspecialidade,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int which) {
 						especialidade = String.valueOf(especialidades[which]);
+						lastSelectEspecialidade = which;
 					}
-				});
+						})
+				.setCancelable(false)
+				.setPositiveButton("Fechar",
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int id) {
+								// do things
+							}
+						});
 		
 		return builder.create();
 	}
@@ -169,7 +179,7 @@ public class CadastrarProfissionalActivity extends Activity {
 				CadastrarProfissionalActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("ConvÃªnio")
+		builder.setTitle("Convênio")
 
 				.setMultiChoiceItems(convenios, itemsConvenioChecked,
 						new DialogInterface.OnMultiChoiceClickListener() {
@@ -190,22 +200,13 @@ public class CadastrarProfissionalActivity extends Activity {
 								}
 							}
 						})
-
-				// Set the action buttons
-				.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int id) {
-
-					}
-				})
-				.setNegativeButton("Cancelar",
+				.setCancelable(false)
+				.setPositiveButton("Fechar",
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog, int id) {
-
+								// do things
 							}
 						});
-
 		return builder.create();
 	}
 	
@@ -223,7 +224,8 @@ public class CadastrarProfissionalActivity extends Activity {
 		// Take appropriate action for each action item click
 		switch (item.getItemId()) {
 		case R.id.action_home:
-			locationFound();
+			//locationFound();
+			CadastrarProfissionalActivity.this.finish();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -330,7 +332,7 @@ public class CadastrarProfissionalActivity extends Activity {
 			if (!isCrmunico) {
 				Toast alertaCRM = Toast.makeText(
 						CadastrarProfissionalActivity.this,
-						"IdentificaÃ§Ã£o invÃ¡lida!",
+						"Identificação inválida!",
 						Toast.LENGTH_LONG);
 				alertaCRM.show();
 

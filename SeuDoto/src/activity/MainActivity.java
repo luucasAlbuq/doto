@@ -37,11 +37,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				
-//				Intent telaBusca = new Intent(MainActivity.this,
-//						BuscarActivity.class);
-//						MainActivity.this.startActivity(telaBusca);
-						
+
 				//start Facebook Login
 				Session.openActiveSession(activity, true, new Session.StatusCallback() {
 				
