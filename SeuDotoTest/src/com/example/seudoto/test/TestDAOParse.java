@@ -531,6 +531,48 @@ public class TestDAOParse extends AndroidTestCase {
 		assertTrue(prof.getNome().equals("Paje"));
 	}
 	
+	public void testJ_AddComentario(){
+		Exception exception = null;
+		try {
+			DAOParse.getInstance().addComentario("10101010101010100101", "abc-124", "Atencioso e comprometido com o paciente");
+
+		} catch (Exception e) {
+			exception = e;
+		}
+		
+		assertNull(exception);
+		
+		exception = null;
+		try {
+			DAOParse.getInstance().addComentario("10101010101010100101", "xxxxxx", "Exte medico eh estranho");
+
+		} catch (Exception e) {
+			exception = e;
+		}
+		assertNotNull(exception);
+		
+	}
+	
+	public void testK_CriaAvaliacao() {
+		Exception exception = null;
+		try {
+			DAOParse.getInstance().criarAvaliacao("abc-124", "12", true);
+		} catch (Exception e) {
+			exception = e;
+		}
+		assertNull(exception);
+		
+		exception = null;
+		
+		try {
+			DAOParse.getInstance().criarAvaliacao("xxx", "12", true, "blah");
+		} catch (Exception e) {
+			exception = e;
+		}
+		assertNotNull(exception);
+		
+		exception = null;
+	}
 	
 	public void testZremoveProfissinaisFakeFromTest() {
 		System.out.println("CRM " + crmProfsFake.size());
