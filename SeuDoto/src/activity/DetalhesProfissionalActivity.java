@@ -189,7 +189,7 @@ public class DetalhesProfissionalActivity extends Activity {
 			super.onPreExecute();
 			Context contexto = DetalhesProfissionalActivity.this;
 			mProgressDialog = new ProgressDialog(contexto);
-			mProgressDialog.setMessage("Colhendo dados");
+			mProgressDialog.setMessage("Colhendo dados ...");
 			mProgressDialog.setIndeterminate(false);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.show();
