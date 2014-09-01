@@ -5,7 +5,6 @@ import model.ProfissionalSaude;
 
 import com.example.seudoto.R;
 import com.example.seudoto.R.id;
-import com.example.seudoto.R.layout;
 import com.parse.ParseException;
 
 import controller.ProfissionalController;
@@ -58,7 +57,7 @@ public class AvaliacaoActivity extends Activity {
 		setContentView(R.layout.activity_avaliacao);
 		
 		
-		final Toast alertaAvaliacaoNaoCriada = Toast.makeText(AvaliacaoActivity.this,"Primeiramente é necessário avaliar o profissional!", Toast.LENGTH_LONG);
+		final Toast alertaAvaliacaoNaoCriada = Toast.makeText(AvaliacaoActivity.this,"Primeiramente Ã© necessÃ¡rio avaliar o profissional", Toast.LENGTH_LONG);
 		
 		//Inicializa elementos do controller
 		controller = ProfissionalController.getInstance();
@@ -75,7 +74,7 @@ public class AvaliacaoActivity extends Activity {
 		nome.setText(profissionalSaude.getNome());
         
         
-        //Se ele ja tiver avaliado e add um comentário anteriormente ele exibe o comentario cadastrado e desabilita o campo de texto
+        //Se ele ja tiver avaliado e add um comentï¿½rio anteriormente ele exibe o comentario cadastrado e desabilita o campo de texto
         if(avaliacaoCorrente!=null && avaliacaoCorrente.getComentario()!=null 
         		&& !avaliacaoCorrente.getComentario().trim().equals("")){
         	
@@ -298,12 +297,12 @@ public class AvaliacaoActivity extends Activity {
 			if(!isAvaliacaoUnica() && !addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaAvaliacao = Toast.makeText(AvaliacaoActivity.this,
-							"Você já avaliou e/ou seu depoimentos é inválido para esse profissional", Toast.LENGTH_LONG);
+							"VocÃª jÃ¡ avaliou e/ou seu depoimentos Ã© invÃ¡lido para esse profissional", Toast.LENGTH_LONG);
 				alertaAvaliacao.show();
 			}else if(!isAvaliacaoUnica() && addComentario){
 				mProgressDialog.dismiss();
 				Toast alertaComentario = Toast.makeText(AvaliacaoActivity.this,
-						"Depoimentos anônimo salvo", Toast.LENGTH_LONG);
+						"Depoimentos anÃ´nimo salvo", Toast.LENGTH_LONG);
 				alertaComentario.show();
 				//Nesse momento ele ja add o comentario, logo devemos atualizar a variavel
 				addComentario=false;
@@ -314,7 +313,7 @@ public class AvaliacaoActivity extends Activity {
 				avaliacaoNega.setText(""+profissionalSaude.getAvaliacoesNegativas());
 				mProgressDialog.dismiss();
 				Toast alertaSucesso = Toast.makeText(AvaliacaoActivity.this,
-						"Avaliação computada com Sucesso", Toast.LENGTH_LONG);
+						"AvaliaÃ§Ã£o computada com Sucesso", Toast.LENGTH_LONG);
 				alertaSucesso.show();
 			}
 			

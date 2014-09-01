@@ -150,7 +150,7 @@ public class BuscarActivity extends Activity {
 				BuscarActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("Convênio")
+		builder.setTitle("ConvÃªnio")
 
 				.setMultiChoiceItems(convenios, itemsConvenioChecked,
 						new DialogInterface.OnMultiChoiceClickListener() {

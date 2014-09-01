@@ -91,7 +91,7 @@ public class CadastrarProfissionalActivity extends Activity {
 		
 		//Mensaggens para acoes de salvar
 		final Toast alertaFalha = Toast.makeText(this,"Erro ao cadastrar um profissional", Toast.LENGTH_LONG);
-		final Toast alertaCampos = Toast.makeText(this,"Os campos Nome, Identificação e Especialidade são obrigatórios",Toast.LENGTH_LONG);
+		final Toast alertaCampos = Toast.makeText(this,"Os campos Nome, IdentificaÃ§Ã£o e Especialidade sÃ£o obrigatÃ³rios",Toast.LENGTH_LONG);
 
 		//Botao salvar eh acionado
 		botaoSalvar.setOnClickListener(new OnClickListener() {
@@ -179,7 +179,7 @@ public class CadastrarProfissionalActivity extends Activity {
 				CadastrarProfissionalActivity.this);
 
 		// Set the dialog title
-		builder.setTitle("Convênio")
+		builder.setTitle("ConvÃªnio")
 
 				.setMultiChoiceItems(convenios, itemsConvenioChecked,
 						new DialogInterface.OnMultiChoiceClickListener() {
@@ -332,7 +332,7 @@ public class CadastrarProfissionalActivity extends Activity {
 			if (!isCrmunico) {
 				Toast alertaCRM = Toast.makeText(
 						CadastrarProfissionalActivity.this,
-						"Identificação inválida!",
+						"IdentificaÃ§Ã£o invÃ¡lida",
 						Toast.LENGTH_LONG);
 				alertaCRM.show();
 

@@ -88,7 +88,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 				}else{
 					Toast alertafone = 
-							Toast.makeText(DetalhesProfissionalActivity.this,"N„o h· um telefone cadastrado para "+ profissionalSaude.getNome() + ".",Toast.LENGTH_LONG);
+							Toast.makeText(DetalhesProfissionalActivity.this,"N√£o h√° telefones cadastrados para "+ profissionalSaude.getNome(),Toast.LENGTH_LONG);
 					alertafone.show();
 				}
 			}
@@ -223,7 +223,7 @@ public class DetalhesProfissionalActivity extends Activity {
 					
 					Toast alertaAvaliacao = Toast.makeText(
 							DetalhesProfissionalActivity.this,
-							"N„o h· depoimentos para "
+							"N√£o h√° depoimentos para "
 									+ profissionalSaude.getNome() + ".",
 							Toast.LENGTH_LONG);
 					alertaAvaliacao.show();
