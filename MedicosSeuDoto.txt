@@ -1,0 +1,117 @@
+4357 | Ana Beatriz Melo Gadelha Sarmento            | Cardiologia  
+4695 | Ana Claudia Andrade Lucena                   | Cardiologia    
+2705 | Cicero Emanuel Barros da Nóbrega             | Cardiologia
+4953 | Claudio Genaro de Paula Mendes               | Cardiologia
+4420 | Cristiana Marques de Araujo                  | Cardiologia
+1203 | Gilvandro Silva de Siqueira                  | Cardiologia
+4824 | Glauco de Gusmão Filho                       | Cardiologia
+3931 | Mirabeau Maranhão Leite                      | Cardiologia
+6369 | Guilherme Veras Mascena                      | Cardiologia
+2330 | Roberto Ramalho Rosas                        | Cardiologia
+1704 | Alba Lucia Eulalio Raposo Freire             | Pediatria
+1759 | Albanita Pereira de Andrade Guerra           | Pediatria
+4476 | Alessandra Avelino Diniz Gonzaga             | Pediatria
+430  | Jose Juracy de Albuquerque Gouveia           | Pediatria
+1113 | Santana Maria Florindo                       | Pediatria
+3789 | Vandezita Dantas de Medeiros Mazzaro         | Pediatria
+4850 | Vanessa Valerio Borges da Fonseca            | Pediatria
+3744 | Vinicius Medeiros Barbosa                    | Pediatria
+1869 | Selma Maria Barroca da Rocha                 | Pediatria
+4353 | Sérgio de Aquino Barbosa                     | Pediatria
+5625 | Andrey Leal Wanderley                        | Ortopedia
+873  | Arlindo Carvalho do Nascimento               | Ortopedia
+2982 | Antonio Nelbi Fernandes                      | Ortopedia
+1959 | Caio Paiva Rocha                             | Ortopedia
+6902 | Carlos Alberto Marques Vieira                | Ortopedia
+5470 | Lucio Cezar de Oliveira e Souza              | Ortopedia
+4995 | Rossana Cavalcante Almeida                   | Ortopedia
+4343 | Ruy de Andrade Gouveia Filho                 | Ortopedia
+5518 | Sacha Medeiros do Amaral                     | Ortopedia
+4922 | Saulo de Tarso Ferreira Torquato             | Ortopedia
+4164 | Tatiana de Oliveira Medeiros                 | Ortopedia
+1658 | Temistocles de Almeida Ribeiro               | Ortopedia
+2857 | Arnaldo Henrique Gomes Viegas                | Geriatria
+5460 | Eduardo Gomes de Melo                  	    | Geriatria
+2991 | Erotildes Alexandre Costa              	    | Geriatria
+3561 | Joáo Borges Virgolino da Silva         	    | Geriatria
+1269 | João Bosco Teixeira                    	    | Geriatria
+4446 | João Dehon Leandro França              	    | Geriatria
+2282 | Joao Marcos Moura                      	    | Geriatria
+5257 | Julio Cesar Braga Santiago de Lima     	    | Geriatria
+4230 | Maristé Mendes Rocha                   	    | Geriatria
+4253 | Nilda Maria de Medeiros Brito Farias   	    | Geriatria
+4076 | Doralice Rodrigues Oliveira            	    | Gastroenterologia
+2802 | Maria Lúcia Souza Lima                 	    | Gastroenterologia
+5923 | Paulo Duques de Amorim                 	    | Gastroenterologia
+5391 | Pedro Duques de Amorim                 	    | Gastroenterologia
+1494 | Pedro Ferreira de Sousa Filho                | Gastroenterologia
+385  | Petronio Vilar Campos                        | Gastroenterologia
+1246 | Severina Monteiro Guedes de Almeida          | Gastroenterologia
+4905 | Simone Fernandes Furtado Trajano             | Gastroenterologia
+2827 | Teresa Cristina Mayer Ventura da Nobrega     | Gastroenterologia
+2260 | Zailton Bezerra de Lima                      | Gastroenterologia
+5771 | Allysson Antonio Ribeiro Gomes               | Cirurgião Geral
+4296 | Ana Cláudia Soares Penazzi                   | Cirurgião Geral
+771  | Anderson Viana Salgado                       | Cirurgião Geral
+4746 | André Adelino Brasileiro Silva               | Cirurgião Geral
+5951 | Elisabete Alves de Almeida Brilhante         | Cirurgião Geral
+4964 | Eliseu Jose de Melo Neto                     | Cirurgião Geral
+3450 | Elizabeth Cavalcanti de Menezes              | Cirurgião Geral
+1256 | José de Araújo Madeiro                       | Cirurgião Geral
+4499 | Metuselá Lameque Jafé da Costa Agra de Mello | Cirurgião Geral
+5372 | Patricia Correia Lima Cariry                 | Cirurgião Geral
+5073 | Paulo Gonçalves dos Santos                   | Cirurgião Geral
+4546 | Gualter Lisboa Ramalho                       | Acupunturista
+3660 | José Anísio Ferreira Filho                   | Acupunturista
+4471 | Júlia de Almeida Silveira                    | Acupunturista
+4806 | Marcos Antonio Soares Porto                  | Acupunturista
+5402 | Maria das Graças Dantas Lima                 | Acupunturista
+3899 | Maria do Socorro Araujo Gouveia              | Acupunturista
+2702 | Moyra Ferreira Araújo de Freitas             | Acupunturista
+1074 | Paulo Roberto Gomes de Siqueira              | Acupunturista
+3160 | Ricardo Cavalcanti de Arruda                 | Acupunturista
+3757 | Sandra Rejane Cabral Batista                 | Acupunturista
+6112 | Sandra Ximenes Leite Bonato                  | Acupunturista
+3180 | Vera Lucia Medeiros Marques de Morais        | Acupunturista
+1785 | Walter Bandeira                              | Acupunturista
+2917 | Zelia Tavares Cruz de Souza Neves            | Acupunturista
+2492 | Clara Celi Nobrega Aires Campelo             | Endocrinologia
+4145 | Claudia Maria Lopes Carneiro Teixeira        | Endocrinologia
+2265 | Cleilton Gomes Cirino                        | Endocrinologia
+547  | Clóvis Alberto Baracuhy                      | Endocrinologia
+6225 | Daniele Loureiro Mangueira Paiva             | Endocrinologia
+5132 | Danielle Medeiros Marques                    | Endocrinologia
+2483 | Dóris Amorim Pontes de Oliveira              | Endocrinologia
+5187 | Karla Renata Freire Meira                    | Endocrinologia
+6458 | Larissa Gondim Paulo Neto Toscano            | Endocrinologia
+4312 | Lilia Yoshiko Tokuo                          | Endocrinologia
+2100 | Luiz Alberto de Oliveira Brito               | Endocrinologia
+5528 | Victor Miguel Coutinho Fernandes             | Endocrinologia
+6222 | Arlindo Félix da Costa Neto                  | Psiquiatria
+975  | Aroldo de Sousa Rique                        | Psiquiatria
+8523 | Cesar Augusto de Freitas e Rathke            | Psiquiatria
+2238 | Clara Maria Vieira Nitão                     | Psiquiatria
+7095 | Cristina Maftei                              | Psiquiatria
+6722 | Douglas Serrano Lewis                        | Psiquiatria
+1962 | Edmundo de Oliveira Gaudencio                | Psiquiatria
+6537 | Milane Caroline de Oliveira Valdek           | Psiquiatria
+446  | Napoleão Gomes de Albuquerque                | Psiquiatria
+5526 | Raquel Mendes Cordeiro                       | Psiquiatria
+7574 | Ricardo Henrique de Sousa Araújo             | Psiquiatria
+1394 | Rodrigo Francisco Pereira Neto               | Psiquiatria
+3595 | Rosele Lucena Beltrão                        | Psiquiatria
+3656 | Gloria de Fatima Carvalho de Barros          | Homeopatia
+1638 | Irismar dos Santos Silva                     | Homeopatia
+2042 | Jose da Silva Sobrinho                       | Homeopatia
+2507 | Jose Francisco de Andrade                    | Homeopatia
+2767 | José Givaldo Melquiades de Medeiros          | Homeopatia
+2334 | José Ibiapina Alves de Macêdo                | Homeopatia
+2514 | Leonia Maria de Lima                         | Homeopatia
+1887 | Margareth Leite Guedes                       | Homeopatia
+3161 | Maria Aparecida Morais de Brito              | Homeopatia
+5402 | Maria das Graças Dantas Lima                 | Homeopatia
+1681 | Maria do Rosario Daysy Ismael de Oliveira    | Homeopatia
+2678 | Mary Stuart Martins de Araujo                | Homeopatia
+2702 | Moyra Ferreira Araújo de Freitas             | Homeopatia
+1709 | Norma Pereira Dantas Cavalcanti              | Homeopatia
+3160 | Ricardo Cavalcanti de Arruda                 | Homeopatia
