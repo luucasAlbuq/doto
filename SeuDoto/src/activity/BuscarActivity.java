@@ -145,13 +145,11 @@ public class BuscarActivity extends Activity {
 	 */
 	public Dialog onCreateDialogConvenio() {
 		conveniosSelecionados = new ArrayList(); // Where we track the selected items
-		itemsConvenioChecked = new boolean[Convenio.values().length];
 		AlertDialog.Builder builder = new AlertDialog.Builder(
 				BuscarActivity.this);
 
 		// Set the dialog title
 		builder.setTitle("Convênio")
-
 				.setMultiChoiceItems(convenios, itemsConvenioChecked,
 						new DialogInterface.OnMultiChoiceClickListener() {
 							@Override
@@ -182,7 +180,6 @@ public class BuscarActivity extends Activity {
 								// do things
 							}
 						});
-
 		return builder.create();
 	}
 	
