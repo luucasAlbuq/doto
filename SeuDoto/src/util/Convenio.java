@@ -2,7 +2,8 @@ package util;
 
 public enum Convenio {
 	
-	UNIMED("Unimed"), SMILE("Smiles"), UNIDENTES("Unidestes");
+	UNIMED("Unimed"),BRADESCO("Bradesco Saúde"),AMIL("Amil"),MEDIAL("Medial Saúde"),SULAMERICA("Sul América"),
+	AMICO("Amico Saúde"),GOLDEN_CROSS("Golden Cross"),SIMLE("Smile");
 	
 	private final String conv;
 	
