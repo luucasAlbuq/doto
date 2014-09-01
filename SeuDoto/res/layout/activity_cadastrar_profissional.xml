@@ -82,7 +82,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="15dp"
-        android:text="Fone::"
+        android:text="Fone:"
         android:textSize="20dp" />
 
     <LinearLayout
